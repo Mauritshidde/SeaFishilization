@@ -1,6 +1,6 @@
 #include "menu.h"
 
-Menu::Menu(int screenWidth, int screenHeight)
+Menu::Menu(int screenWidth, int screenHeight, std::vector<const char *> setMenuTexts)
 {
       running = true;
       fontSize = 100;
@@ -10,7 +10,8 @@ Menu::Menu(int screenWidth, int screenHeight)
       buttonPressed = 0;
 
       lenghtOfOneLetter = MeasureText(oneLetter, fontSize);
-      menuTexts = {simuText, settingsText, quitText};
+      menuTexts = setMenuTexts;
+      // menuTexts = {simuText, settingsText, quitText};
 
       amount = menuTexts.size();
       val = screenHeight / (amount + 1);
@@ -31,6 +32,7 @@ Menu::~Menu()
 void Menu::Draw(int screenWidth, int screenHeight)
 {
       BeginDrawing();
+      // Texture2D test = LoadTexture("test.png");
       ClearBackground(WHITE);
 
       for (int i = 0; i < menuTexts.size(); i++)
@@ -101,6 +103,7 @@ void Menu::Update(int screenWidth, int screenHeight)
 
       if (isButtonPressed)
       {
+            isButtonPressed = false;
             startScreen = false;
       }
 }

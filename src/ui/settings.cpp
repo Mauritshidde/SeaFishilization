@@ -101,6 +101,7 @@ void Settings::Update(int screenWidth, int screenHeight)
 
       if (isButtonPressed)
       {
+            isButtonPressed = false;
             startScreen = false;
       }
 }
