@@ -1,6 +1,6 @@
 #include "menu.h"
 
-Menu::Menu(int screenWidth, int screenHeight, std::vector<const char *> setMenuTexts)
+Menu::Menu(int screenWidth, int screenHeight)
 {
       running = true;
       fontSize = 100;
@@ -10,8 +10,8 @@ Menu::Menu(int screenWidth, int screenHeight, std::vector<const char *> setMenuT
       buttonPressed = 0;
 
       lenghtOfOneLetter = MeasureText(oneLetter, fontSize);
-      menuTexts = setMenuTexts;
-      // menuTexts = {simuText, settingsText, quitText};
+      // menuTexts = setMenuTexts;
+      menuTexts = {simuText, settingsText, quitText};
 
       amount = menuTexts.size();
       val = screenHeight / (amount + 1);

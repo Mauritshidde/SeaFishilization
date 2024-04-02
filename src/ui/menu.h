@@ -29,6 +29,6 @@ public:
     void Draw(int screenWidth, int screenHeight);
     void Update(int screenWidth, int screenHeight);
 
-    Menu(int screenWidth = 1920, int screenHeight = 1080, std::vector<const char *> setMenuTexts = {"no values set"});
+    Menu(int screenWidth = 1920, int screenHeight = 1080);
     ~Menu();
 };
