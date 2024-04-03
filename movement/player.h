@@ -9,13 +9,13 @@ public:
     Vector2 position;
     void movement(double dt);
 
-    Player(Vector2 position={0,0}, int screenWidth=1920, int screenHeight=1084);
+    Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1084);
     ~Player();
 };
 
-Player::Player(Vector2 position, int screenWidth, int screenHeight)
+Player::Player(Vector2 startPosition, int screenWidth, int screenHeight)
 {
-    position = {float(screenHeight)/2, float(screenWidth)/2};
+    position = startPosition;
     camera.target = position;
     camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
     camera.rotation = 0.0f;
@@ -31,11 +31,11 @@ void Player::movement(double dt)
 {
     if (IsKeyDown(KEY_W))
     {
-        camera.target.y += movementSpeed * dt;
+        camera.target.y -= movementSpeed * dt;
     }
     else if (IsKeyDown(KEY_S))
     {
-        camera.target.y -= movementSpeed * dt;
+        camera.target.y += movementSpeed * dt;
     }
     else if (IsKeyDown(KEY_A))
     {
