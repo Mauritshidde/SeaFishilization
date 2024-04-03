@@ -17,7 +17,7 @@ Player::Player(Vector2 startPosition, int screenWidth, int screenHeight)
 {
     position = startPosition;
     camera.target = position;
-    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+    // camera.offset = (Vector2){0,0};
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 }

@@ -1,6 +1,6 @@
 #include "raylib.h"
 
-#include "movement/player.h"
+#include "player/player.h"
 #include "map/map.h"
 
 class Game

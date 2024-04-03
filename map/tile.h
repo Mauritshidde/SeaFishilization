@@ -10,11 +10,11 @@ public:
     Vector2 pos;
 
     void Draw();
-    Tile(int x = 0, int y = 0, int size = 30);
+    Tile(int x = 0, int y = 0, double size = 0.1);
     ~Tile();
 };
 
-Tile::Tile(int x, int y, int size) 
+Tile::Tile(int x, int y, double size) 
 {
     pos.x = x;
     pos.y = y;
@@ -24,9 +24,7 @@ Tile::Tile(int x, int y, int size)
 
 void Tile::Draw() 
 {
-    Color tileColor = {110, 125, 150, 255}; // temp
-    DrawRectangle(pos.x * tileSize, pos.y * tileSize, tileSize -1, tileSize -1, tileColor);
-    DrawTextureEx(tileTexture, pos, 0, 0.1, BLACK);
+    DrawTextureEx(tileTexture, pos, 0, tileSize, WHITE);
 }
 
 Tile::~Tile() {
