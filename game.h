@@ -5,7 +5,7 @@
 class Game
 {
 private:
-    Player player;
+    PlayerMovement playerMovement;
     // Tile tile = Tile(2, 3);
     Map map;
 
@@ -25,7 +25,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(16, 16);
 
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
-    player = Player(startingPosition, screenWidth, screenHeight);
+    playerMovement = PlayerMovement(startingPosition, screenWidth, screenHeight);
 }
 
 Game::~Game()
@@ -34,7 +34,7 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
-    player.movement(dt);
+    playerMovement.movement(dt);
 }
 
 void Game::Render()
