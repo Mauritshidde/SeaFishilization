@@ -1,10 +1,13 @@
 #include "raylib.h"
 #include "movement/player.h"
+#include "map/map.h"
 
 class Game
 {
 private:
     Player player;
+    // Tile tile = Tile(2, 3);
+    Map map;
 
     void Update(double dt);
     void Render();
@@ -22,6 +25,7 @@ Game::Game(int screenWidth, int screenHeight, int mapSize)
 
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position
     player = Player(startingPosition, screenWidth, screenHeight);
+    map = Map(16, 16);
 }
 
 Game::~Game()
@@ -43,9 +47,9 @@ void Game::Render()
 
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
-
             DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2, 100, RED);
             DrawCircle(10, 10, 50, RED);
+            map.Draw();
             // DrawRectangle(-6000, 320, 13000, 8000, DARKGRAY);
         EndMode2D();
     EndDrawing();
