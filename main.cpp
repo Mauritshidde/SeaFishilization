@@ -12,7 +12,7 @@ int main()
 {
     bool quitGame = false;
 
-    InitWindow(0, 0, "airplane simulation");
+    InitWindow(0, 0, "SeaFishilisation I");
     SetTargetFPS(60);
     Menu menu;
     Settings settingsMenu;
