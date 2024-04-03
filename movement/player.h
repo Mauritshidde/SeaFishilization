@@ -33,15 +33,15 @@ void Player::movement(double dt)
     {
         camera.target.y -= movementSpeed * dt;
     }
-    else if (IsKeyDown(KEY_S))
+    if (IsKeyDown(KEY_S))
     {
         camera.target.y += movementSpeed * dt;
     }
-    else if (IsKeyDown(KEY_A))
+    if (IsKeyDown(KEY_A))
     {
         camera.target.x -= movementSpeed * dt;
     }
-    else if (IsKeyDown(KEY_D))
+    if (IsKeyDown(KEY_D))
     {
         camera.target.x += movementSpeed * dt;
     }

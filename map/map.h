@@ -22,7 +22,13 @@ Map::Map(int rowCount, int columCount)
     tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0)));
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            tileMap[i][j] = Tile(i, j, 100);
+            if (i % 2 == 0) {
+                tileMap[i][j] = Tile(i*1024/10, j*1024/10, 100);
+                std::cout << "ja" << std::endl;
+            } else {
+                tileMap[i][j] = Tile(i*1024/10, j*1024/10-1024/20, 100);
+                std::cout << "nee" << std::endl;
+            }
         }
     }
 

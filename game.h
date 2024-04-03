@@ -1,11 +1,12 @@
 #include "raylib.h"
+
 #include "movement/player.h"
 #include "map/map.h"
 
 class Game
 {
 private:
-    PlayerMovement playerMovement;
+    Player player;
     // Tile tile = Tile(2, 3);
     Map map;
 
@@ -25,7 +26,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(16, 16);
 
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
-    playerMovement = PlayerMovement(startingPosition, screenWidth, screenHeight);
+    player = Player(startingPosition, screenWidth, screenHeight);
 }
 
 Game::~Game()
@@ -34,7 +35,7 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
-    playerMovement.movement(dt);
+    player.movement(dt);
 }
 
 void Game::Render()
