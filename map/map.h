@@ -23,7 +23,7 @@ Map::Map(int rowCount, int columCount)
 {
     rows = rowCount;
     cols = columCount;
-    tileMap.resize(rows, std::vector<Tile>(cols, sizeof(Tile()))); // !!!! mogelijke optimalisatie en nog niet belangerijk TODO !!!! dit oplsosen zorgt ervoor dat alles 2 keer laat. inladen van textures ksot veel dus misschien pointers. 
+    tileMap.resize(rows, std::vector<Tile>(cols, sizeof(Tile(0, 0, 0.1)))); // !!!! mogelijke optimalisatie en nog niet belangerijk TODO !!!! dit oplsosen zorgt ervoor dat alles 2 keer laat. inladen van textures ksot veel dus misschien pointers. 
 
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {

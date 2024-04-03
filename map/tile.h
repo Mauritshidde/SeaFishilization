@@ -24,7 +24,7 @@ Tile::Tile(int x, int y, double size)
 
 void Tile::Draw() 
 {
-    DrawTextureEx(tileTexture, pos, 0, tileSize, WHITE);
+    DrawTextureEx(tileTexture, pos, 0, 0.1, WHITE);
 }
 
 Tile::~Tile() {
