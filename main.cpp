@@ -5,6 +5,8 @@
 #include "ui/menu.h"
 #include "ui/settings.h"
 
+#include "game.h"
+
 int screenWidth = 0;
 int screenHeight = 0;
 
@@ -35,6 +37,8 @@ int main()
 
         if (menu.buttonPressed == 0) // optie 1 start game
         {
+            Game game(screenWidth, screenHeight, 10);
+            game.run();
             // dit moet worden vervangen met een functie of class die in een andere file moet
             // while (!WindowShouldClose())
             // {

@@ -3,24 +3,46 @@
 class Player
 {
 private:
-    /* data */
+    double movementSpeed = 100;
 public:
-    Vector2 location;
+    Camera2D camera = { 0 };
+    Vector2 position;
+    void movement(double dt);
 
-    void movement();
-
-    Player(/* args */);
+    Player(Vector2 position={0,0}, int screenWidth=1920, int screenHeight=1084);
     ~Player();
 };
 
-Player::Player(/* args */)
+Player::Player(Vector2 position, int screenWidth, int screenHeight)
 {
+    position = {float(screenHeight)/2, float(screenWidth)/2};
+    camera.target = position;
+    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+    camera.rotation = 0.0f;
+    camera.zoom = 1.0f;
 }
 
 Player::~Player()
 {
+
 }
 
-void Player::movement() {
-    if (KeyDow)
+void Player::movement(double dt)
+{
+    if (IsKeyDown(KEY_W))
+    {
+        camera.target.y += movementSpeed * dt;
+    }
+    else if (IsKeyDown(KEY_S))
+    {
+        camera.target.y -= movementSpeed * dt;
+    }
+    else if (IsKeyDown(KEY_A))
+    {
+        camera.target.x -= movementSpeed * dt;
+    }
+    else if (IsKeyDown(KEY_D))
+    {
+        camera.target.x += movementSpeed * dt;
+    }
 }
