@@ -26,7 +26,7 @@ int main()
 
     // for the main menu maybe add 
 
-    while (!quitGame) // dit is de gameloop voor het mainMenu deze zolang deze acttief is runt de game
+    while (!quitGame && WindowShouldClose() == false) // dit is de gameloop voor het mainMenu deze zolang deze acttief is runt de game
     {       
         while (menu.startScreen) // deze loop gaat door tot je een keuze hebt gemaakt in het main menu
         {
