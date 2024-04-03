@@ -1,18 +1,39 @@
-TARGET ?= a.out
-SRC_DIRS ?= ./src
-CC = g++
+.PHONY: linux
+linux:
+	TARGET ?= a.out
+	SRC_DIRS ?= ./src
+	CC = g++
 
-SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
-OBJS := $(addsuffix .o,$(basename $(SRCS)))
-DEPS := $(OBJS:.o=.d)
+	SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+	OBJS := $(addsuffix .o,$(basename $(SRCS)))
+	DEPS := $(OBJS:.o=.d)
 
-INC_DIRS := $(shell find $(SRC_DIRS) -type d)
-INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+	INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+	INC_FLAGS := $(addprefix -I,$(INC_DIRS))
 
-CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
+	CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
 
-$(TARGET): $(OBJS)
-	$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS) -lraylib
+	$(TARGET): $(OBJS)
+		$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS) -lraylib
+
+.PHONY: windows
+windows:
+	TARGET ?= a.out
+	SRC_DIRS ?= ./src
+	CC = Mingw-w64
+
+	SRCS := $(shell find $(SRC_DIRS) -name '*.cpp' -or -name '*.c' -or -name '*.s')
+	OBJS := $(addsuffix .o,$(basename $(SRCS)))
+	DEPS := $(OBJS:.o=.d)
+
+	INC_DIRS := $(shell find $(SRC_DIRS) -type d)
+	INC_FLAGS := $(addprefix -I,$(INC_DIRS))
+
+	CPPFLAGS ?= $(INC_FLAGS) -MMD -MP
+
+	$(TARGET): $(OBJS)
+		$(CC) $(LDFLAGS) $(OBJS) -o $@ $(LOADLIBES) $(LDLIBS) -lraylib
+
 
 .PHONY: clean
 clean:
