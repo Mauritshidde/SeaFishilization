@@ -15,13 +15,9 @@ public:
 
     void changeType(std::string newType);
     void draw();
-    Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type);
+    Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type_);
     ~Tile();
 };
-
-void Tile::changeType(std::string newType) {
-    type = newType;
-}
 
 Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type_)
 {
@@ -32,12 +28,17 @@ Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileText
     type = type_;
 }
 
+Tile::~Tile() 
+{
+}
+
+void Tile::changeType(std::string newType) 
+{
+    type = newType;
+}
+
 void Tile::draw() 
 {
     Texture2D texture = textures[type];
     DrawTextureEx(texture, pos, 0, 0.1, WHITE);
-}
-
-Tile::~Tile() {
-
 }

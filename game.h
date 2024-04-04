@@ -1,13 +1,14 @@
 #include "raylib.h"
 
 #include "player/player.h"
+#include "player/overlay.h"
 #include "map/map.h"
 
 class Game
 {
 private:
     Player player;
-    // Tile tile = Tile(2, 3);
+    Overlay overlay;
     Map map;
     Music song;
 
@@ -27,6 +28,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
+    overlay = Overlay();
     map = Map(17, 17, &player.camera);
 
 
@@ -56,8 +58,9 @@ void Game::Render()
     BeginDrawing();
         ClearBackground(WHITE);
         Vector2 coord;
-        Vector2 posi = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
-        coord = map.worldPosToGridPos(posi);
+        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
+        coord = map.worldPosToGridPos(pos);
+
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
@@ -65,11 +68,13 @@ void Game::Render()
             // DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2, 100, RED);
             // DrawCircle(10, 10, 50, RED);
         EndMode2D();
+
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 200, 10, BLACK);
         DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
 
         // ui draw functions that should not move here
         player.DrawInventory();
+        overlay.draw();
     EndDrawing();
 
     MusicPlayer();

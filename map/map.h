@@ -18,15 +18,7 @@ private:
     std::vector<std::vector<Tile>> tileMap;
     
     std::map<std::string, Texture2D> tileTextures;
-    // Texture2D seaTile;
-    // Texture2D foodTile;
-    // Texture2D coralTile;
-    // Texture2D castleV1;
-    // Texture2D castleV2;
-    // Texture2D castleV3;
-    // Texture2D castleV4;
-    // Texture2D castleV5;
-
+    
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
     void draw();
