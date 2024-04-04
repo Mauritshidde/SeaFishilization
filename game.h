@@ -28,7 +28,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
-    overlay = Overlay();
+    overlay = Overlay(screenWidth, screenHeight);
     map = Map(17, 17, &player.camera);
 
 
@@ -73,8 +73,10 @@ void Game::Render()
         DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
 
         // ui draw functions that should not move here
-        player.DrawInventory();
-        overlay.draw();
+        int food = player.getFoodAmount();
+        int coral = player.getCoralAmount();
+        overlay.drawInventory(food, coral);
+        overlay.drawBuildMode();
     EndDrawing();
 
     MusicPlayer();
