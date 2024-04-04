@@ -12,20 +12,28 @@ public:
     ~Overlay();
 };
 
-Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084) {
+Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084) 
+{
     screenWidth = screenWidth_;
     screenHeight = screenHeight_;
 }
 
-Overlay::~Overlay() {
+Overlay::~Overlay() 
+{
     
 }
 
-void Overlay::drawBuildMode() {
-    
+void Overlay::drawBuildMode() 
+{
+    int startX = screenWidth / 4;
+    int startY = screenHeight / 8 * 7;
+    int w = screenWidth / 2;
+    int h = screenHeight / 8;
+    DrawRectangle(startX, startY, w, h, BROWN);
 }
 
-void Overlay::drawInventory(int food, int coral) {
+void Overlay::drawInventory(int food, int coral) 
+{
     DrawRectangle(screenWidth - screenWidth/4, 0, screenWidth/4, screenHeight/10, BLACK);
 
     DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
