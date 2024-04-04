@@ -6,38 +6,36 @@ class Tile
 {
 private: 
     int tileSize;
-    int type;
-    Texture2D tileTexture;
+    std::string type;
+    std::map<std::string, Texture2D> textures;
 
-    void changeTile();
+
 public:
     Vector2 pos;
 
-    void changeType(int newType);
-    void Draw();
-    Tile(int x, int y, double size, std::map<std::string, Texture2D> tileTextures);
+    void changeType(std::string newType);
+    void draw();
+    Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type);
     ~Tile();
 };
 
-void Tile::changeTile() {
-
+void Tile::changeType(std::string newType) {
+    type = newType;
 }
 
-void Tile::changeType(int newType) {
-    changeTile();
-}
-
-Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D> tileTextures)
+Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type_)
 {
     pos.x = x;
     pos.y = y;
     tileSize = size;
-    tileTexture = tileTextures["sea"];
+    textures = tileTextures;
+    type = type_;
 }
 
-void Tile::Draw() 
+void Tile::draw() 
 {
-    DrawTextureEx(tileTexture, pos, 0, 0.1, WHITE);
+    Texture2D texture = textures[type];
+    DrawTextureEx(texture, pos, 0, 0.1, WHITE);
 }
 
 Tile::~Tile() {

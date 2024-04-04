@@ -29,9 +29,9 @@ private:
 
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
+    void draw();
     Map(int rowCount = 16, int columCount = 16, Camera2D *setPlayerCamera = NULL);
     ~Map();
-    void Draw();
 };
 
 Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera) 
@@ -46,24 +46,25 @@ Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
         {"food", LoadTexture("sprites/resources/AlgenTile.png")},
         {"coral", LoadTexture("sprites/resources/CoralTile.png")},
-        {"castleV1", LoadTexture("sprites/resources/CastleTileLVL1.png")},
-        {"castleV2", LoadTexture("sprites/resources/CastleTileLVL2.png")},
-        {"castleV3", LoadTexture("sprites/resources/CastleTileLVL3.png")},
-        {"castleV4", LoadTexture("sprites/resources/CastleTileLVL4.png")},
-        {"castleV5", LoadTexture("sprites/resources/CastleTileLVL5.png")}
+        {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
+        {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
+        {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
+        {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
+        {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
     };
 
     tileSize = 1024/10;
-    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.1, tileTextures))); 
+    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.1, tileTextures, "sea" ))); 
     
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (i % 2 == 0) {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.1, tileTextures); // tile location based on tiles with a size of 1024 x 1024
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.1, tileTextures, "sea"); // tile location based on tiles with a size of 1024 x 1024
             } else {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.1, tileTextures);
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.1, tileTextures, "sea");
             }
         }
+        tileMap.at(rows/2).at(cols/2).changeType("castleV1");
     }
 }
 
@@ -71,10 +72,10 @@ Map::~Map()
 {
 }
 
-void Map::Draw() {
+void Map::draw() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            tileMap[i][j].Draw();
+            tileMap[i][j].draw();
         }
     }
 }

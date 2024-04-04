@@ -27,7 +27,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
-    map = Map(16, 16, &player.camera);
+    map = Map(17, 17, &player.camera);
 
 
     song = LoadMusicStream("music/GuitarSong.mp3");
@@ -60,7 +60,7 @@ void Game::Render()
         coord = map.worldPosToGridPos(posi);
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
-            map.Draw();
+            map.draw();
 
             // DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2, 100, RED);
             // DrawCircle(10, 10, 50, RED);
