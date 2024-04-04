@@ -1,6 +1,6 @@
 #include <string>
-#include <raylib.h>
 #include <iostream>
+#include "../raylib.h"
 
 void loadingScreen(float fontSize, float screenWidth, float screenHeight) {
     const char *oneLetter = "A";
