@@ -1,5 +1,6 @@
 #include <vector>
 #include <iostream>
+#include <cmath>
 #include "raylib.h"
 
 #include "tile.h"
@@ -9,6 +10,7 @@ class Map
 {
 private:
     int rows, cols;
+    double tileSize;
     std::vector<std::vector<Tile>> tileMap;
     
     Texture2D seaTile;
@@ -21,6 +23,7 @@ private:
     Texture2D castleV5;
 
 public:
+    Vector2 worldPosToGridPos(Vector2 coord);
     Map(int rowCount = 16, int columCount = 16);
     ~Map();
     void Draw();
@@ -39,6 +42,7 @@ Map::Map(int rowCount, int columCount)
 
     std::vector<Texture2D> tiles {seaTile, foodTile};
 
+    tileSize = 1024/10;
     rows = rowCount;
     cols = columCount;
     tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.1, tiles))); 
@@ -46,9 +50,9 @@ Map::Map(int rowCount, int columCount)
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (i % 2 == 0) {
-                tileMap.at(i).at(j) = Tile(i*1024/10, j*1024/10, 0.1, tiles); // tile location based on tiles with a size of 1024 x 1024
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.1, tiles); // tile location based on tiles with a size of 1024 x 1024
             } else {
-                tileMap.at(i).at(j) = Tile(i*1024/10, j*1024/10-1024/20, 0.1, tiles);
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.1, tiles);
             }
         }
     }
@@ -65,4 +69,24 @@ void Map::Draw() {
             tileMap[i][j].Draw();
         }
     }
+}
+
+Vector2 Map::worldPosToGridPos(Vector2 coord) { // coordinate of mouse  to grid
+    int x = coord.x/(tileSize);
+    int y;
+    std::cout << x << " x " << coord.x/(tileSize) << std::endl;
+
+    if (x % 2 == 0) {
+        y = coord.y/(tileSize);
+        std::cout << y << " y " << coord.y/(tileSize) << std::endl;
+    } else {
+        y = std::round(coord.y/(tileSize) + 1/2);
+        std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
+    }
+
+    Vector2 result;
+    result.x = x;
+    result.y = y;
+
+    return result;
 }

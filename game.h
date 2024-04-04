@@ -45,8 +45,8 @@ void Game::Render()
 {
     BeginDrawing();
         ClearBackground(WHITE);
-        // ui draw functions that should not move here
-
+        Vector2 coord;
+        coord = map.worldPosToGridPos(GetMousePosition());
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.Draw();
@@ -54,6 +54,11 @@ void Game::Render()
             // DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2, 100, RED);
             // DrawCircle(10, 10, 50, RED);
         EndMode2D();
+        DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 200, 10, BLACK);
+        DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
+
+        // ui draw functions that should not move here
+        player.DrawInventory();
     EndDrawing();
 
     // if (!IsMusicStreamPlaying(song)) { // start song if not already playing
@@ -64,9 +69,11 @@ void Game::Render()
 void Game::run() // start the game loop
 {
     bool gameRunning = true;
+    double dt;
     while (gameRunning && !WindowShouldClose())
     {
-        Update(GetFrameTime());
+        dt = GetFrameTime();
+        Update(dt);
         Render();
         // If quit go to main menu
         // When esc press open menu for settings, save, load, continue and exit

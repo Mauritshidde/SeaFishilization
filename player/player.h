@@ -7,6 +7,9 @@ private:
     double zoomSpeed = 10;
     double mouseMovementSpeed = 10;
     
+    int screenWidth;
+    int screenHeight;
+
     Vector2 mouseStartPos;
 public:
     int food;
@@ -15,15 +18,19 @@ public:
     Camera2D camera = { 0 };
     Vector2 position;
     void movement(double dt);
+    void DrawInventory();
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1084);
     ~Player();
 };
 
-Player::Player(Vector2 startPosition, int screenWidth, int screenHeight)
+Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight)
 {
     food = 0;
     coral = 0;
+
+    screenWidth = setScreenWidth;
+    screenHeight = setScreenHeight;
     
     position = startPosition;
     camera.target = position;
@@ -81,4 +88,11 @@ void Player::movement(double dt)
         
         mouseStartPos = GetMousePosition();
     }
+}
+
+void Player::DrawInventory() {
+    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/4, screenWidth/4, 10, BLACK);
+    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/5, screenWidth/4, 10, BLACK);
+
+    DrawRectangle(screenWidth - screenWidth/4, 0, screenWidth/4, screenHeight/10, BLACK);
 }

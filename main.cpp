@@ -21,6 +21,10 @@ int main()
         InitAudioDevice();
     }
     
+    if (!IsWindowFullscreen()) {
+        ToggleFullscreen();
+    }
+    
     Menu menu;
     Settings settingsMenu;
 
