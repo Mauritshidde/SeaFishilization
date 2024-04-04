@@ -6,17 +6,19 @@ private:
     double movementSpeed = 100;
     double zoomSpeed = 10;
     double mouseMovementSpeed = 10;
+    Vector2 mouseStartPos;
     
     int screenWidth;
     int screenHeight;
 
-    Vector2 mouseStartPos;
-public:
     int food;
     int coral;
+public:
 
     Camera2D camera = { 0 };
     Vector2 position;
+    void changeFoodAmount(int amount); // remove fish if buying something add food when receiving something
+    void changeCoralAmount(int amount); // remove fish if buying something add food when receiving something
     void movement(double dt);
     void DrawInventory();
 
@@ -88,11 +90,22 @@ void Player::movement(double dt)
         
         mouseStartPos = GetMousePosition();
     }
+
+    SetMouseScale(camera.zoom, camera.zoom);
+    SetMouseOffset(camera.target.x, camera.target.y);
 }
 
 void Player::DrawInventory() {
-    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/4, screenWidth/4, 10, BLACK);
-    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/5, screenWidth/4, 10, BLACK);
-
     DrawRectangle(screenWidth - screenWidth/4, 0, screenWidth/4, screenHeight/10, BLACK);
+
+    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
+    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
+}
+
+void Player::changeFoodAmount(int amount) {
+    food += amount;
+}
+
+void Player::changeCoralAmount(int amount) {
+    coral += amount;
 }
