@@ -1,3 +1,5 @@
+#include <map>
+#include <string>
 #include "raylib.h"
 
 class Tile 
@@ -13,7 +15,7 @@ public:
 
     void changeType(int newType);
     void Draw();
-    Tile(int x, int y, double size, std::vector<Texture2D> setTileTexture);
+    Tile(int x, int y, double size, std::map<std::string, Texture2D> tileTextures);
     ~Tile();
 };
 
@@ -25,12 +27,12 @@ void Tile::changeType(int newType) {
     changeTile();
 }
 
-Tile::Tile(int x, int y, double size, std::vector<Texture2D> setTileTexture)
+Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D> tileTextures)
 {
     pos.x = x;
     pos.y = y;
     tileSize = size;
-    tileTexture = setTileTexture.at(0); // change to vec
+    tileTexture = tileTextures["sea"];
 }
 
 void Tile::Draw() 
