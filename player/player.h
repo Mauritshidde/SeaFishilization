@@ -20,7 +20,8 @@ public:
     void changeFoodAmount(int amount); // remove food if buying something add food when receiving something
     void changeCoralAmount(int amount); // remove coral if buying something add coral when receiving something
     void movement(double dt);
-    void DrawInventory();
+    int getFoodAmount();
+    int getCoralAmount();
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1084);
     ~Player();
@@ -92,17 +93,18 @@ void Player::movement(double dt)
     }
 }
 
-void Player::DrawInventory() {
-    DrawRectangle(screenWidth - screenWidth/4, 0, screenWidth/4, screenHeight/10, BLACK);
-
-    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
-    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
-}
-
 void Player::changeFoodAmount(int amount) {
     food += amount;
 }
 
 void Player::changeCoralAmount(int amount) {
     coral += amount;
+}
+
+int Player::getFoodAmount() {
+    return food;
+}
+
+int Player::getCoralAmount() {
+    return coral;
 }
