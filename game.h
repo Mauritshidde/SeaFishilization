@@ -9,6 +9,7 @@ private:
     Player player;
     // Tile tile = Tile(2, 3);
     Map map;
+    Music song;
 
     void Update(double dt);
     void Render();
@@ -27,6 +28,8 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
+
+    // song = LoadMusicStream("/music/song1");
 }
 
 Game::~Game()
@@ -52,6 +55,10 @@ void Game::Render()
             // DrawCircle(10, 10, 50, RED);
         EndMode2D();
     EndDrawing();
+
+    // if (!IsMusicStreamPlaying(song)) { // start song if not already playing
+    //     PlayMusicStream(song);
+    // }
 }
 
 void Game::run() // start the game loop

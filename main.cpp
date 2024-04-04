@@ -16,6 +16,11 @@ int main()
 
     InitWindow(0, 0, "SeaFishilisation I");
     SetTargetFPS(60);
+
+    if (!IsAudioDeviceReady()) {
+        InitAudioDevice();
+    }
+    
     Menu menu;
     Settings settingsMenu;
 
