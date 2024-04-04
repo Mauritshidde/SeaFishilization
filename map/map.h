@@ -9,6 +9,8 @@
 class Map
 {
 private:
+    Camera2D *playerCamera;
+
     int rows, cols;
     double tileSize;
     std::vector<std::vector<Tile>> tileMap;
@@ -24,13 +26,15 @@ private:
 
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
-    Map(int rowCount = 16, int columCount = 16);
+    Map(int rowCount = 16, int columCount = 16, Camera2D *setPlayerCamera = NULL);
     ~Map();
     void Draw();
 };
 
-Map::Map(int rowCount, int columCount)
+Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
 {
+    playerCamera = setPlayerCamera;
+
     seaTile = LoadTexture("sprites/resources/BlankTile.png");
     foodTile = LoadTexture("sprites/resources/AlgenTile.png");
     coralTile = LoadTexture("sprites/resources/CoralTile.png");

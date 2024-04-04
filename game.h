@@ -24,10 +24,10 @@ public:
 Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 {
     // generate map using mapSize
-    map = Map(16, 16);
-
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
+    map = Map(16, 16, &player.camera);
+
 
     // song = LoadMusicStream("/music/song1");
 }
