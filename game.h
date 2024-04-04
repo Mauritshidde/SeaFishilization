@@ -57,10 +57,9 @@ void Game::Render()
 {
     BeginDrawing();
         ClearBackground(WHITE);
-        Vector2 coord;
-        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
-        coord = map.worldPosToGridPos(pos);
-
+        Vector3 coord;
+        Vector2 posi = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
+        coord = map.worldPosToGridPos(posi);
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
@@ -68,9 +67,10 @@ void Game::Render()
             // DrawCircle(GetScreenWidth()/2, GetScreenHeight()/2, 100, RED);
             // DrawCircle(10, 10, 50, RED);
         EndMode2D();
-
-        DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 200, 10, BLACK);
+        
+        DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
+        DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
 
         // ui draw functions that should not move here
         player.DrawInventory();

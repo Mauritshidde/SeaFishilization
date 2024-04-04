@@ -36,7 +36,6 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight)
     
     position = startPosition;
     camera.target = position;
-    // camera.offset = (Vector2){0,0};
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
 }
