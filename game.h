@@ -13,6 +13,7 @@ private:
 
     void Update(double dt);
     void Render();
+    void MusicPlayer();
 
 public:
     void run();
@@ -41,6 +42,15 @@ void Game::Update(double dt)
     player.movement(dt);
 }
 
+void Game::MusicPlayer() 
+{
+    if (!IsMusicStreamPlaying(song)) { // start song if not already playing
+        PlayMusicStream(song);
+    } else {
+        UpdateMusicStream(song);
+    }
+}
+
 void Game::Render()
 {
     BeginDrawing();
@@ -62,12 +72,7 @@ void Game::Render()
         player.DrawInventory();
     EndDrawing();
 
-    if (!IsMusicStreamPlaying(song)) { // start song if not already playing
-        PlayMusicStream(song);
-        std::cout << "music song1 test " << std::endl;
-    } else {
-        UpdateMusicStream(song);
-    }
+    MusicPlayer();
 }
 
 void Game::run() // start the game loop

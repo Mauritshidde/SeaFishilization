@@ -63,7 +63,6 @@ int main()
                 settingsMenu.Update(screenWidth, screenHeight);
                 settingsMenu.Draw(screenWidth, screenHeight);
             }
-                std::cout<< "end ? test" <<std::endl;
 
             settingsMenu.startScreen = true; // same reason as for main menu, and declaration not in this if becuase this is better for response time, but worse for start up time
         }
