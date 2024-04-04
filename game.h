@@ -57,7 +57,7 @@ void Game::Render()
 void Game::run() // start the game loop
 {
     bool gameRunning = true;
-    while (gameRunning)
+    while (gameRunning && !WindowShouldClose())
     {
         Update(GetFrameTime());
         Render();
