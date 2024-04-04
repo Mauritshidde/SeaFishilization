@@ -17,8 +17,8 @@ public:
 
     Camera2D camera = { 0 };
     Vector2 position;
-    void changeFoodAmount(int amount); // remove fish if buying something add food when receiving something
-    void changeCoralAmount(int amount); // remove fish if buying something add food when receiving something
+    void changeFoodAmount(int amount); // remove food if buying something add food when receiving something
+    void changeCoralAmount(int amount); // remove coral if buying something add coral when receiving something
     void movement(double dt);
     void DrawInventory();
 
@@ -90,9 +90,6 @@ void Player::movement(double dt)
         
         mouseStartPos = GetMousePosition();
     }
-
-    SetMouseScale(camera.zoom, camera.zoom);
-    SetMouseOffset(camera.target.x, camera.target.y);
 }
 
 void Player::DrawInventory() {

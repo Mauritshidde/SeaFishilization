@@ -46,7 +46,8 @@ void Game::Render()
     BeginDrawing();
         ClearBackground(WHITE);
         Vector2 coord;
-        coord = map.worldPosToGridPos(GetMousePosition());
+        Vector2 posi = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
+        coord = map.worldPosToGridPos(posi);
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.Draw();
