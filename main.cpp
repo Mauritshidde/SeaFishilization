@@ -17,9 +17,7 @@ int main()
     InitWindow(0, 0, "SeaFishilisation I");
     SetTargetFPS(60);
 
-    if (!IsAudioDeviceReady()) {
-        InitAudioDevice();
-    }
+    InitAudioDevice();
     
     if (!IsWindowFullscreen()) {
         ToggleFullscreen();

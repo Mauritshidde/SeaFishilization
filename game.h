@@ -29,7 +29,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(16, 16, &player.camera);
 
 
-    // song = LoadMusicStream("/music/song1");
+    song = LoadMusicStream("music/GuitarSong.mp3");
 }
 
 Game::~Game()
@@ -62,9 +62,12 @@ void Game::Render()
         player.DrawInventory();
     EndDrawing();
 
-    // if (!IsMusicStreamPlaying(song)) { // start song if not already playing
-    //     PlayMusicStream(song);
-    // }
+    if (!IsMusicStreamPlaying(song)) { // start song if not already playing
+        PlayMusicStream(song);
+        std::cout << "music song1 test " << std::endl;
+    } else {
+        UpdateMusicStream(song);
+    }
 }
 
 void Game::run() // start the game loop
