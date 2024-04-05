@@ -7,7 +7,7 @@ class Menu
 private:
     const char *oneLetter = "A";
     const char *simuText = "Start Game";
-    const char *settingsText = "Settings";
+    const char *settingsText = "Settings (does not work yet)";
     const char *quitText = "Quit";
 
     float fontSize;

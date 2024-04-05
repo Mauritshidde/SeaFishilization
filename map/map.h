@@ -25,6 +25,7 @@ private:
     Tile& getTile(Vector2 coord);
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
+    Vector2 gridPosToWorldPos(Vector2 coord);
     void drawGhostTile(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
     void draw();
@@ -73,8 +74,8 @@ Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera)
                 tileMap.at(i).at(j) = Tile(i*tileWidth, j*tileHeight-tileHeight/2, tileWidth, tileHeight, tileTextures, "sea");
             }
         }
-        tileMap.at(rows/2).at(cols/2).changeType("castleV1");
     }
+    tileMap.at(rows/2).at(cols/2).changeType("castleV1");
 }
 
 Map::~Map()
@@ -144,6 +145,27 @@ Vector2 Map::worldPosToGridPos(Vector2 coord)
         // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
     } else {
         y = std::round(coord.y/(tileHeight) + 1/2);
+        // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
+    }
+
+    Vector2 result;
+    result.x = x;
+    result.y = y;
+
+    return result;
+}
+
+Vector2 Map::gridPosToWorldPos(Vector2 coord) 
+{ // coordinate of mouse  to grid
+    int x = coord.x*(tileWidth);
+    int y;
+    // std::cout << x << " x " << coord.x/(tileSize) << std::endl;
+
+    if (x % 2 == 0) {
+        y = coord.y*(tileHeight);
+        // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
+    } else {
+        y = std::round(coord.y*(tileHeight) + 1/2 * tileHeight);
         // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
     }
 

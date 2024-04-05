@@ -12,17 +12,18 @@ private:
 public:
     double selected;
     double health;
+    Vector2 gridPosition;
     Vector2 position;
 
     void heal();
-    void takeDamage();
+    void takeDamage(double damage);
     void move(Vector2 target);
     void moveOneTile(int option);
 
-    void Update();
+    void Update(double dt);
     void Render();
 
-    Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage);
+    Unit(double setMaxHealth=100, double setAttackSpeed=10, double setMovementSpeed=100, double setAttackDamage=100);
     ~Unit();
 };
 
@@ -30,9 +31,9 @@ void Unit::heal() {
 
 }
 
-void Unit::takeDamage() 
+void Unit::takeDamage(double damage) 
 {
-
+    health -= damage;
 }
 
 void Unit::moveOneTile(int option) {
@@ -75,11 +76,19 @@ void Unit::moveOneTile(int option) {
 
 void Unit::move(Vector2 target) // target is given in hexagon coords
 {
+    bool unitMoving = false;
+
+    if (unitMoving) {
+        // pathfinding
+
+        moveOneTile(1);
+    }
 
 }
 
 void Unit::Update(double dt)
 {
+
     // checkIfMovementPossible(); // returns true if possible input is the option
 
     // if (unitMoving) {
@@ -106,6 +115,7 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
 
     selected = false;
     health = setMaxHealth;
+    gridPosition = {10,10};
 
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
 }

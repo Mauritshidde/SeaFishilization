@@ -4,6 +4,7 @@
 
 #include "ui/menu.h"
 #include "ui/settings.h"
+#include "ui/loadingScreen.h"
 
 #include "game.h"
 
@@ -44,27 +45,19 @@ int main()
 
         if (menu.buttonPressed == 0) // optie 1 start game
         {
+            loadingScreen(100, screenWidth, screenHeight);
             Game game(screenWidth, screenHeight, 17, 17);
             game.run();
-            // dit moet worden vervangen met een functie of class die in een andere file moet
-            // while (!WindowShouldClose())
-            // {
-            //     Start();
-            //     Update();
-            //     Render();
-            // }
-
-            // set game closed to flase again so a game can be restarted
         }
         else if (menu.buttonPressed == 1) // optie 2 settings
         {
-            while (settingsMenu.startScreen)
-            {
-                settingsMenu.Update(screenWidth, screenHeight);
-                settingsMenu.Draw(screenWidth, screenHeight);
-            }
+            // while (settingsMenu.startScreen)
+            // {
+            //     settingsMenu.Update(screenWidth, screenHeight);
+            //     settingsMenu.Draw(screenWidth, screenHeight);
+            // }
 
-            settingsMenu.startScreen = true; // same reason as for main menu, and declaration not in this if becuase this is better for response time, but worse for start up time
+            // settingsMenu.startScreen = true; // same reason as for main menu, and declaration not in this if because this is better for response time, but worse for start up time
         }
         else // optie 3 quit game
         {
