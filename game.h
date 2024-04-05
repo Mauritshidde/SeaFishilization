@@ -78,7 +78,9 @@ void Game::Render()
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
-            map.drawGhostTile(coord, "coral");
+            if(!overlay.isMouseOnOverlay()) {
+                map.drawGhostTile(coord, "coral");
+            }
             testU.Render();
         EndMode2D();
         

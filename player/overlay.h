@@ -42,6 +42,7 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
         {"food", LoadTexture("sprites/resources/AlgenTile.png")},
         {"coral", LoadTexture("sprites/resources/CoralTile.png")},
+        {"training", LoadTexture("sprites/buildings/TrainingTile.png")},
         {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
         {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
         {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
@@ -57,23 +58,23 @@ Overlay::~Overlay()
 
 void Overlay::drawBuildMode() 
 {
-    int imgSize = 80;
+    int imgSize = 100;
     DrawRectangle(buildMenuStartPosition.x, buildMenuStartPosition.y, buildMenuWidth, buildMenuHeight, BROWN);
     Vector2 pos1 = {
-        buildMenuStartPosition.x + buildMenuWidth/3 - imgSize, 
-        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/3 - imgSize/2, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize/2
     };
     Vector2 pos2 = {
-        buildMenuStartPosition.x + buildMenuWidth/2 - imgSize, 
-        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/2 - imgSize/2, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize/2
     };
     Vector2 pos3 = {
-        buildMenuStartPosition.x + buildMenuWidth/3 * 2 - imgSize, 
-        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/3 * 2 - imgSize/2, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize/2
     };
     DrawTextureEx(tileTextures["food"], pos1, 0, (double) imgSize / 810, WHITE);
     DrawTextureEx(tileTextures["coral"], pos2, 0, (double) imgSize / 810, WHITE);
-    DrawTextureEx(tileTextures["sea"], pos3, 0, (double) imgSize / 810, WHITE);
+    DrawTextureEx(tileTextures["training"], pos3, 0, (double) imgSize / 810, WHITE);
 }
 
 void Overlay::drawInventory(int food, int coral) 

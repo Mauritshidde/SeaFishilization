@@ -45,6 +45,7 @@ Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera)
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
         {"food", LoadTexture("sprites/resources/AlgenTile.png")},
         {"coral", LoadTexture("sprites/resources/CoralTile.png")},
+        {"training", LoadTexture("sprites/buildings/TrainingTile.png")},
         {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
         {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
         {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
