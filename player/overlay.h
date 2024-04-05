@@ -34,6 +34,7 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
 {
     screenWidth = screenWidth_;
     screenHeight = screenHeight_;
+    tileTextures = tileTextures_;
 
     inventoryPos = { screenWidth/4*3, 0};
     inventoryWidth = screenWidth/4;
@@ -69,20 +70,6 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
     selectedBuildTile = -1;
     highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
     
-    // TODO get sprites as parameter in overlay constructor //
-    tileTextures = {
-        {"locked", LoadTexture("sprites/resources/BlankTile.png")},
-        {"sea", LoadTexture("sprites/resources/BlankTile.png")},
-        {"food", LoadTexture("sprites/resources/AlgenTile.png")},
-        {"coral", LoadTexture("sprites/resources/CoralTile.png")},
-        {"training", LoadTexture("sprites/buildings/TrainingTile.png")},
-        {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
-        {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
-        {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
-        {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
-        {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
-    };
-
     isBuildMode = true;
 }
 
@@ -120,6 +107,10 @@ int Overlay::mouseOnBuildTile() {
 }
 
 void Overlay::selectBuildTile(int buildTile) {
+    if(buildTile == selectedBuildTile) {
+        selectedBuildTile = -1; // deselct if already selected
+        return;
+    }
     selectedBuildTile = buildTile;
 }
 
