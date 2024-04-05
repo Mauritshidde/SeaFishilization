@@ -6,7 +6,7 @@
 #include <string>
 #include "../raylib.h"
 
-#include "tile.h"
+// #include "tile.h"
 
 class Map
 {

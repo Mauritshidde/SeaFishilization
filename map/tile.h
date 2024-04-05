@@ -2,7 +2,7 @@
 #include <string>
 #include "../raylib.h"
 
-#include "../units/unit.h"
+// #include "../units/unit.h"
 
 class Tile 
 {
@@ -16,6 +16,7 @@ private:
 public:
     Unit *unitOnTile;
     bool isUnitOnTile;
+    // bool tileSelected;
 
     Vector2 getPos();
     std::string getType();

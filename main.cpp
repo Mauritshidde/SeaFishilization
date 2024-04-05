@@ -6,6 +6,14 @@
 #include "ui/settings.h"
 #include "ui/loadingScreen.h"
 
+#include "player/player.h"
+#include "player/overlay.h"
+
+#include "units/unit.h"
+
+#include "map/tile.h"
+#include "map/map.h"
+
 #include "game.h"
 
 int screenWidth = 0;

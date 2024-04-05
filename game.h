@@ -1,11 +1,6 @@
 #include <map>
 #include "raylib.h"
 
-#include "player/player.h"
-#include "player/overlay.h"
-#include "map/map.h"
-// #include "units/unit.h"
-
 class Game
 {
 private:
@@ -43,6 +38,11 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
         {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
         {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
         {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
+    };
+
+    std::map<std::string, Texture2D> unitTextures = {
+        {"warriorLVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
+        {"warriorLVL2", LoadTexture("sprites/units/melee/BattlefishRed.png")}
     };
 
     overlay = Overlay(screenWidth, screenHeight, tileTextures);

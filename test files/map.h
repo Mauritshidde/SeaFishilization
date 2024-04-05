@@ -5,9 +5,6 @@
 #include <string>
 #include "../raylib.h"
 
-#include "tile.h"
-
-
 class Map
 {
 private:
@@ -22,6 +19,7 @@ private:
 public:
     Vector3 worldPosToGridPos(Vector2 coord);
     void draw();
+    Tile* getTile(Vector2 coord); // get tile using map coords;
     Map(int rowCount = 16, int columCount = 16, Camera2D *setPlayerCamera = NULL);
     ~Map();
 };
@@ -101,4 +99,8 @@ Vector3 Map::worldPosToGridPos(Vector2 coord) { // coordinate of mouse  to grid
     // result.y = y;
 
     return {float(x), float(y), float(z)};
+}
+
+Tile* Map::getTile(Vector2 coord) {
+    return &tileMap.at(coord.x).at(coord.y);
 }
