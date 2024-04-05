@@ -9,8 +9,8 @@ private:
     int screenHeight;
     std::map<std::string, Texture2D> tileTextures;
     std::string selectedTile;
-    bool isBuildMode;
 public:
+    bool isBuildMode;
     void drawBuildMode();
     void drawInventory(int food, int coral);
     Overlay(int screenWidth, int screenHeight);

@@ -17,9 +17,11 @@ private:
     int rows, cols;
     double tileSize;
     std::vector<std::vector<Tile>> tileMap;
+    std::vector<std::string> lockedTileTypes;
     
     std::map<std::string, Texture2D> tileTextures;
     
+    Tile& getTile(Vector2 coord);
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
     void drawGhostTile(Vector2 coord, std::string type);
@@ -35,7 +37,7 @@ Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
     cols = columCount;
     playerCamera = setPlayerCamera;
 
-    // TODO get sprites as parameter in map constructor //
+    // TODO get tileTexuters as parameter in map constructor //
     tileTextures = {
         {"locked", LoadTexture("sprites/resources/BlankTile.png")},
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
@@ -46,6 +48,15 @@ Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
         {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
         {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
         {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
+    };
+
+    lockedTileTypes = {
+        "locked",
+        "castleV1",
+        "castleV2",
+        "castleV3",
+        "castleV4",
+        "castleV5"
     };
 
     tileSize = 1024/10;
@@ -67,27 +78,7 @@ Map::~Map()
 {
 }
 
-void Map::draw() {
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < cols; ++j) {
-            tileMap.at(i).at(j).draw();
-        }
-    }
-}
-
-void Map::drawGhostTile(Vector2 coord, std::string type) 
-{
-    const std::vector<std::string> skipTypes = {
-        "locked",
-        "castleV1",
-        "castleV2",
-        "castleV3",
-        "castleV4",
-        "castleV5"
-    };
-
-    Texture2D texture = tileTextures[type];
-
+Tile& Map::getTile(Vector2 coord) {
     if(coord.y >= rows) {
         coord.y = rows - 1;
     }
@@ -101,21 +92,42 @@ void Map::drawGhostTile(Vector2 coord, std::string type)
         coord.x = 0;
     }
 
-    Tile& tile = tileMap.at(coord.x).at(coord.y);
+    return tileMap.at(coord.x).at(coord.y);
+}
 
-    bool isInSkipTypes = (std::find(skipTypes.begin(), skipTypes.end(), tile.getType()) != skipTypes.end());
-    if(isInSkipTypes) {
+void Map::draw() {
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            tileMap.at(i).at(j).draw();
+        }
+    }
+}
+
+void Map::drawGhostTile(Vector2 coord, std::string type) 
+{
+    Texture2D texture = tileTextures[type];
+
+    Tile& tile = getTile(coord);
+
+    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), tile.getType()) != lockedTileTypes.end());
+    if(isInLockedTileTypes) {
         return;
     }
-    
+
     Vector2 pos = tile.getPos();
     DrawTextureEx(texture, pos, 0, 0.1, WHITE);
 }
 
 void Map::changeTileType(Vector2 coord, std::string type) {
-    tileMap.at(coord.x).at(coord.y).changeType(type);
-}
 
+    Tile& tile = getTile(coord);
+    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), tile.getType()) != lockedTileTypes.end());
+    if(isInLockedTileTypes) {
+        return;
+    }
+
+    tile.changeType(type);
+}
 
 Vector2 Map::worldPosToGridPos(Vector2 coord) 
 { // coordinate of mouse  to grid

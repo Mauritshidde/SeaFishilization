@@ -41,6 +41,14 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
+    if(IsMouseButtonReleased(0)) {
+        if(overlay.isBuildMode) {
+            Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
+            Vector2 coord = map.worldPosToGridPos(worldMousePos);
+            map.changeTileType(coord, "coral");
+        }
+        
+    }
     player.movement(dt);
 }
 
@@ -57,9 +65,8 @@ void Game::Render()
 {
     BeginDrawing();
         ClearBackground(WHITE);
-        Vector2 coord;
-        Vector2 pos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
-        coord = map.worldPosToGridPos(pos);
+        Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
+        Vector2 coord = map.worldPosToGridPos(worldMousePos);
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
