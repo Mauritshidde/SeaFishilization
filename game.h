@@ -56,7 +56,10 @@ void Game::Update(double dt)
             } else {
                 Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
                 Vector2 coord = map.worldPosToGridPos(worldMousePos);
-                map.changeTileType(coord, "coral");
+                std::string buildTileName = overlay.getBuildTileName();
+                if(buildTileName != "") {
+                    map.changeTileType(coord, buildTileName);
+                }
             }
         }
 
@@ -83,7 +86,10 @@ void Game::Render()
             // map draw functions where things have to move here
             map.draw();
             if(!overlay.isMouseOnOverlay()) {
-                map.drawGhostTile(coord, "coral");
+                std::string buildTileName = overlay.getBuildTileName();
+                if(buildTileName != "") {
+                    map.drawGhostTile(coord, buildTileName);
+                }
             }
             testU.Render();
         EndMode2D();

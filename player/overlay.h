@@ -13,6 +13,7 @@ private:
     Vector2 buildTilePos0, buildTilePos1, buildTilePos2;
     std::vector<Vector2> buildTilePositions;
     int buildTileSize;
+    std::vector<std::string> buildTileNames;
     int selectedBuildTile;
     Texture2D highlightTileTexture;
 
@@ -24,6 +25,7 @@ public:
     bool isMouseOnOverlay();
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);
+    std::string getBuildTileName();
     Overlay(int screenWidth, int screenHeight);
     ~Overlay();
 };
@@ -57,6 +59,12 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
             buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
         }
     };
+    
+    buildTileNames = {
+        "food",
+        "coral",
+        "training"
+    };
 
     selectedBuildTile = -1;
     highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
@@ -85,9 +93,9 @@ Overlay::~Overlay()
 void Overlay::drawBuildMode() 
 {
     DrawRectangle(buildMenuPos.x, buildMenuPos.y, buildMenuWidth, buildMenuHeight, BROWN);
-    DrawTextureEx(tileTextures["food"], buildTilePositions[0], 0, (double) buildTileSize / 810, WHITE);
-    DrawTextureEx(tileTextures["coral"], buildTilePositions[1], 0, (double) buildTileSize / 810, WHITE);
-    DrawTextureEx(tileTextures["training"], buildTilePositions[2], 0, (double) buildTileSize / 810, WHITE);
+    for(int i = 0; i < buildTilePositions.size(); i++) {
+        DrawTextureEx(tileTextures[buildTileNames[i]], buildTilePositions[i], 0, (double) buildTileSize / 810, WHITE);
+    }
     if(selectedBuildTile > -1 && selectedBuildTile < buildTilePositions.size()) {
         DrawTextureEx(highlightTileTexture, buildTilePositions[selectedBuildTile], 0, (double) buildTileSize / 810, WHITE);
     }
@@ -102,22 +110,24 @@ void Overlay::drawInventory(int food, int coral)
 }
 
 int Overlay::mouseOnBuildTile() {
-    Rectangle buildTileRect0 = { buildTilePositions[0].x, buildTilePositions[0].y, buildTileSize*1.15, buildTileSize };
-    Rectangle buildTileRect1 = { buildTilePositions[1].x, buildTilePositions[1].y, buildTileSize*1.15, buildTileSize };
-    Rectangle buildTileRect2 = { buildTilePositions[2].x, buildTilePositions[2].y, buildTileSize*1.15, buildTileSize };
-
-    if (CheckCollisionPointRec(GetMousePosition(), buildTileRect0)) {
-        return 0;
-    } else if (CheckCollisionPointRec(GetMousePosition(), buildTileRect1)) {
-        return 1;
-    } else if (CheckCollisionPointRec(GetMousePosition(), buildTileRect2)) {
-        return 2;
+    for(int i = 0; i < buildTilePositions.size(); i++) {
+        Rectangle buildTileRect = { buildTilePositions[i].x, buildTilePositions[i].y, buildTileSize*1.15, buildTileSize };
+        if (CheckCollisionPointRec(GetMousePosition(), buildTileRect)) {
+            return i;
+        }
     }
     return -1;
 }
 
 void Overlay::selectBuildTile(int buildTile) {
     selectedBuildTile = buildTile;
+}
+
+std::string Overlay::getBuildTileName() {
+    if(selectedBuildTile < 0 || selectedBuildTile >= buildTileNames.size()) {
+        return "";
+    }
+    return buildTileNames[selectedBuildTile];
 }
 
 
