@@ -11,7 +11,10 @@ private:
     Vector2 buildMenuPos;
     int buildMenuWidth, buildMenuHeight;
     Vector2 buildTilePos0, buildTilePos1, buildTilePos2;
+    std::vector<Vector2> buildTilePositions;
     int buildTileSize;
+    int selectedBuildTile;
+    Texture2D highlightTileTexture;
 
     std::map<std::string, Texture2D> tileTextures;
 public:
@@ -40,20 +43,23 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
 
     buildTileSize = 120;
 
-    buildTilePos0 = {
-        buildMenuPos.x + buildMenuWidth/3 - buildTileSize/2, 
-        buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
-    };
-    buildTilePos1 = {
-        buildMenuPos.x + buildMenuWidth/2 - buildTileSize/2, 
-        buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
-    };
-    buildTilePos2 = {
-        buildMenuPos.x + buildMenuWidth/3 * 2 - buildTileSize/2, 
-        buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
+    buildTilePositions = {
+        {
+            buildMenuPos.x + buildMenuWidth/3 - buildTileSize/2, 
+            buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
+        },
+        {
+            buildMenuPos.x + buildMenuWidth/2 - buildTileSize/2, 
+            buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
+        },
+        {
+            buildMenuPos.x + buildMenuWidth/3*2 - buildTileSize/2, 
+            buildMenuPos.y + buildMenuHeight/2 - buildTileSize/2
+        }
     };
 
-    isBuildMode = true;
+    selectedBuildTile = -1;
+    highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
     
     // TODO get sprites as parameter in overlay constructor //
     tileTextures = {
@@ -69,6 +75,7 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
         {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
     };
 
+    isBuildMode = true;
 }
 
 Overlay::~Overlay() 
@@ -78,9 +85,12 @@ Overlay::~Overlay()
 void Overlay::drawBuildMode() 
 {
     DrawRectangle(buildMenuPos.x, buildMenuPos.y, buildMenuWidth, buildMenuHeight, BROWN);
-    DrawTextureEx(tileTextures["food"], buildTilePos0, 0, (double) buildTileSize / 810, WHITE);
-    DrawTextureEx(tileTextures["coral"], buildTilePos1, 0, (double) buildTileSize / 810, WHITE);
-    DrawTextureEx(tileTextures["training"], buildTilePos2, 0, (double) buildTileSize / 810, WHITE);
+    DrawTextureEx(tileTextures["food"], buildTilePositions[0], 0, (double) buildTileSize / 810, WHITE);
+    DrawTextureEx(tileTextures["coral"], buildTilePositions[1], 0, (double) buildTileSize / 810, WHITE);
+    DrawTextureEx(tileTextures["training"], buildTilePositions[2], 0, (double) buildTileSize / 810, WHITE);
+    if(selectedBuildTile > -1 && selectedBuildTile < buildTilePositions.size()) {
+        DrawTextureEx(highlightTileTexture, buildTilePositions[selectedBuildTile], 0, (double) buildTileSize / 810, WHITE);
+    }
 }
 
 void Overlay::drawInventory(int food, int coral) 
@@ -92,9 +102,9 @@ void Overlay::drawInventory(int food, int coral)
 }
 
 int Overlay::mouseOnBuildTile() {
-    Rectangle buildTileRect0 = { buildTilePos0.x, buildTilePos0.y, buildTileSize*1.15, buildTileSize };
-    Rectangle buildTileRect1 = { buildTilePos1.x, buildTilePos1.y, buildTileSize*1.15, buildTileSize };
-    Rectangle buildTileRect2 = { buildTilePos2.x, buildTilePos2.y, buildTileSize*1.15, buildTileSize };
+    Rectangle buildTileRect0 = { buildTilePositions[0].x, buildTilePositions[0].y, buildTileSize*1.15, buildTileSize };
+    Rectangle buildTileRect1 = { buildTilePositions[1].x, buildTilePositions[1].y, buildTileSize*1.15, buildTileSize };
+    Rectangle buildTileRect2 = { buildTilePositions[2].x, buildTilePositions[2].y, buildTileSize*1.15, buildTileSize };
 
     if (CheckCollisionPointRec(GetMousePosition(), buildTileRect0)) {
         return 0;
@@ -107,22 +117,7 @@ int Overlay::mouseOnBuildTile() {
 }
 
 void Overlay::selectBuildTile(int buildTile) {
-    Texture2D highlightTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
-    Vector2 buildTilePos;
-    switch (buildTile) {
-        case 0:
-            buildTilePos = buildTilePos0;
-            break;
-        case 1:
-            buildTilePos = buildTilePos1;
-            break;
-        case 2:
-            buildTilePos = buildTilePos2;
-            break;
-        default:
-            break;
-    }
-    DrawTextureEx(highlightTexture, buildTilePos, 0, buildTileSize / 810, WHITE);
+    selectedBuildTile = buildTile;
 }
 
 
