@@ -8,6 +8,7 @@ private:
     double movementSpeed;
     double attackDamage;
 
+    Texture2D texture;
 public:
     double selected;
     double health;
@@ -85,15 +86,15 @@ void Unit::Update(double dt)
     //     movingProgress += movementSpeed * dt;
     // }
 
-    if (movingProgress >= 100) {
-        movingDone = true;
-        moveOneTile(option);
-    }
+    // if (movingProgress >= 100) {
+    //     movingDone = true;
+    //     moveOneTile(option);
+    // }
 }
 
 void Unit::Render()
 {
-
+    DrawTextureEx(texture, position, 0, 0.1, WHITE);
 }
 
 Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage)
@@ -105,6 +106,8 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
 
     selected = false;
     health = setMaxHealth;
+
+    texture = LoadTexture("sprites/units/melee/Battlefish.png");
 }
 
 Unit::~Unit()
