@@ -3,6 +3,7 @@
 #include "player/player.h"
 #include "player/overlay.h"
 #include "map/map.h"
+#include "units/unit.h"
 
 class Game
 {
@@ -11,6 +12,7 @@ private:
     Overlay overlay;
     Map map;
     Music song;
+    Unit testU;
 
     void Update(double dt);
     void Render();
@@ -31,7 +33,9 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     overlay = Overlay(screenWidth, screenHeight);
     map = Map(rowCount, columnCount, &player.camera);
 
-
+    testU = Unit();
+    testU.position = map.gridPosToWorldPos(testU.gridPosition);
+    
     song = LoadMusicStream("music/GuitarSong.mp3");
 }
 
@@ -71,7 +75,7 @@ void Game::Render()
             // map draw functions where things have to move here
             map.draw();
             map.drawGhostTile(coord, "coral");
-
+            testU.Render();
         EndMode2D();
         
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
