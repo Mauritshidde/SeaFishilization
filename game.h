@@ -43,9 +43,13 @@ void Game::Update(double dt)
 {
     if(IsMouseButtonReleased(0)) {
         if(overlay.isBuildMode) {
-            Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
-            Vector2 coord = map.worldPosToGridPos(worldMousePos);
-            map.changeTileType(coord, "coral");
+            if(overlay.isMouseOnOverlay()) {
+                // do stuff with overlay
+            } else {
+                Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
+                Vector2 coord = map.worldPosToGridPos(worldMousePos);
+                map.changeTileType(coord, "coral");
+            }
         }
 
     }

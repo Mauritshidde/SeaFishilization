@@ -5,14 +5,18 @@
 class Overlay
 {
 private:
-    int screenWidth;
-    int screenHeight;
+    int screenWidth, screenHeight;
+    Vector2 inventoryStartPosition;
+    int inventoryWidth, inventoryHeight;
+    Vector2 buildMenuStartPosition;
+    int buildMenuWidth, buildMenuHeight;
     std::map<std::string, Texture2D> tileTextures;
     std::string selectedTile;
 public:
     bool isBuildMode;
     void drawBuildMode();
     void drawInventory(int food, int coral);
+    bool isMouseOnOverlay();
     Overlay(int screenWidth, int screenHeight);
     ~Overlay();
 };
@@ -21,6 +25,14 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
 {
     screenWidth = screenWidth_;
     screenHeight = screenHeight_;
+
+    inventoryStartPosition = { screenWidth/4*3, 0};
+    inventoryWidth = screenWidth/4;
+    inventoryHeight = screenHeight/10;
+
+    buildMenuStartPosition = { screenWidth/4, screenHeight/8*7};
+    buildMenuWidth = screenWidth/2;
+    buildMenuHeight = screenHeight/8;
 
     isBuildMode = true;
     
@@ -45,33 +57,45 @@ Overlay::~Overlay()
 
 void Overlay::drawBuildMode() 
 {
-    int imgSize = 51;
-    int x = screenWidth / 4;
-    int y = screenHeight / 8 * 7;
-    int w = screenWidth / 2;
-    int h = screenHeight / 8;
-    DrawRectangle(x, y, w, h, BROWN);
+    int imgSize = 80;
+    DrawRectangle(buildMenuStartPosition.x, buildMenuStartPosition.y, buildMenuWidth, buildMenuHeight, BROWN);
     Vector2 pos1 = {
-        x + w/3 - imgSize, 
-        y + h/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/3 - imgSize, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
     };
     Vector2 pos2 = {
-        x + w/2 - imgSize, 
-        y + h/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/2 - imgSize, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
     };
     Vector2 pos3 = {
-        x + w/3 * 2 - imgSize, 
-        y + h/2 - imgSize
+        buildMenuStartPosition.x + buildMenuWidth/3 * 2 - imgSize, 
+        buildMenuStartPosition.y + buildMenuHeight/2 - imgSize
     };
-    DrawTextureEx(tileTextures["food"], pos1, 0, 0.1, WHITE);
-    DrawTextureEx(tileTextures["coral"], pos2, 0, 0.1, WHITE);
-    DrawTextureEx(tileTextures["sea"], pos3, 0, 0.1, WHITE);
+    DrawTextureEx(tileTextures["food"], pos1, 0, (double) imgSize / 810, WHITE);
+    DrawTextureEx(tileTextures["coral"], pos2, 0, (double) imgSize / 810, WHITE);
+    DrawTextureEx(tileTextures["sea"], pos3, 0, (double) imgSize / 810, WHITE);
 }
 
 void Overlay::drawInventory(int food, int coral) 
 {
-    DrawRectangle(screenWidth - screenWidth/4, 0, screenWidth/4, screenHeight/10, BLACK);
+    DrawRectangle(inventoryStartPosition.x, inventoryStartPosition.y, inventoryWidth, inventoryHeight, BROWN);
 
     DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
     DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
+}
+
+bool Overlay::isMouseOnOverlay() {
+    Vector2 mousePos = GetMousePosition();
+    bool isXInBuildMenu = (mousePos.x > buildMenuStartPosition.x && mousePos.x < buildMenuStartPosition.x + buildMenuWidth);
+    bool isYInBuildMenu = (mousePos.y > buildMenuStartPosition.y && mousePos.y < buildMenuStartPosition.y + buildMenuHeight);
+    if(isBuildMode && isXInBuildMenu && isYInBuildMenu) {
+        return true;
+    }
+
+    bool isXInInventory = (mousePos.x > inventoryStartPosition.x && mousePos.x < inventoryStartPosition.x + inventoryWidth);
+    bool isYInInventory = (mousePos.y > inventoryStartPosition.y && mousePos.y < inventoryStartPosition.y + inventoryHeight);
+    if (isXInInventory && isYInInventory) {
+        return true;
+    }
+    return false;
 }
