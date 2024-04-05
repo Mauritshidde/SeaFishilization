@@ -2,6 +2,8 @@
 #include <string>
 #include "../raylib.h"
 
+#include "../units/unit.h"
+
 class Tile 
 {
 private: 
@@ -12,6 +14,9 @@ private:
     Vector2 pos;
 
 public:
+    Unit *unitOnTile;
+    bool isUnitOnTile;
+
     Vector2 getPos();
     std::string getType();
     void changeType(std::string newType);
@@ -22,6 +27,9 @@ public:
 
 Tile::Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTextures, std::string type_)
 {
+    unitOnTile = NULL;
+    isUnitOnTile = false;
+
     pos.x = x;
     pos.y = y;
     width = w;

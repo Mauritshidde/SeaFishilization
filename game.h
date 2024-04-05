@@ -3,7 +3,7 @@
 #include "player/player.h"
 #include "player/overlay.h"
 #include "map/map.h"
-#include "units/unit.h"
+// #include "units/unit.h"
 
 class Game
 {
@@ -31,7 +31,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
     overlay = Overlay(screenWidth, screenHeight);
-    map = Map(rowCount, columnCount, &player.camera);
+    map = Map(rowCount, columnCount, &player.camera); 
 
     testU = Unit();
     testU.position = map.gridPosToWorldPos(testU.gridPosition);

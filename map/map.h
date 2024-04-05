@@ -8,7 +8,6 @@
 
 #include "tile.h"
 
-
 class Map
 {
 private:
