@@ -29,7 +29,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
     overlay = Overlay(screenWidth, screenHeight);
-    map = Map(31, 31, &player.camera);
+    map = Map(rowCount, columnCount, &player.camera);
 
 
     song = LoadMusicStream("music/GuitarSong.mp3");
@@ -47,7 +47,7 @@ void Game::Update(double dt)
             Vector2 coord = map.worldPosToGridPos(worldMousePos);
             map.changeTileType(coord, "coral");
         }
-        
+
     }
     player.movement(dt);
 }
@@ -64,7 +64,7 @@ void Game::MusicPlayer()
 void Game::Render()
 {
     BeginDrawing();
-        ClearBackground(WHITE);
+        ClearBackground(BLACK);
         Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
         Vector2 coord = map.worldPosToGridPos(worldMousePos);
         BeginMode2D(player.camera);

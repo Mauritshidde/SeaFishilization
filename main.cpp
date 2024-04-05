@@ -44,7 +44,7 @@ int main()
 
         if (menu.buttonPressed == 0) // optie 1 start game
         {
-            Game game(screenWidth, screenHeight, 10, 10);
+            Game game(screenWidth, screenHeight, 17, 17);
             game.run();
             // dit moet worden vervangen met een functie of class die in een andere file moet
             // while (!WindowShouldClose())

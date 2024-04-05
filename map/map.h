@@ -15,6 +15,7 @@ private:
     Camera2D *playerCamera;
 
     int rows, cols;
+    int tileHeight, tileWidth;
     double tileSize;
     std::vector<std::vector<Tile>> tileMap;
     std::vector<std::string> lockedTileTypes;
@@ -27,14 +28,14 @@ public:
     void drawGhostTile(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
     void draw();
-    Map(int rowCount = 16, int columCount = 16, Camera2D *setPlayerCamera = NULL);
+    Map(int rowCount = 17, int columnCount = 17, Camera2D *setPlayerCamera = NULL);
     ~Map();
 };
 
-Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera) 
+Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera) 
 {
     rows = rowCount;
-    cols = columCount;
+    cols = columnCount;
     playerCamera = setPlayerCamera;
 
     // TODO get tileTexuters as parameter in map constructor //
@@ -60,14 +61,16 @@ Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
     };
 
     tileSize = 1024/10;
-    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.13, tileTextures, "sea" ))); 
+    tileWidth = 100;
+    tileHeight = 115;
+    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.13, 0.13, tileTextures, "sea" ))); 
     
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (i % 2 == 0) {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.13, tileTextures, "sea"); // tile location based on tiles with a size of 1024 x 1024
+                tileMap.at(i).at(j) = Tile(i*tileWidth, j*tileHeight, tileWidth, tileHeight, tileTextures, "sea"); // tile location based on tiles with a size of 1024 x 1024
             } else {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.13, tileTextures, "sea");
+                tileMap.at(i).at(j) = Tile(i*tileWidth, j*tileHeight-tileHeight/2, tileWidth, tileHeight, tileTextures, "sea");
             }
         }
         tileMap.at(rows/2).at(cols/2).changeType("castleV1");
@@ -115,7 +118,8 @@ void Map::drawGhostTile(Vector2 coord, std::string type)
     }
 
     Vector2 pos = tile.getPos();
-    DrawTextureEx(texture, pos, 0, 0.13, WHITE);
+    double scale = (double) tileHeight / 810;
+    DrawTextureEx(texture, pos, 0, scale, WHITE);
 }
 
 void Map::changeTileType(Vector2 coord, std::string type) {
@@ -131,15 +135,15 @@ void Map::changeTileType(Vector2 coord, std::string type) {
 
 Vector2 Map::worldPosToGridPos(Vector2 coord) 
 { // coordinate of mouse  to grid
-    int x = coord.x/(tileSize);
+    int x = coord.x/(tileWidth);
     int y;
     // std::cout << x << " x " << coord.x/(tileSize) << std::endl;
 
     if (x % 2 == 0) {
-        y = coord.y/(tileSize);
+        y = coord.y/(tileHeight);
         // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
     } else {
-        y = std::round(coord.y/(tileSize) + 1/2);
+        y = std::round(coord.y/(tileHeight) + 1/2);
         // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
     }
 
