@@ -26,11 +26,11 @@ public:
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);
     std::string getBuildTileName();
-    Overlay(int screenWidth, int screenHeight);
+    Overlay(int screenWidth = 1920, int screenHeight = 1084, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Overlay();
 };
 
-Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084) 
+Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Texture2D> tileTextures_) 
 {
     screenWidth = screenWidth_;
     screenHeight = screenHeight_;

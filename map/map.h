@@ -29,29 +29,16 @@ public:
     void drawGhostTile(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
     void draw();
-    Map(int rowCount = 17, int columnCount = 17, Camera2D *setPlayerCamera = NULL);
+    Map(int rowCount = 17, int columnCount = 17, Camera2D *setPlayerCamera = NULL, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Map();
 };
 
-Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera) 
+Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera, std::map<std::string, Texture2D> tileTextures_) 
 {
     rows = rowCount;
     cols = columnCount;
     playerCamera = setPlayerCamera;
-
-    // TODO get tileTexuters as parameter in map constructor //
-    tileTextures = {
-        {"locked", LoadTexture("sprites/resources/BlankTile.png")},
-        {"sea", LoadTexture("sprites/resources/BlankTile.png")},
-        {"food", LoadTexture("sprites/resources/AlgenTile.png")},
-        {"coral", LoadTexture("sprites/resources/CoralTile.png")},
-        {"training", LoadTexture("sprites/buildings/TrainingTile.png")},
-        {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
-        {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
-        {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
-        {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
-        {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
-    };
+    tileTextures = tileTextures_;
 
     lockedTileTypes = {
         "locked",

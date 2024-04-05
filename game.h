@@ -1,3 +1,4 @@
+#include <map>
 #include "raylib.h"
 
 #include "player/player.h"
@@ -30,8 +31,22 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
     player = Player(startingPosition, screenWidth, screenHeight);
-    overlay = Overlay(screenWidth, screenHeight);
-    map = Map(rowCount, columnCount, &player.camera);
+
+    std::map<std::string, Texture2D> tileTextures = {
+        {"locked", LoadTexture("sprites/resources/BlankTile.png")},
+        {"sea", LoadTexture("sprites/resources/BlankTile.png")},
+        {"food", LoadTexture("sprites/resources/AlgenTile.png")},
+        {"coral", LoadTexture("sprites/resources/CoralTile.png")},
+        {"training", LoadTexture("sprites/buildings/TrainingTile.png")},
+        {"castleV1", LoadTexture("sprites/castle/CastleTileLVL1.png")},
+        {"castleV2", LoadTexture("sprites/castle/CastleTileLVL2.png")},
+        {"castleV3", LoadTexture("sprites/castle/CastleTileLVL3.png")},
+        {"castleV4", LoadTexture("sprites/castle/CastleTileLVL4.png")},
+        {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
+    };
+
+    overlay = Overlay(screenWidth, screenHeight, tileTextures);
+    map = Map(rowCount, columnCount, &player.camera, tileTextures);
 
     testU = Unit();
     testU.position = map.gridPosToWorldPos(testU.gridPosition);
