@@ -52,7 +52,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     testU.position = map.gridPosToWorldPos(testU.gridPosition);
     
     song = LoadMusicStream("music/GuitarSong.mp3");
-    map.getSurroundingTiles({2,1});
+    // map.getSurroundingTiles({2,1});
 }
 
 Game::~Game()
