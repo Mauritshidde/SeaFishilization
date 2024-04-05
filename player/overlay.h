@@ -8,6 +8,8 @@ private:
     int screenWidth;
     int screenHeight;
     std::map<std::string, Texture2D> tileTextures;
+    std::string selectedTile;
+    bool isBuildMode;
 public:
     void drawBuildMode();
     void drawInventory(int food, int coral);
@@ -19,6 +21,8 @@ Overlay::Overlay(int screenWidth_ = 1920, int screenHeight_ = 1084)
 {
     screenWidth = screenWidth_;
     screenHeight = screenHeight_;
+
+    isBuildMode = true;
     
     // TODO get sprites as parameter in overlay constructor //
     tileTextures = {

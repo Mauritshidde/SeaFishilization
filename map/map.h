@@ -1,5 +1,6 @@
-#include <vector>
 #include <iostream>
+#include <vector>
+#include <algorithm>
 #include <cmath>
 #include <map>
 #include <string>
@@ -21,6 +22,8 @@ private:
     
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
+    void drawGhostTile(Vector2 coord, std::string type);
+    void changeTileType(Vector2 coord, std::string type);
     void draw();
     Map(int rowCount = 16, int columCount = 16, Camera2D *setPlayerCamera = NULL);
     ~Map();
@@ -67,12 +70,55 @@ Map::~Map()
 void Map::draw() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
-            tileMap[i][j].draw();
+            tileMap.at(i).at(j).draw();
         }
     }
 }
 
-Vector2 Map::worldPosToGridPos(Vector2 coord) { // coordinate of mouse  to grid
+void Map::drawGhostTile(Vector2 coord, std::string type) 
+{
+    const std::vector<std::string> skipTypes = {
+        "locked",
+        "castleV1",
+        "castleV2",
+        "castleV3",
+        "castleV4",
+        "castleV5"
+    };
+
+    Texture2D texture = tileTextures[type];
+
+    if(coord.y >= rows) {
+        coord.y = rows - 1;
+    }
+    if (coord.x >= cols) {
+        coord.x = cols - 1;
+    }
+    if (coord.y < 0) {
+        coord.y = 0;
+    }
+    if (coord.x < 0) {
+        coord.x = 0;
+    }
+
+    Tile& tile = tileMap.at(coord.x).at(coord.y);
+
+    bool isInSkipTypes = (std::find(skipTypes.begin(), skipTypes.end(), tile.getType()) != skipTypes.end());
+    if(isInSkipTypes) {
+        return;
+    }
+    
+    Vector2 pos = tile.getPos();
+    DrawTextureEx(texture, pos, 0, 0.1, WHITE);
+}
+
+void Map::changeTileType(Vector2 coord, std::string type) {
+    tileMap.at(coord.x).at(coord.y).changeType(type);
+}
+
+
+Vector2 Map::worldPosToGridPos(Vector2 coord) 
+{ // coordinate of mouse  to grid
     int x = coord.x/(tileSize);
     int y;
     // std::cout << x << " x " << coord.x/(tileSize) << std::endl;

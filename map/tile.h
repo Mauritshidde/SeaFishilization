@@ -8,11 +8,11 @@ private:
     int tileSize;
     std::string type;
     std::map<std::string, Texture2D> textures;
-
-
-public:
     Vector2 pos;
 
+public:
+    Vector2 getPos();
+    std::string getType();
     void changeType(std::string newType);
     void draw();
     Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileTextures, std::string type_);
@@ -30,6 +30,14 @@ Tile::Tile(int x, int y, double size, std::map<std::string, Texture2D>& tileText
 
 Tile::~Tile() 
 {
+}
+
+Vector2 Tile::getPos() {
+    return pos;
+}
+
+std::string Tile::getType() {
+    return type;
 }
 
 void Tile::changeType(std::string newType) 
