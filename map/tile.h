@@ -5,7 +5,7 @@
 class Tile 
 {
 private: 
-    int tileSize;
+    double tileSize;
     std::string type;
     std::map<std::string, Texture2D> textures;
     Vector2 pos;
@@ -48,5 +48,5 @@ void Tile::changeType(std::string newType)
 void Tile::draw() 
 {
     Texture2D texture = textures[type];
-    DrawTextureEx(texture, pos, 0, 0.1, WHITE);
+    DrawTextureEx(texture, pos, 0, tileSize, WHITE);
 }

@@ -60,14 +60,14 @@ Map::Map(int rowCount, int columCount, Camera2D *setPlayerCamera)
     };
 
     tileSize = 1024/10;
-    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.1, tileTextures, "sea" ))); 
+    tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.13, tileTextures, "sea" ))); 
     
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if (i % 2 == 0) {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.1, tileTextures, "sea"); // tile location based on tiles with a size of 1024 x 1024
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize, 0.13, tileTextures, "sea"); // tile location based on tiles with a size of 1024 x 1024
             } else {
-                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.1, tileTextures, "sea");
+                tileMap.at(i).at(j) = Tile(i*tileSize, j*tileSize-tileSize/2, 0.13, tileTextures, "sea");
             }
         }
         tileMap.at(rows/2).at(cols/2).changeType("castleV1");
@@ -115,7 +115,7 @@ void Map::drawGhostTile(Vector2 coord, std::string type)
     }
 
     Vector2 pos = tile.getPos();
-    DrawTextureEx(texture, pos, 0, 0.1, WHITE);
+    DrawTextureEx(texture, pos, 0, 0.13, WHITE);
 }
 
 void Map::changeTileType(Vector2 coord, std::string type) {
