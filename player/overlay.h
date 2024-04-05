@@ -36,13 +36,13 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
     screenHeight = screenHeight_;
     tileTextures = tileTextures_;
 
-    inventoryPos = { screenWidth/4*3, 0};
-    inventoryWidth = screenWidth/4;
-    inventoryHeight = screenHeight/10;
+    inventoryPos = { screenWidth/4.0f*3.0f, 0};
+    inventoryWidth = screenWidth/4.0f;
+    inventoryHeight = screenHeight/10.0f;
 
-    buildMenuPos = { screenWidth/4, screenHeight/8*7};
-    buildMenuWidth = screenWidth/2;
-    buildMenuHeight = screenHeight/8;
+    buildMenuPos = { screenWidth/4.0f, screenHeight/8.0f*7.0f};
+    buildMenuWidth = screenWidth/2.0f;
+    buildMenuHeight = screenHeight/8.0f;
 
     buildTileSize = 120;
 
@@ -98,7 +98,7 @@ void Overlay::drawInventory(int food, int coral)
 
 int Overlay::mouseOnBuildTile() {
     for(int i = 0; i < buildTilePositions.size(); i++) {
-        Rectangle buildTileRect = { buildTilePositions[i].x, buildTilePositions[i].y, buildTileSize*1.15, buildTileSize };
+        Rectangle buildTileRect = { buildTilePositions[i].x, buildTilePositions[i].y, buildTileSize*1.15f, (float)buildTileSize };
         if (CheckCollisionPointRec(GetMousePosition(), buildTileRect)) {
             return i;
         }

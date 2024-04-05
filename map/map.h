@@ -25,9 +25,11 @@ private:
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
     Vector2 gridPosToWorldPos(Vector2 coord);
+    std::vector<Tile> getSurroundingTiles(Vector2 coord);
     void drawGhostTile(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
     void draw();
+
     Map(int rowCount = 17, int columnCount = 17, Camera2D *setPlayerCamera = NULL, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Map();
 };
@@ -161,4 +163,24 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
     result.y = y;
 
     return result;
+}
+
+std::vector<Tile> Map::getSurroundingTiles(Vector2 coord) {
+    std::vector<Tile> tiles;
+    if((int)coord.x % 2 == 1) {
+        std::cout << coord.x << " and " << coord.y - 1 << std::endl;
+        std::cout << coord.x + 1 << " and " << coord.y - 1 << std::endl;
+        std::cout << coord.x + 1 << " and " << coord.y << std::endl;
+        std::cout << coord.x << " and " << coord.y + 1 << std::endl;
+        std::cout << coord.x - 1 << " and " << coord.y << std::endl;
+        std::cout << coord.x - 1 << " and " << coord.y - 1<< std::endl;
+    } else {
+        std::cout << coord.x << " and " << coord.y - 1 << std::endl;
+        std::cout << coord.x + 1 << " and " << coord.y << std::endl;
+        std::cout << coord.x + 1 << " and " << coord.y + 1 << std::endl;
+        std::cout << coord.x << " and " << coord.y + 1 << std::endl;
+        std::cout << coord.x - 1 << " and " << coord.y + 1 << std::endl;
+        std::cout << coord.x - 1 << " and " << coord.y << std::endl;
+    }
+    return tiles;
 }
