@@ -48,6 +48,10 @@ void Game::Update(double dt)
     if(IsMouseButtonReleased(0)) {
         if(overlay.isBuildMode) {
             if(overlay.isMouseOnOverlay()) {
+                int buildTile = overlay.mouseOnBuildTile();
+                if(buildTile != -1) {
+                    overlay.selectBuildTile(buildTile);
+                }
                 // do stuff with overlay
             } else {
                 Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
