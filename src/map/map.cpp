@@ -184,10 +184,8 @@ bool Map::isSurrounded(Vector2 coord) {
             (std::find(buildTileTypes.begin(), buildTileTypes.end(), getTileType(surroundingCoords.at(i))) != buildTileTypes.end());
         
         if(isInBuildTileTypes) {
-            std::cout << "DID IT! " << surroundingCoords.at(i).x << " " << surroundingCoords.at(i).y << std::endl;
             return true;
         }
     }
-    std::cout <<"didn't" << std::endl;
     return false;
 }
