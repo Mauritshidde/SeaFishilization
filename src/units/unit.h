@@ -17,8 +17,11 @@ private:
     Texture2D tileHighLite;
     Map* tileMap;
     Tile* currentTile;
+    Camera2D* camera;
 
     std::vector<Vector2> possibleOptions;
+
+    bool tileInOptions(Vector2 coords);
 public:
     double selected;
     double health;
@@ -31,10 +34,11 @@ public:
     void move(Vector2 target);
     void moveOneTile(int option);
     void setOptions();
-
+    void removeOptions();
+    
     void Update(double dt);
     void Render();
 
-    Unit(double setMaxHealth=100, double setAttackSpeed=10, double setMovementSpeed=100, double setAttackDamage=100, Map* setTilemap = NULL);
+    Unit(double setMaxHealth=100, double setAttackSpeed=10, double setMovementSpeed=100, double setAttackDamage=100, Map* setTilemap = NULL, Camera2D* setCamera = NULL, Tile *startTile = NULL);
     ~Unit();
 };

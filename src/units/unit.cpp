@@ -63,12 +63,15 @@ void Unit::move(Vector2 target) // target is given in hexagon coords
 void Unit::setOptions() {
     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
     for (int i=0; i < options.size(); i++) {
-            // std::cout << "??" << std::endl;
-
         if (!tileMap->isTileLocked(options.at(i))) {
-            // std::cout << "yes" << std::endl;
             possibleOptions.push_back(options.at(i));
         }
+    }
+}
+
+void Unit::removeOptions() {
+    for (int i=0; i < possibleOptions.size(); i++) {
+        possibleOptions.pop_back();
     }
 }
 
@@ -78,10 +81,57 @@ void Unit::setOptions() {
 //     }
 // }
 
+bool Unit::tileInOptions(Vector2 coords) {
+    for (int i=0; i < possibleOptions.size(); i++) {
+        Vector2 possibleCoord = possibleOptions.at(i);
+        if (coords.x == possibleCoord.x && coords.y == possibleCoord.y) {
+            return true;
+        }
+    }
+    return false;
+}
+
 void Unit::Update(double dt)
 {
-    // if (selected) {
-        
+    if (selected) {
+        if (IsMouseButtonPressed(0)) {
+            Vector2 mousePos = GetMousePosition();
+            Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+
+            if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                selected = false;
+                removeOptions();
+            } else if (tileInOptions(tilePos)) {
+                selected = false;
+                gridPosition = tilePos;
+
+                currentTile->isUnitOnTile = false;
+                currentTile->unitOnTile = NULL;
+
+                Tile *targetTile = tileMap->getTile(tilePos);
+
+                targetTile->isUnitOnTile = true;
+                targetTile->unitOnTile = this;
+
+                currentTile = targetTile;
+                
+                removeOptions();
+            }
+        }
+    } else {
+        if (IsMouseButtonPressed(0)) {
+            Vector2 mousePos = GetMousePosition();
+            Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+            if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                selected = true;
+                setOptions();
+            }
+        }
+    }
+
+    position = tileMap->gridPosToWorldPos(gridPosition);
+
+
     // } else {
     //     std::cout << "ja" << std::endl;
     //     for (int i=0; i < possibleOptions.size(); i++) {
@@ -116,7 +166,7 @@ void Unit::Render()
     DrawTextureEx(texture, position, 0, 0.1, WHITE);
 }
 
-Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap)
+Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile)
 {
     maxHealth = setMaxHealth;
     attackSpeed = setMaxHealth;
@@ -128,6 +178,11 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     gridPosition = {10,10};
 
     tileMap = setTileMap;
+    camera = setCamera;
+    currentTile = startTile;
+
+    // currentTile->isUnitOnTile = true;
+    // currentTile->unitOnTile = this;
 
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
     tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");

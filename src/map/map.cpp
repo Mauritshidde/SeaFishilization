@@ -138,7 +138,7 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
         y = coord.y*(tileHeight);
         // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
     } else {
-        y = std::round(coord.y*(tileHeight) + 1/2 * tileHeight);
+        y = std::round((coord.y+0.5) * tileHeight);
         // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
     }
 

@@ -27,7 +27,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(rowCount, columnCount, tileTextures);
     player = Player(startingPosition, screenWidth, screenHeight, &map);
 
-    testU = Unit(100, 10,100,1000,&map);
+    testU = Unit(100, 10,100,1000,&map, &player.camera, map.getTile({10,10}));
     testU.position = map.gridPosToWorldPos(testU.gridPosition);
     
     gameTime = 0;
@@ -43,19 +43,19 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
-    if (IsMouseButtonPressed(0)) {
-        Vector2 mousePos = GetMousePosition();
-        Vector2 tilePos = map.worldPosToGridPos(GetScreenToWorld2D(mousePos, player.camera));
-        for (int i=0; i < 1; i++) {
-            if (tilePos.x == testU.gridPosition.x && tilePos.y == testU.gridPosition.y) {
-                // std::cout << "ja yes nee" << std::endl;
-                testU.selected = true;
-                testU.setOptions();
-                break;
-                // testU.move(tilePos);
-            }
-        }
-    }
+    // if (IsMouseButtonPressed(0)) {
+    //     Vector2 mousePos = GetMousePosition();
+    //     Vector2 tilePos = map.worldPosToGridPos(GetScreenToWorld2D(mousePos, player.camera));
+    //     for (int i=0; i < 1; i++) {
+    //         if (tilePos.x == testU.gridPosition.x && tilePos.y == testU.gridPosition.y) {
+    //             // std::cout << "ja yes nee" << std::endl;
+    //             testU.selected = true;
+    //             testU.setOptions();
+    //             break;
+    //             // testU.move(tilePos);
+    //         }
+    //     }
+    // }
 
     testU.Update(dt);
 
