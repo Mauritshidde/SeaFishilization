@@ -78,6 +78,11 @@ void Map::drawGhostTile(Vector2 coord, std::string type)
     DrawTextureEx(texture, pos, 0, scale, WHITE);
 }
 
+std::string Map::getTileType( Vector2 coord) {
+    Tile& tile = getTile(coord);
+    return tile.getType();
+} 
+
 void Map::changeTileType(Vector2 coord, std::string type) {
 
     Tile& tile = getTile(coord);
@@ -131,22 +136,58 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
     return result;
 }
 
-std::vector<Tile> Map::getSurroundingTiles(Vector2 coord) {
-    std::vector<Tile> tiles;
-    if((int)coord.x % 2 == 1) {
-        std::cout << coord.x << " and " << coord.y - 1 << std::endl;
-        std::cout << coord.x + 1 << " and " << coord.y - 1 << std::endl;
-        std::cout << coord.x + 1 << " and " << coord.y << std::endl;
-        std::cout << coord.x << " and " << coord.y + 1 << std::endl;
-        std::cout << coord.x - 1 << " and " << coord.y << std::endl;
-        std::cout << coord.x - 1 << " and " << coord.y - 1<< std::endl;
-    } else {
-        std::cout << coord.x << " and " << coord.y - 1 << std::endl;
-        std::cout << coord.x + 1 << " and " << coord.y << std::endl;
-        std::cout << coord.x + 1 << " and " << coord.y + 1 << std::endl;
-        std::cout << coord.x << " and " << coord.y + 1 << std::endl;
-        std::cout << coord.x - 1 << " and " << coord.y + 1 << std::endl;
-        std::cout << coord.x - 1 << " and " << coord.y << std::endl;
+std::vector<Vector2> Map::getSurroundingCoords(Vector2 coord) 
+{
+    std::vector<Vector2> surroundingCoords;
+    if(coord.x < 1 || coord.x > rows - 2 || coord.y < 1 || coord.y > cols - 2) {
+        // ? excluding gameBorder tiles: always locked //
+        return surroundingCoords;
     }
-    return tiles;
+    
+    if((int)coord.x % 2 == 1) {
+        surroundingCoords = {
+            { coord.x, coord.y - 1 },
+            { coord.x + 1, coord.y - 1 },
+            { coord.x + 1, coord.y },
+            { coord.x, coord.y + 1 },
+            { coord.x - 1, coord.y },
+            { coord.x - 1, coord.y - 1}
+        };
+    } else {
+        surroundingCoords = {
+            { coord.x, coord.y - 1 },
+            { coord.x + 1, coord.y },
+            { coord.x + 1, coord.y + 1 },
+            { coord.x, coord.y + 1 },
+            { coord.x - 1, coord.y + 1 },
+            { coord.x - 1, coord.y}
+        };
+    }
+    return surroundingCoords;
+}
+
+bool Map::isSurrounded(Vector2 coord) {
+    std::vector<std::string> buildTileTypes = {
+        "food",
+        "coral",
+        "training",
+        "castleV1",
+        "castleV2",
+        "castleV3",
+        "castleV4",
+        "castleV5"
+    };
+
+    std::vector<Vector2> surroundingCoords = getSurroundingCoords(coord);
+    for(int i = 0; i < surroundingCoords.size(); i++) {
+        bool isInBuildTileTypes = 
+            (std::find(buildTileTypes.begin(), buildTileTypes.end(), getTileType(surroundingCoords.at(i))) != buildTileTypes.end());
+        
+        if(isInBuildTileTypes) {
+            std::cout << "DID IT! " << surroundingCoords.at(i).x << " " << surroundingCoords.at(i).y << std::endl;
+            return true;
+        }
+    }
+    std::cout <<"didn't" << std::endl;
+    return false;
 }

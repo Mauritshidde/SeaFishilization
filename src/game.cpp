@@ -31,7 +31,6 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     testU.position = map.gridPosToWorldPos(testU.gridPosition);
     
     song = LoadMusicStream("music/GuitarSong.mp3");
-    // map.getSurroundingTiles({2,1});
 }
 
 Game::~Game()
@@ -52,7 +51,7 @@ void Game::Update(double dt)
                 Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
                 Vector2 coord = map.worldPosToGridPos(worldMousePos);
                 std::string buildTileName = overlay.getBuildTileName();
-                if(buildTileName != "") {
+                if(buildTileName != "" && map.isSurrounded(coord)) {
                     map.changeTileType(coord, buildTileName);
                 }
             }
@@ -80,7 +79,7 @@ void Game::Render()
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
-            if(!overlay.isMouseOnOverlay()) {
+            if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
                     map.drawGhostTile(coord, buildTileName);
