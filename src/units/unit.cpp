@@ -60,26 +60,57 @@ void Unit::move(Vector2 target) // target is given in hexagon coords
 
 }
 
+bool Unit::hasTileEnemy(Vector2 coord) {
+    Tile *tile = tileMap->getTile(coord);
+    if (tile->isUnitOnTile) {
+        if (tile->unitOnTile->owner == "Enemy") {
+            return true;
+        }
+    } else {
+        return false;
+    }
+
+    return false; // just to be sure for the compiler
+}
+
+bool Unit::hasTileFriendly(Vector2 coord) {
+    Tile *tile = tileMap->getTile(coord);
+    if (tile->isUnitOnTile) {
+        if (tile->unitOnTile->owner != "Enemy") {
+            return true;
+        }
+    } else {
+        return false;
+    }
+
+    return false; // just to be sure for the compiler
+}
+
+// void Unit::removeBorderOptions() {
+//     if() {
+//         return surroundingCoords;
+//     }
+// }
+
 void Unit::setOptions() {
     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
     for (int i=0; i < options.size(); i++) {
-        if (!tileMap->isTileLocked(options.at(i))) {
-            possibleOptions.push_back(options.at(i));
+        Vector2 coord = options.at(i);
+        if (!tileMap->isTileLocked(coord) && !hasTileFriendly(coord)) {
+            bool isBorder = (coord.x < 1 || coord.x > tileMap->rows - 2 || coord.y < 1 || coord.y > tileMap->cols - 2);
+            if (!isBorder) {
+                possibleOptions.push_back(options.at(i));
+            }
         }
     }
 }
 
 void Unit::removeOptions() {
-    for (int i=0; i < possibleOptions.size(); i++) {
+    int size = possibleOptions.size();
+    for (int i=0; i < size; i++) {
         possibleOptions.pop_back();
     }
 }
-
-// void Unit::removeOptions() {
-//     for (int i=0; i < possibleOptions.size(); i++) {
-//         possibleOptions.pop_back();
-//     }
-// }
 
 bool Unit::tileInOptions(Vector2 coords) {
     for (int i=0; i < possibleOptions.size(); i++) {
@@ -93,53 +124,46 @@ bool Unit::tileInOptions(Vector2 coords) {
 
 void Unit::Update(double dt)
 {
-    if (selected) {
-        if (IsMouseButtonPressed(0)) {
-            Vector2 mousePos = GetMousePosition();
-            Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+    // if (!isMoving) {
+        if (selected) {
+            if (IsMouseButtonPressed(0)) {
+                Vector2 mousePos = GetMousePosition();
+                Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
 
-            if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                selected = false;
-                removeOptions();
-            } else if (tileInOptions(tilePos)) {
-                selected = false;
-                gridPosition = tilePos;
+                if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                    selected = false;
+                    removeOptions();
+                } else if (tileInOptions(tilePos)) {
+                    selected = false;
+                    gridPosition = tilePos;
 
-                currentTile->isUnitOnTile = false;
-                currentTile->unitOnTile = NULL;
+                    currentTile->isUnitOnTile = false;
+                    currentTile->unitOnTile = NULL;
 
-                Tile *targetTile = tileMap->getTile(tilePos);
+                    Tile *targetTile = tileMap->getTile(tilePos);
 
-                targetTile->isUnitOnTile = true;
-                targetTile->unitOnTile = this;
+                    targetTile->isUnitOnTile = true;
+                    targetTile->unitOnTile = this;
 
-                currentTile = targetTile;
-                
-                removeOptions();
+                    currentTile = targetTile;
+                    
+                    removeOptions();
+                }
+            }
+        } else {
+            if (IsMouseButtonPressed(0)) {
+                Vector2 mousePos = GetMousePosition();
+                Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+                if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                    selected = true;
+                    setOptions();
+                }
             }
         }
-    } else {
-        if (IsMouseButtonPressed(0)) {
-            Vector2 mousePos = GetMousePosition();
-            Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-            if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                selected = true;
-                setOptions();
-            }
-        }
-    }
 
-    position = tileMap->gridPosToWorldPos(gridPosition);
-
-
+        position = tileMap->gridPosToWorldPos(gridPosition);
     // } else {
-    //     std::cout << "ja" << std::endl;
-    //     for (int i=0; i < possibleOptions.size(); i++) {
-    //         possibleOptions.pop_back();
-    //     }
-    // }
-    // if (inBattle) {
-
+        // smooth movement
     // }
 
 

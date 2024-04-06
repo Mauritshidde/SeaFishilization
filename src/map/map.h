@@ -12,7 +12,6 @@
 class Map
 {
 private:
-    int rows, cols;
     std::vector<std::vector<Tile>> tileMap;
     std::vector<std::string> lockedTileTypes;
     
@@ -21,6 +20,7 @@ private:
     Texture2D redHighlightTileTexture;
     
 public:
+    int rows, cols;
     int tileHeight, tileWidth;
     Vector2 worldPosToGridPos(Vector2 coord);
     Vector2 gridPosToWorldPos(Vector2 coord);

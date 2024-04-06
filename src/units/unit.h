@@ -1,5 +1,6 @@
 #pragma once
 #include <cmath>
+#include <string>
 #include "../raylib.h"
 
 #include "../map/tile.h"
@@ -27,12 +28,15 @@ public:
     double health;
     Vector2 gridPosition;
     Vector2 position;
+    std::string owner;
 
     void fight(Tile *targetTile);
     void heal();
     void takeDamage(double damage);
     void move(Vector2 target);
     void moveOneTile(int option);
+    bool hasTileEnemy(Vector2 coord);
+    bool hasTileFriendly(Vector2 coord);
     void setOptions();
     void removeOptions();
     
