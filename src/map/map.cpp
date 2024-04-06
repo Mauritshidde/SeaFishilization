@@ -89,12 +89,17 @@ std::string Map::getTileType(Vector2 coord) {
     return tile->getType();
 } 
 
-bool Map::isTileAvailable( Vector2 coord, std::string type) {
+bool Map::isTileAvailable(Vector2 coord, std::string type) {
     bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), getTileType(coord)) != lockedTileTypes.end());
     if(isInLockedTileTypes || getTileType(coord) == type) {
         return false;
     }
     return true;
+}
+
+bool Map::isTileLocked(Vector2 coord) {
+    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), getTileType(coord)) != lockedTileTypes.end());
+    return isInLockedTileTypes;
 }
 
 void Map::changeTileType(Vector2 coord, std::string type) {

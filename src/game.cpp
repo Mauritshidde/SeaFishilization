@@ -27,9 +27,13 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(rowCount, columnCount, tileTextures);
     player = Player(startingPosition, screenWidth, screenHeight, &map);
 
-    testU = Unit();
+    testU = Unit(100, 10,100,1000,&map);
     testU.position = map.gridPosToWorldPos(testU.gridPosition);
     
+    gameTime = 0;
+    waveCount = 0;
+    score = 0;
+
     song = LoadMusicStream("music/GuitarSong.mp3");
 }
 
@@ -39,6 +43,22 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
+    if (IsMouseButtonPressed(0)) {
+        Vector2 mousePos = GetMousePosition();
+        Vector2 tilePos = map.worldPosToGridPos(GetScreenToWorld2D(mousePos, player.camera));
+        for (int i=0; i < 1; i++) {
+            if (tilePos.x == testU.gridPosition.x && tilePos.y == testU.gridPosition.y) {
+                // std::cout << "ja yes nee" << std::endl;
+                testU.selected = true;
+                testU.setOptions();
+                break;
+                // testU.move(tilePos);
+            }
+        }
+    }
+
+    testU.Update(dt);
+
     if(IsMouseButtonReleased(0)) {
         if(overlay.isBuildMode) {
             if(overlay.isMouseOnOverlay()) {
@@ -84,13 +104,15 @@ void Game::Render()
         BeginMode2D(player.camera);
             // map draw functions where things have to move here
             map.draw();
+
+            testU.Render();
+            
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
                     map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
                 }
             }
-            testU.Render();
         EndMode2D();
         
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
@@ -100,11 +122,11 @@ void Game::Render()
         // ui draw functions that should not move here
         int food = player.getFoodAmount();
         int coral = player.getCoralAmount();
-        overlay.drawInventory(food, coral);
+        overlay.drawInventory(food, coral, score, gameTime, waveCount, 1);
         overlay.drawBuildMode();
     EndDrawing();
 
-    MusicPlayer();
+    // MusicPlayer();
 }
 
 void Game::run() // start the game loop
@@ -116,6 +138,8 @@ void Game::run() // start the game loop
         dt = GetFrameTime();
         Update(dt);
         Render();
+
+        gameTime += dt;
         // If quit go to main menu
         // When esc press open menu for settings, save, load, continue and exit
     }

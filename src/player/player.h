@@ -2,6 +2,7 @@
 #include <string>
 #include "../raylib.h"
 #include "../map/map.h"
+#include "../units/unit.h"
 
 class Player
 {
@@ -22,6 +23,7 @@ private:
     int food;
     int coral;
 
+    std::vector<Unit> units;
     Map *map;
 public:
 

@@ -18,36 +18,6 @@ void Unit::takeDamage(double damage)
 
 void Unit::moveOneTile(int option) {
     // unitMoving = true;
-
-    // if (movingDone) {
-        switch (option)
-        {
-        case 0: // move up
-            position.y -= 1;
-            break;
-        case 1: // move right up
-            position.x += 1;
-            position.y -= 1;
-            break;
-        case 2: // move right down
-            position.x += 1;
-            position.y += 1;
-            break;
-        case 3: // move down
-            position.y += 1;
-            break;
-        case 4: // move left down
-            position.x -= 1;
-            position.y += 1;
-            break;
-        case 5: // move left up
-            position.x -= 1;
-            position.y -= 1;
-            break;
-
-        default:
-            break;
-        }
         // movingDone = false;
         // movingProgress = 0;
         // unitMoving = false;
@@ -58,30 +28,70 @@ void Unit::move(Vector2 target) // target is given in hexagon coords
 {
     Tile *targetTile = tileMap->getTile(target);
 
-    if (!targetTile->isUnitOnTile) {
-        position = target;
-        currentTile->isUnitOnTile = false;
-        currentTile->unitOnTile = NULL;
+    // if (selected) {
+    //     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
+    //     for (int i=0; i < possibleOptions.size(); i++) {
+    //         if (!tileMap->isTileLocked(options.at(i))) {
+    //             possibleOptions.push_back(options.at(i));
+    //         }
+    //     }
+    // }
+    
 
-        targetTile->unitOnTile = this;
-        targetTile->isUnitOnTile = true;
-    } else {
-        fight(targetTile);
-    }
+    // if (!targetTile->isUnitOnTile) {
+    //     position = target;
+    //     currentTile->isUnitOnTile = false;
+    //     currentTile->unitOnTile = NULL;
+
+    //     targetTile->unitOnTile = this;
+    //     targetTile->isUnitOnTile = true;
+    // } else {
+    //     fight(targetTile);
+    // }
 
 
-    bool unitMoving = false;
+    // bool unitMoving = false;
 
-    if (unitMoving) {
-        // pathfinding
+    // if (unitMoving) {
+    //     // pathfinding
 
-        moveOneTile(1);
-    }
+    //     moveOneTile(1);
+    // }
 
 }
 
+void Unit::setOptions() {
+    std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
+    for (int i=0; i < options.size(); i++) {
+            // std::cout << "??" << std::endl;
+
+        if (!tileMap->isTileLocked(options.at(i))) {
+            // std::cout << "yes" << std::endl;
+            possibleOptions.push_back(options.at(i));
+        }
+    }
+}
+
+// void Unit::removeOptions() {
+//     for (int i=0; i < possibleOptions.size(); i++) {
+//         possibleOptions.pop_back();
+//     }
+// }
+
 void Unit::Update(double dt)
 {
+    // if (selected) {
+        
+    // } else {
+    //     std::cout << "ja" << std::endl;
+    //     for (int i=0; i < possibleOptions.size(); i++) {
+    //         possibleOptions.pop_back();
+    //     }
+    // }
+    // if (inBattle) {
+
+    // }
+
 
     // checkIfMovementPossible(); // returns true if possible input is the option
 
@@ -97,6 +107,12 @@ void Unit::Update(double dt)
 
 void Unit::Render()
 {
+    for (int i=0; i < possibleOptions.size(); i++) {
+        // std::cout << i << " werkt" << std::endl;
+        Tile *tile = tileMap->getTile(possibleOptions.at(i));
+        DrawTextureEx(tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
+    }
+
     DrawTextureEx(texture, position, 0, 0.1, WHITE);
 }
 
@@ -114,13 +130,11 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     tileMap = setTileMap;
 
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
+    tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
 }
 
 Unit::~Unit()
 {
-    // delete tileMap;
-    // delete currentTile;
 
-    // tileMap = NULL;
-    // currentTile = NULL;
 }
+        

@@ -1,4 +1,5 @@
 #pragma once
+#include <cmath>
 #include "../raylib.h"
 
 #include "../map/tile.h"
@@ -13,8 +14,11 @@ private:
     double attackDamage;
 
     Texture2D texture;
+    Texture2D tileHighLite;
     Map* tileMap;
     Tile* currentTile;
+
+    std::vector<Vector2> possibleOptions;
 public:
     double selected;
     double health;
@@ -26,6 +30,7 @@ public:
     void takeDamage(double damage);
     void move(Vector2 target);
     void moveOneTile(int option);
+    void setOptions();
 
     void Update(double dt);
     void Render();

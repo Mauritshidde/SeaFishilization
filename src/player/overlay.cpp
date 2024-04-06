@@ -58,12 +58,16 @@ void Overlay::drawBuildMode()
     }
 }
 
-void Overlay::drawInventory(int food, int coral) 
+void Overlay::drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime) 
 {
     DrawRectangle(inventoryPos.x, inventoryPos.y, inventoryWidth, inventoryHeight, BROWN);
 
-    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
-    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
+    DrawText(TextFormat("Food: %d", food), screenWidth - screenWidth/8, screenHeight/30, 10, WHITE);
+    DrawText(TextFormat("Coral: %d", coral), screenWidth - screenWidth/4, screenHeight/30, 10, WHITE);
+    DrawText(TextFormat("score: %d", score), screenWidth - screenWidth/8, screenHeight/20, 10, WHITE);
+    DrawText(TextFormat("time: %d", time), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
+    DrawText(TextFormat("time until next wave: %d", nextWaveTime), screenWidth - screenWidth/8, screenHeight/15, 10, WHITE);
+    DrawText(TextFormat("wave: %d", wave), screenWidth - screenWidth/4, screenHeight/15, 10, WHITE);
 }
 
 int Overlay::mouseOnBuildTile() {

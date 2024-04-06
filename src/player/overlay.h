@@ -23,7 +23,7 @@ private:
 public:
     bool isBuildMode;
     void drawBuildMode();
-    void drawInventory(int food, int coral);
+    void drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime);
     bool isMouseOnOverlay();
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);

@@ -22,6 +22,10 @@ private:
     void MusicPlayer();
 
 public:
+    double gameTime;
+    int waveCount;
+    int score;
+
     void run();
 
     Game(int screenWidth, int screenHeight, int columnCount, int rowCount);

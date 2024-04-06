@@ -13,7 +13,6 @@ class Map
 {
 private:
     int rows, cols;
-    int tileHeight, tileWidth;
     std::vector<std::vector<Tile>> tileMap;
     std::vector<std::string> lockedTileTypes;
     
@@ -22,6 +21,7 @@ private:
     Texture2D redHighlightTileTexture;
     
 public:
+    int tileHeight, tileWidth;
     Vector2 worldPosToGridPos(Vector2 coord);
     Vector2 gridPosToWorldPos(Vector2 coord);
     std::vector<Vector2> getSurroundingCoords(Vector2 coord);
@@ -29,6 +29,7 @@ public:
     void drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed);
     std::string getTileType(Vector2 coord);
     bool isTileAvailable(Vector2 coord, std::string type);
+    bool isTileLocked(Vector2 coord);
     void changeTileType(Vector2 coord, std::string type);
     int countTilesWithType(std::string type);
     void draw();
