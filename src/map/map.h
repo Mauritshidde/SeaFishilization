@@ -16,11 +16,12 @@ private:
 
     int rows, cols;
     int tileHeight, tileWidth;
-    double tileSize;
     std::vector<std::vector<Tile>> tileMap;
     std::vector<std::string> lockedTileTypes;
     
     std::map<std::string, Texture2D> tileTextures;
+    Texture2D whiteHighlightTileTexture;
+    Texture2D redHighlightTileTexture;
     
     Tile& getTile(Vector2 coord);
 public:
@@ -28,7 +29,7 @@ public:
     Vector2 gridPosToWorldPos(Vector2 coord);
     std::vector<Vector2> getSurroundingCoords(Vector2 coord);
     bool isSurrounded(Vector2 coord);
-    void drawGhostTile(Vector2 coord, std::string type);
+    void drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed);
     std::string getTileType(Vector2 coord);
     void changeTileType(Vector2 coord, std::string type);
     void draw();

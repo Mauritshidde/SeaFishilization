@@ -16,7 +16,9 @@ Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera, std::map<std:
         "castleV5"
     };
 
-    tileSize = 1024/10;
+    whiteHighlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
+    redHighlightTileTexture = LoadTexture("sprites/UI-elements/hexRedHighlight.png");
+
     tileWidth = 100;
     tileHeight = 115;
     tileMap.resize(rows, std::vector<Tile>(cols, Tile(0, 0, 0.13, 0.13, tileTextures, "sea" ))); 
@@ -62,7 +64,7 @@ void Map::draw() {
     }
 }
 
-void Map::drawGhostTile(Vector2 coord, std::string type) 
+void Map::drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed) 
 {
     Texture2D texture = tileTextures[type];
 
@@ -76,6 +78,11 @@ void Map::drawGhostTile(Vector2 coord, std::string type)
     Vector2 pos = tile.getPos();
     double scale = (double) tileHeight / 810;
     DrawTextureEx(texture, pos, 0, scale, WHITE);
+    if(isPlacementAllowed) {
+        DrawTextureEx(whiteHighlightTileTexture, tile.getPos(), 0, (double) tileHeight / 810, WHITE);
+    } else {
+        DrawTextureEx(redHighlightTileTexture, tile.getPos(), 0, (double) tileHeight / 810, WHITE);
+    }
 }
 
 std::string Map::getTileType( Vector2 coord) {

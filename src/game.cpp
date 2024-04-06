@@ -82,7 +82,7 @@ void Game::Render()
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
-                    map.drawGhostTile(coord, buildTileName);
+                    map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
                 }
             }
             testU.Render();
