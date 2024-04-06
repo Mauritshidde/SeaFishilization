@@ -21,7 +21,6 @@ private:
     Texture2D whiteHighlightTileTexture;
     Texture2D redHighlightTileTexture;
     
-    Tile& getTile(Vector2 coord);
 public:
     Vector2 worldPosToGridPos(Vector2 coord);
     Vector2 gridPosToWorldPos(Vector2 coord);
@@ -33,6 +32,7 @@ public:
     void changeTileType(Vector2 coord, std::string type);
     int countTilesWithType(std::string type);
     void draw();
+    Tile& getTile(Vector2 coord);
 
     Map(int rowCount = 17, int columnCount = 17, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Map();
