@@ -1,12 +1,14 @@
 #include "player.h"
 
-Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight)
+Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map& map_)
 {
     food = 0;
     coral = 0;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
+
+    map = map_;
 
     position = startPosition;
     camera.target = position;

@@ -12,8 +12,6 @@
 class Map
 {
 private:
-    Camera2D *playerCamera;
-
     int rows, cols;
     int tileHeight, tileWidth;
     std::vector<std::vector<Tile>> tileMap;
@@ -33,8 +31,9 @@ public:
     std::string getTileType(Vector2 coord);
     bool isTileAvailable(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
+    int countTilesWithType(std::string type);
     void draw();
 
-    Map(int rowCount = 17, int columnCount = 17, Camera2D *setPlayerCamera = NULL, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
+    Map(int rowCount = 17, int columnCount = 17, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Map();
 };

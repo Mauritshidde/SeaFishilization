@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include "../raylib.h"
+#include "../map/map.h"
 
 class Player
 {
@@ -20,6 +21,8 @@ private:
 
     int food;
     int coral;
+
+    Map map;
 public:
 
     Camera2D camera = { 0 };
@@ -31,6 +34,6 @@ public:
     int getCoralAmount();
     bool buyTile(std::string type);
 
-    Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1084);
+    Player(Vector2 startPosition, int screenWidth, int screenHeight, Map &map_);
     ~Player();
 };

@@ -4,7 +4,6 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 {
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
-    player = Player(startingPosition, screenWidth, screenHeight);
 
     std::map<std::string, Texture2D> tileTextures = {
         {"locked", LoadTexture("sprites/resources/BlankTile.png")},
@@ -25,7 +24,8 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     };
 
     overlay = Overlay(screenWidth, screenHeight, tileTextures);
-    map = Map(rowCount, columnCount, &player.camera, tileTextures);
+    map = Map(rowCount, columnCount, tileTextures);
+    player = Player(startingPosition, screenWidth, screenHeight, &map);
 
     testU = Unit();
     testU.position = map.gridPosToWorldPos(testU.gridPosition);

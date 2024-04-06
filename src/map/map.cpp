@@ -1,10 +1,9 @@
 #include "map.h"
 
-Map::Map(int rowCount, int columnCount, Camera2D *setPlayerCamera, std::map<std::string, Texture2D> tileTextures_) 
+Map::Map(int rowCount, int columnCount, std::map<std::string, Texture2D> tileTextures_) 
 {
     rows = rowCount;
     cols = columnCount;
-    playerCamera = setPlayerCamera;
     tileTextures = tileTextures_;
 
     lockedTileTypes = {
@@ -196,4 +195,16 @@ bool Map::isSurrounded(Vector2 coord) {
         }
     }
     return false;
+}
+
+int Map::countTilesWithType(std::string type) {
+    int count = 0;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if (getTileType({i, j}) == type) {
+                count++;
+            }
+        }
+    }
+    return count;
 }
