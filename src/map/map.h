@@ -32,7 +32,7 @@ public:
     void changeTileType(Vector2 coord, std::string type);
     int countTilesWithType(std::string type);
     void draw();
-    Tile& getTile(Vector2 coord);
+    Tile* getTile(Vector2 coord);
 
     Map(int rowCount = 17, int columnCount = 17, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Map();

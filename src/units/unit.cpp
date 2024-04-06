@@ -56,7 +56,7 @@ void Unit::moveOneTile(int option) {
 
 void Unit::move(Vector2 target) // target is given in hexagon coords
 {
-    Tile *targetTile = &tileMap->getTile(target);
+    Tile *targetTile = tileMap->getTile(target);
 
     if (!targetTile->isUnitOnTile) {
         position = target;

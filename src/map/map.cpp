@@ -38,7 +38,7 @@ Map::~Map()
 {
 }
 
-Tile& Map::getTile(Vector2 coord) {
+Tile* Map::getTile(Vector2 coord) {
     if(coord.y >= rows) {
         coord.y = rows - 1;
     }
@@ -52,7 +52,7 @@ Tile& Map::getTile(Vector2 coord) {
         coord.x = 0;
     }
 
-    return tileMap.at(coord.x).at(coord.y);
+    return &tileMap.at(coord.x).at(coord.y);
 }
 
 void Map::draw() {
@@ -67,26 +67,26 @@ void Map::drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed
 {
     Texture2D texture = tileTextures[type];
 
-    Tile& tile = getTile(coord);
+    Tile* tile = getTile(coord);
 
-    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), tile.getType()) != lockedTileTypes.end());
+    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), tile->getType()) != lockedTileTypes.end());
     if(isInLockedTileTypes) {
         return;
     }
 
-    Vector2 pos = tile.getPos();
+    Vector2 pos = tile->getPos();
     double scale = (double) tileHeight / 810;
     DrawTextureEx(texture, pos, 0, scale, WHITE);
     if(isPlacementAllowed) {
-        DrawTextureEx(whiteHighlightTileTexture, tile.getPos(), 0, (double) tileHeight / 810, WHITE);
+        DrawTextureEx(whiteHighlightTileTexture, tile->getPos(), 0, (double) tileHeight / 810, WHITE);
     } else {
-        DrawTextureEx(redHighlightTileTexture, tile.getPos(), 0, (double) tileHeight / 810, WHITE);
+        DrawTextureEx(redHighlightTileTexture, tile->getPos(), 0, (double) tileHeight / 810, WHITE);
     }
 }
 
 std::string Map::getTileType(Vector2 coord) {
-    Tile& tile = getTile(coord);
-    return tile.getType();
+    Tile* tile = getTile(coord);
+    return tile->getType();
 } 
 
 bool Map::isTileAvailable( Vector2 coord, std::string type) {
@@ -98,7 +98,8 @@ bool Map::isTileAvailable( Vector2 coord, std::string type) {
 }
 
 void Map::changeTileType(Vector2 coord, std::string type) {
-    getTile(coord).changeType(type);
+    Tile *useTile = getTile(coord);
+    useTile->changeType(type);
 }
 
 Vector2 Map::worldPosToGridPos(Vector2 coord) 

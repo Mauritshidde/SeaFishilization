@@ -22,7 +22,7 @@ private:
     int food;
     int coral;
 
-    Map map;
+    Map *map;
 public:
 
     Camera2D camera = { 0 };
@@ -34,6 +34,6 @@ public:
     int getCoralAmount();
     bool buyTile(std::string type);
 
-    Player(Vector2 startPosition, int screenWidth, int screenHeight, Map &map_);
+    Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL);
     ~Player();
 };
