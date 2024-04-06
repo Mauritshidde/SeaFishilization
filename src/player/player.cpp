@@ -81,11 +81,11 @@ void Player::movement(double dt)
     }
 }
 
-void Player::changeFoodAmount(int amount) {
+void Player::addFoodAmount(int amount) {
     food += amount;
 }
 
-void Player::changeCoralAmount(int amount) {
+void Player::addCoralAmount(int amount) {
     coral += amount;
 }
 
@@ -95,4 +95,9 @@ int Player::getFoodAmount() {
 
 int Player::getCoralAmount() {
     return coral;
+}
+
+bool Player::buyTile(std::string type) {
+    addFoodAmount(1);
+    return true;
 }

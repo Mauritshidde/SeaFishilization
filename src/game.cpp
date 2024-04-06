@@ -51,8 +51,13 @@ void Game::Update(double dt)
                 Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
                 Vector2 coord = map.worldPosToGridPos(worldMousePos);
                 std::string buildTileName = overlay.getBuildTileName();
-                if(buildTileName != "" && map.isSurrounded(coord)) {
-                    map.changeTileType(coord, buildTileName);
+                if(buildTileName != "" && map.isSurrounded(coord) && map.isTileAvailable(coord, buildTileName)) {
+                    bool isBought = player.buyTile(map.getTileType(coord));
+                    if(isBought) {
+                        map.changeTileType(coord, buildTileName);
+                    } else {
+                        // not enough money
+                    }
                 }
             }
         }

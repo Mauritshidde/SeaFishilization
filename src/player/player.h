@@ -1,4 +1,5 @@
 #pragma once
+#include <string>
 #include "../raylib.h"
 
 class Player
@@ -23,11 +24,12 @@ public:
 
     Camera2D camera = { 0 };
     Vector2 position;
-    void changeFoodAmount(int amount); // remove food if buying something add food when receiving something
-    void changeCoralAmount(int amount); // remove coral if buying something add coral when receiving something
+    void addFoodAmount(int amount); // remove food if buying something add food when receiving something
+    void addCoralAmount(int amount); // remove coral if buying something add coral when receiving something
     void movement(double dt);
     int getFoodAmount();
     int getCoralAmount();
+    bool buyTile(std::string type);
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1084);
     ~Player();

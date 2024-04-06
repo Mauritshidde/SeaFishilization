@@ -31,6 +31,7 @@ public:
     bool isSurrounded(Vector2 coord);
     void drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed);
     std::string getTileType(Vector2 coord);
+    bool isTileAvailable(Vector2 coord, std::string type);
     void changeTileType(Vector2 coord, std::string type);
     void draw();
 

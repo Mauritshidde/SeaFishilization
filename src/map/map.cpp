@@ -85,20 +85,21 @@ void Map::drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed
     }
 }
 
-std::string Map::getTileType( Vector2 coord) {
+std::string Map::getTileType(Vector2 coord) {
     Tile& tile = getTile(coord);
     return tile.getType();
 } 
 
-void Map::changeTileType(Vector2 coord, std::string type) {
-
-    Tile& tile = getTile(coord);
-    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), tile.getType()) != lockedTileTypes.end());
-    if(isInLockedTileTypes) {
-        return;
+bool Map::isTileAvailable( Vector2 coord, std::string type) {
+    bool isInLockedTileTypes = (std::find(lockedTileTypes.begin(), lockedTileTypes.end(), getTileType(coord)) != lockedTileTypes.end());
+    if(isInLockedTileTypes || getTileType(coord) == type) {
+        return false;
     }
+    return true;
+}
 
-    tile.changeType(type);
+void Map::changeTileType(Vector2 coord, std::string type) {
+    getTile(coord).changeType(type);
 }
 
 Vector2 Map::worldPosToGridPos(Vector2 coord) 
