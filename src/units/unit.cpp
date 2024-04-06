@@ -1,5 +1,12 @@
 #include "unit.h"
 
+void Unit::fight(Tile *targetTile) {
+    Unit *enemy = targetTile->unitOnTile;
+    
+    // health -= enemy->attack();
+    // enemy->health -= attack();
+}
+
 void Unit::heal() {
 
 }
@@ -49,6 +56,20 @@ void Unit::moveOneTile(int option) {
 
 void Unit::move(Vector2 target) // target is given in hexagon coords
 {
+    Tile *targetTile = &tileMap->getTile(target);
+
+    if (!targetTile->isUnitOnTile) {
+        position = target;
+        currentTile->isUnitOnTile = false;
+        currentTile->unitOnTile = NULL;
+
+        targetTile->unitOnTile = this;
+        targetTile->isUnitOnTile = true;
+    } else {
+        fight(targetTile);
+    }
+
+
     bool unitMoving = false;
 
     if (unitMoving) {
@@ -79,7 +100,7 @@ void Unit::Render()
     DrawTextureEx(texture, position, 0, 0.1, WHITE);
 }
 
-Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage)
+Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap)
 {
     maxHealth = setMaxHealth;
     attackSpeed = setMaxHealth;
@@ -90,9 +111,16 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     health = setMaxHealth;
     gridPosition = {10,10};
 
+    tileMap = setTileMap;
+
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
 }
 
 Unit::~Unit()
 {
+    // delete tileMap;
+    // delete currentTile;
+
+    // tileMap = NULL;
+    // currentTile = NULL;
 }

@@ -3,8 +3,10 @@
 #include <string>
 #include "../raylib.h"
 
-#include "../units/unit.h"
+// #include "../units/unit.h"
 
+// Forward declaration of Unit class, because of cicular dependicy
+class Unit;
 
 class Tile 
 {
@@ -18,7 +20,7 @@ private:
 public:
     Unit *unitOnTile;
     bool isUnitOnTile;
-    // bool tileSelected;
+    bool tileSelected;
 
     Vector2 getPos();
     std::string getType();
