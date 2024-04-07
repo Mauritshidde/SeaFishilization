@@ -55,10 +55,11 @@ void Game::Update(double dt)
                 Vector2 coord = map.worldPosToGridPos(worldMousePos);
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "" && map.isSurrounded(coord) && map.isTileAvailable(coord, buildTileName)) {
-                    bool isBought = player.buyTile(map.getTileType(coord));
+                    bool isBought = player.buyTile(buildTileName);
                     if(isBought) {
                         map.changeTileType(coord, buildTileName);
                     } else {
+                        std::cout << "NOT ENOUGH MONEY" << std::endl;
                         // not enough money
                     }
                 }

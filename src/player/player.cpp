@@ -1,9 +1,11 @@
+#include <cmath>
+
 #include "player.h"
 
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap)
 {
     food = 0;
-    coral = 0;
+    coral = 6;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -102,13 +104,28 @@ int Player::getCoralAmount() {
 }
 
 bool Player::buyTile(std::string type) {
-    addFoodAmount(1);
+    int tileCount = map->countTilesWithType(type);
+    int cost = (tileCount + 1) * 2;
+
+    if (cost > coral) return false;
+    
+    addCoralAmount(-cost);
     return true;
 }
 
 void Player::Update(double dt) {
     playerUnits.Update(dt);
     movement(dt);
+
+
+    if (GetTime() - static_cast<int>(GetTime()) + dt > 1) {
+        int foodTileCount = map->countTilesWithType("food");
+        int coralTileCount = map->countTilesWithType("coral");
+        addFoodAmount(foodTileCount); // 1 / tile / sec
+        addCoralAmount(coralTileCount); // 1 / tile / sec
+    }
+
+
 }
 
 void Player::Render() {
