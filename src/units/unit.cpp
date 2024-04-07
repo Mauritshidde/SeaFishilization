@@ -1,8 +1,30 @@
 #include "unit.h"
 
-void Unit::fight(Tile *targetTile) {
+void Unit::fight(Tile *targetTile, double dt) {
     Unit *enemy = targetTile->unitOnTile;
     
+    double *enemyHealth = &enemy->health;
+
+    *enemyHealth -= attackDamage * dt;
+    health -= enemy->attackDamage * dt;
+
+    if (*enemyHealth <= 0) {
+        currentTile->unitOnTile = NULL;
+        currentTile->isUnitOnTile = false;
+
+        targetTile->unitOnTile = this;
+        currentTile = targetTile;
+        enemy->isAlive = false;
+    }
+    
+    if (health <= 0) {
+        currentTile->unitOnTile = NULL;
+        currentTile->isUnitOnTile = false;
+
+        currentTile = NULL;   
+        isAlive = false;
+    }
+
     // health -= enemy->attack();
     // enemy->health -= attack();
 }
@@ -60,10 +82,10 @@ void Unit::move(Vector2 target) // target is given in hexagon coords
 
 }
 
-bool Unit::hasTileEnemy(Vector2 coord) {
+bool Unit::hasTileEnemy(Vector2 coord, std::string type) {
     Tile *tile = tileMap->getTile(coord);
     if (tile->isUnitOnTile) {
-        if (tile->unitOnTile->owner == "Enemy") {
+        if (tile->unitOnTile->owner != type) {
             return true;
         }
     } else {
@@ -73,10 +95,10 @@ bool Unit::hasTileEnemy(Vector2 coord) {
     return false; // just to be sure for the compiler
 }
 
-bool Unit::hasTileFriendly(Vector2 coord) {
+bool Unit::hasTileFriendly(Vector2 coord, std::string type) {
     Tile *tile = tileMap->getTile(coord);
     if (tile->isUnitOnTile) {
-        if (tile->unitOnTile->owner != "Enemy") {
+        if (tile->unitOnTile->owner == type) {
             return true;
         }
     } else {
@@ -96,7 +118,7 @@ void Unit::setOptions() {
     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
     for (int i=0; i < options.size(); i++) {
         Vector2 coord = options.at(i);
-        if (!tileMap->isTileLocked(coord) && !hasTileFriendly(coord)) {
+        if (!tileMap->isTileLocked(coord) && !hasTileFriendly(coord, owner)) {
             bool isBorder = (coord.x < 1 || coord.x > tileMap->rows - 2 || coord.y < 1 || coord.y > tileMap->cols - 2);
             if (!isBorder) {
                 possibleOptions.push_back(options.at(i));
@@ -164,6 +186,8 @@ void Unit::Update(double dt)
         position = tileMap->gridPosToWorldPos(gridPosition);
     // } else {
         // smooth movement
+
+        // isMoving = false;
     // }
 
 
@@ -204,6 +228,10 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     tileMap = setTileMap;
     camera = setCamera;
     currentTile = startTile;
+
+    isMoving = false;
+    canMove = true;
+    isAlive = true;
 
     // currentTile->isUnitOnTile = true;
     // currentTile->unitOnTile = this;

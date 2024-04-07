@@ -14,6 +14,9 @@ private:
     double movementSpeed;
     double attackDamage;
 
+    bool isMoving;
+    bool canMove;
+
     Texture2D texture;
     Texture2D tileHighLite;
     Map* tileMap;
@@ -24,19 +27,21 @@ private:
 
     bool tileInOptions(Vector2 coords);
 public:
-    double selected;
+    bool isAlive;
+    bool selected;
     double health;
+
     Vector2 gridPosition;
     Vector2 position;
     std::string owner;
 
-    void fight(Tile *targetTile);
+    void fight(Tile *targetTile, double dt);
     void heal();
     void takeDamage(double damage);
     void move(Vector2 target);
     void moveOneTile(int option);
-    bool hasTileEnemy(Vector2 coord);
-    bool hasTileFriendly(Vector2 coord);
+    bool hasTileEnemy(Vector2 coord, std::string type);
+    bool hasTileFriendly(Vector2 coord, std::string type);
     void setOptions();
     void removeOptions();
     

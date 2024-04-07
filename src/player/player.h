@@ -3,6 +3,7 @@
 #include "../raylib.h"
 #include "../map/map.h"
 #include "../units/unit.h"
+#include "../units/unitInventory.h"
 
 class Player
 {
@@ -15,6 +16,7 @@ private:
     double maxX, minX;
     double maxY, minY;
 
+    UnitInventory playerUnits;
     Vector2 mouseStartPos;
 
     int screenWidth;
@@ -35,6 +37,8 @@ public:
     int getFoodAmount();
     int getCoralAmount();
     bool buyTile(std::string type);
+
+    void Update(double dt);
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL);
     ~Player();
