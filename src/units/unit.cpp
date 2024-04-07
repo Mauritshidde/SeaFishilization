@@ -170,6 +170,9 @@ void Unit::Update(double dt)
                     currentTile = targetTile;
                     
                     removeOptions();
+                } else {
+                    removeOptions();
+                    selected = false;
                 }
             }
         } else {
@@ -211,7 +214,11 @@ void Unit::Render()
         DrawTextureEx(tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
     }
 
-    DrawTextureEx(texture, position, 0, 0.1, WHITE);
+    if (int(gridPosition.x) % 2 == 0) {
+        DrawTextureEx(texture, position, 0, 0.1, WHITE);
+    } else {
+        DrawTextureEx(texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
+    }
 }
 
 Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner)
