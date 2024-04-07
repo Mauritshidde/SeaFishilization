@@ -146,6 +146,11 @@ bool Unit::tileInOptions(Vector2 coords) {
 
 void Unit::Update(double dt)
 {
+    if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
+        currentTile->isUnitOnTile = true;
+        currentTile->unitOnTile = this;
+    }
+
     // if (!isMoving) {
         if (selected) {
             if (IsMouseButtonPressed(0)) {
@@ -188,6 +193,7 @@ void Unit::Update(double dt)
         }
 
         position = tileMap->gridPosToWorldPos(gridPosition);
+        position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
     // } else {
         // smooth movement
 
@@ -242,8 +248,8 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
 
     owner = setOwner;
 
-    currentTile->isUnitOnTile = true;
-    currentTile->unitOnTile = this;
+    // currentTile->isUnitOnTile = true;
+    // currentTile->unitOnTile = this;
 
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
     tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
