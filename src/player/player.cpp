@@ -2,8 +2,6 @@
 
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap)
 {
-    playerUnits = UnitInventory("player", map, &camera);
-
     food = 0;
     coral = 0;
 
@@ -11,6 +9,8 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     screenHeight = setScreenHeight;
 
     map = setMap;
+
+    playerUnits = UnitInventory("player", map, &camera);
 
     position = startPosition;
     camera.target = position;
@@ -109,4 +109,14 @@ bool Player::buyTile(std::string type) {
 void Player::Update(double dt) {
     playerUnits.Update(dt);
     movement(dt);
+}
+
+void Player::Render() {
+    playerUnits.Render();
+}
+
+void Player::Start() {
+    playerUnits.createUnit(100, 10, 100, {10, 10}, &camera);
+    playerUnits.createUnit(100, 10, 100, {11, 10}, &camera);
+    playerUnits.createUnit(100, 10, 100, {12, 10}, &camera);
 }

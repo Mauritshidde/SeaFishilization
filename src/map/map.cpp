@@ -51,7 +51,6 @@ Tile* Map::getTile(Vector2 coord) {
     if (coord.x < 0) {
         coord.x = 0;
     }
-
     return &tileMap.at(coord.x).at(coord.y);
 }
 

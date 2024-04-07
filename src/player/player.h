@@ -39,6 +39,8 @@ public:
     bool buyTile(std::string type);
 
     void Update(double dt);
+    void Render();
+    void Start();
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL);
     ~Player();

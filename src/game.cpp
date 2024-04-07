@@ -27,9 +27,6 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     map = Map(rowCount, columnCount, tileTextures);
     player = Player(startingPosition, screenWidth, screenHeight, &map);
 
-    testU = Unit(100, 10,100,1000,&map, &player.camera, map.getTile({10,10}));
-    testU.position = map.gridPosToWorldPos(testU.gridPosition);
-    
     gameTime = 0;
     waveCount = 0;
     score = 0;
@@ -43,21 +40,7 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
-    // if (IsMouseButtonPressed(0)) {
-    //     Vector2 mousePos = GetMousePosition();
-    //     Vector2 tilePos = map.worldPosToGridPos(GetScreenToWorld2D(mousePos, player.camera));
-    //     for (int i=0; i < 1; i++) {
-    //         if (tilePos.x == testU.gridPosition.x && tilePos.y == testU.gridPosition.y) {
-    //             // std::cout << "ja yes nee" << std::endl;
-    //             testU.selected = true;
-    //             testU.setOptions();
-    //             break;
-    //             // testU.move(tilePos);
-    //         }
-    //     }
-    // }
-
-    testU.Update(dt);
+    player.Update(dt);
 
     if(IsMouseButtonReleased(0)) {
         if(overlay.isBuildMode) {
@@ -83,7 +66,6 @@ void Game::Update(double dt)
         }
 
     }
-    player.movement(dt);
 }
 
 void Game::MusicPlayer() 
@@ -105,8 +87,8 @@ void Game::Render()
             // map draw functions where things have to move here
             map.draw();
 
-            testU.Render();
-            
+            player.Render();
+
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
@@ -133,6 +115,9 @@ void Game::run() // start the game loop
 {
     bool gameRunning = true;
     double dt;
+
+    player.Start();
+    
     while (gameRunning && !WindowShouldClose())
     {
         dt = GetFrameTime();

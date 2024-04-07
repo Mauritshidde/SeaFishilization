@@ -15,7 +15,6 @@ private:
     Overlay overlay;
     Map map;
     Music song;
-    Unit testU;
 
     void Update(double dt);
     void Render();
