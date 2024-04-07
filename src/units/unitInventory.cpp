@@ -2,7 +2,7 @@
 
 void UnitInventory::createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test) { // startingPos is grid position and not world position
     Tile *startTile = map->getTile(startingPos);
-    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, map, test, startTile, startingPos);
+    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, map, test, startTile, startingPos, owner);
     units.push_back(newUnit);
 }
 

@@ -110,14 +110,11 @@ Vector2 Map::worldPosToGridPos(Vector2 coord)
 { // coordinate of mouse  to grid
     int x = coord.x/(tileWidth);
     int y;
-    // std::cout << x << " x " << coord.x/(tileSize) << std::endl;
 
     if (x % 2 == 0) {
         y = coord.y/(tileHeight);
-        // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
     } else {
         y = std::round(coord.y/(tileHeight) + 1/2);
-        // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
     }
 
     Vector2 result;
@@ -131,14 +128,11 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
 { // coordinate of mouse  to grid
     int x = coord.x*(tileWidth);
     int y;
-    // std::cout << x << " x " << coord.x/(tileSize) << std::endl;
 
     if (x % 2 == 0) {
         y = coord.y*(tileHeight);
-        // std::cout << y << " y " << coord.y/(tileSize) << std::endl;
     } else {
         y = std::round((coord.y+0.5) * tileHeight);
-        // std::cout << y << " y " << coord.y/(tileSize) + 1/2 << std::endl;
     }
 
     Vector2 result;

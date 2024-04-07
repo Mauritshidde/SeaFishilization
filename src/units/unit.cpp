@@ -176,8 +176,7 @@ void Unit::Update(double dt)
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
                 Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-                std::cout << gridPosition.x << " ja " << gridPosition.y << std::endl;
-                std::cout << tilePos.x << " nee " << tilePos.y << std::endl;
+
                 if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
                     selected = true;
                     setOptions();
@@ -215,7 +214,7 @@ void Unit::Render()
     DrawTextureEx(texture, position, 0, 0.1, WHITE);
 }
 
-Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos)
+Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner)
 {
     maxHealth = setMaxHealth;
     attackSpeed = setMaxHealth;
@@ -234,8 +233,10 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     canMove = true;
     isAlive = true;
 
-    // currentTile->isUnitOnTile = true;
-    // currentTile->unitOnTile = this;
+    owner = setOwner;
+
+    currentTile->isUnitOnTile = true;
+    currentTile->unitOnTile = this;
 
     texture = LoadTexture("sprites/units/melee/Battlefish.png");
     tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
