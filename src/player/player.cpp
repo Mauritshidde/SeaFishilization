@@ -7,7 +7,6 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     food = 0;
     coral = 0;
 
-    productionSpeed = 5; // seconds
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -33,6 +32,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     minX = 0;
     maxY = screenHeight;
     minY = 0;
+    productionSpeed = 5;
 }
 
 Player::~Player()
@@ -112,11 +112,9 @@ int Player::getCoralAmount() {
 
 int Player::getTileCost(std::string type) {
     int tileCount = map->countTilesWithType(type);
-    if(tileCount == 0 && type == "coral") return 0;
+    if(tileCount == 0 && type == "coral") return 0; // fist coral is always free
     if(type != "coral") tileCount++;
     int cost = (int) std::pow(1.6, tileCount);
-    std::cout << cost << std::endl;
-    // int cost = 0;
     return cost;
 }
 
