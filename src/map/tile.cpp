@@ -15,6 +15,7 @@ Tile::Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTex
 
 Tile::~Tile() 
 {
+    unitOnTile = NULL;
 }
 
 Vector2 Tile::getPos() {
