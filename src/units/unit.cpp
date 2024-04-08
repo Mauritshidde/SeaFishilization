@@ -254,6 +254,10 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
 
 Unit::~Unit()
 {
-
+    texture = NULL;
+    tileHighLite = NULL;
+    tileMap = NULL;
+    currentTile = NULL;
+    camera = NULL;
 }
         

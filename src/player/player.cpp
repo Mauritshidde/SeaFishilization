@@ -32,7 +32,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
 
 Player::~Player()
 {
-
+    map = NULL;
 }
 
 void Player::movement(double dt, int isBuildMode)
