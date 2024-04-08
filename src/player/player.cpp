@@ -5,7 +5,9 @@
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
-    coral = 6;
+    coral = 0;
+
+    productionSpeed = 5; // seconds
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -110,7 +112,11 @@ int Player::getCoralAmount() {
 
 int Player::getTileCost(std::string type) {
     int tileCount = map->countTilesWithType(type);
-    int cost = tileCount * 2;
+    if(tileCount == 0 && type == "coral") return 0;
+    if(type != "coral") tileCount++;
+    int cost = (int) std::pow(1.6, tileCount);
+    std::cout << cost << std::endl;
+    // int cost = 0;
     return cost;
 }
 
@@ -126,10 +132,10 @@ void Player::Update(double dt, int isBuildMode) {
     playerUnits.Update(dt);
     movement(dt, isBuildMode);
 
-    if (GetTime() - static_cast<int>(GetTime()) + dt > 1) {
+    if (GetTime() - (int)GetTime() + dt > 1 && (int)GetTime() % productionSpeed == 0) {
         int foodTileCount = map->countTilesWithType("food");
         int coralTileCount = map->countTilesWithType("coral");
-        addFoodAmount(foodTileCount); // 1 / tile / sec
+        addFoodAmount(foodTileCount); // 1 / tile / update
         addCoralAmount(coralTileCount); // 1 / tile / sec
     }
 

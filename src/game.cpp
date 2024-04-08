@@ -35,6 +35,11 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     gameTime = 0;
     waveCount = 0;
     score = 0;
+    
+    int foodTileCost = player.getTileCost("food");
+    int coralTileCost = player.getTileCost("coral");
+    int trainingTileCost = player.getTileCost("training");
+    overlay.setTileTypeCosts(foodTileCost, coralTileCost, trainingTileCost);
 
     song = LoadMusicStream("music/GuitarSong.mp3");
 }
@@ -123,15 +128,18 @@ void Game::Render()
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
                     map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
+                    // ! TODO: DRAW MONEY SHORTAGE ! //
+                    // ! getTileCost is not optimized //
+                    // if(player.getTileCost(buildTileName) > player.getCoralAmount()) {
+                    //     Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
+                    //     DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){(GetScreenWidth() - textDimentions.x) / 2, (GetScreenHeight() - textDimentions.y) / 2}, 50, 10, RED);
+                    // }
+                    // ! END TODO ! //
                 }
             }
 
         EndMode2D();
         
-        // ! TODO: DRAW MONEY SHORTAGE ! //
-        // Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
-        // DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){(GetScreenWidth() - textDimentions.x) / 2, (GetScreenHeight() - textDimentions.y) / 2}, 50, 10, RED);
-        // ! END TODO ! //
 
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);

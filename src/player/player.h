@@ -25,12 +25,14 @@ private:
     int food;
     int coral;
 
+
     std::vector<Unit> units;
     Map *map;
 
     std::map<std::string, Texture2D> unitTextures;
     Texture2D *tileHighLite;
 public:
+    int productionSpeed; // in seconds
 
     Camera2D camera = { 0 };
     Vector2 position;
