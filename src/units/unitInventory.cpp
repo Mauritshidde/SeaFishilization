@@ -1,8 +1,8 @@
 #include "unitInventory.h"
 
 void UnitInventory::createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test) { // startingPos is grid position and not world position
-    Tile *startTile = map->getTile(startingPos);
-    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, map, test, startTile, startingPos, owner, &warrior1, &tileHighLite);
+    Tile *startTile = tileMap->getTile(startingPos);
+    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, tileMap, test, startTile, startingPos, owner, &unitTextures["warrior1LVL1"], tileHighLite);
     units.push_back(newUnit);
 }
 
@@ -41,26 +41,21 @@ void UnitInventory::Render() {
 }
 
 
-UnitInventory::UnitInventory(std::string setOnwer, Map *setMap, Camera2D *setCamera)
+UnitInventory::UnitInventory(std::string setOnwer, Map *setMap, Camera2D *setCamera, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     owner = setOnwer;
-    map = setMap;
+    tileMap = setMap;
     camera = setCamera;
 
-    tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
-
-    warrior1 = LoadTexture("sprites/units/melee/Battlefish.png");
-    warrior2 = LoadTexture("sprites/units/melee/BattlefishRed.png");
+    tileHighLite = setTileHighLite;
+    unitTextures = setUnitTextures;
 }
 
 UnitInventory::~UnitInventory()
 {
-    map = NULL;
+    tileMap = NULL;
     camera = NULL;
 
-    // UnloadTexture(tileHighLite);
-    
-    // UnloadTexture(warrior1);
-    // UnloadTexture(warrior2);
+    tileHighLite = NULL;
 }
 

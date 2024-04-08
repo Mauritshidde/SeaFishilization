@@ -2,7 +2,7 @@
 
 #include "player.h"
 
-Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap)
+Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
     coral = 6;
@@ -12,12 +12,16 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
 
     map = setMap;
 
-    playerUnits = UnitInventory("player", map, &camera);
+    unitTextures = setUnitTextures;
+    tileHighLite = setTileHighLite;
 
     position = startPosition;
     camera.target = position;
     camera.rotation = 0.0f;
     camera.zoom = 1.0f;
+
+    playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
+    // std::cout << "jes" << std::endl;
 
     movementSpeed = 250;
     zoomSpeed = 10;
@@ -118,7 +122,6 @@ bool Player::buyTile(std::string type) {
 void Player::Update(double dt, int isBuildMode) {
     playerUnits.Update(dt);
     movement(dt, isBuildMode);
-
 
     if (GetTime() - static_cast<int>(GetTime()) + dt > 1) {
         int foodTileCount = map->countTilesWithType("food");

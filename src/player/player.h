@@ -27,6 +27,9 @@ private:
 
     std::vector<Unit> units;
     Map *map;
+
+    std::map<std::string, Texture2D> unitTextures;
+    Texture2D *tileHighLite;
 public:
 
     Camera2D camera = { 0 };
@@ -42,6 +45,6 @@ public:
     void Render();
     void Start();
 
-    Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL);
+    Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL, Texture2D *setTileHighLite = NULL, std::map<std::string, Texture2D> setUnitTextures = {});
     ~Player();
 };

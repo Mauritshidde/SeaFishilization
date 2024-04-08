@@ -1,5 +1,6 @@
 #include <vector>
 #include <string>
+#include <map>
 #include "../raylib.h"
 
 #include "../map/tile.h"
@@ -12,12 +13,11 @@ private:
     bool isAlive(Unit *unit);
     void removeDead();
 
-    Map *map;
+    Map *tileMap;
     Camera2D *camera;
 
-    Texture2D tileHighLite;
-    Texture2D warrior1;
-    Texture2D warrior2;
+    std::map<std::string, Texture2D> unitTextures;
+    Texture2D *tileHighLite;
 public:
     std::string owner;
     std::vector<Unit> units;
@@ -26,6 +26,6 @@ public:
     void Update(double dt);
     void Render();
 
-    UnitInventory(std::string setOnwer = "player", Map *setMap = NULL, Camera2D *setCamera = NULL);
+    UnitInventory(std::string setOnwer = "player", Map *setMap = NULL, Camera2D *setCamera = NULL, Texture2D *setTileHighLite = NULL, std::map<std::string, Texture2D> setUnitTextures = {});
     ~UnitInventory();
 };

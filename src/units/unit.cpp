@@ -108,12 +108,6 @@ bool Unit::hasTileFriendly(Vector2 coord, std::string type) {
     return false; // just to be sure for the compiler
 }
 
-// void Unit::removeBorderOptions() {
-//     if() {
-//         return surroundingCoords;
-//     }
-// }
-
 void Unit::setOptions() {
     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
     for (int i=0; i < options.size(); i++) {
@@ -156,7 +150,6 @@ void Unit::Update(double dt)
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
                 Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-
                 if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
                     selected = false;
                     removeOptions();
@@ -181,6 +174,7 @@ void Unit::Update(double dt)
                 }
             }
         } else {
+
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
                 Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
@@ -215,8 +209,10 @@ void Unit::Update(double dt)
 
 void Unit::Render()
 {
+
     for (int i=0; i < possibleOptions.size(); i++) {
         Tile *tile = tileMap->getTile(possibleOptions.at(i));
+        std::cout << "yes 1" << std::endl;
         DrawTextureEx(*tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
     }
 
@@ -225,6 +221,7 @@ void Unit::Render()
     } else {
         DrawTextureEx(*texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
     }
+
 }
 
 Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)

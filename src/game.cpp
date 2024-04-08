@@ -19,13 +19,17 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     };
 
     unitTextures = {
-        {"warriorLVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
-        {"warriorLVL2", LoadTexture("sprites/units/melee/BattlefishRed.png")}
+        {"warrior1LVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
+        {"warrior2LVL1", LoadTexture("sprites/units/melee/BattlefishRed.png")}
     };
+
+    tileHighLiteWhite = LoadTexture("sprites/UI-elements/hexHighlight.png");
+    tileHighLiteRed = LoadTexture("sprites/UI-elements/hexRedHighlight.png");
+    
 
     overlay = Overlay(screenWidth, screenHeight, tileTextures);
     map = Map(rowCount, columnCount, tileTextures);
-    player = Player(startingPosition, screenWidth, screenHeight, &map);
+    player = Player(startingPosition, screenWidth, screenHeight, &map, &tileHighLiteWhite, unitTextures);
 
     gameTime = 0;
     waveCount = 0;
@@ -47,12 +51,16 @@ Game::~Game()
     for (int i=0; i < unloadUnitTextures.size(); i++) {
         UnloadTexture(unitTextures[unloadUnitTextures.at(i)]);
     }
+
+    UnloadTexture(tileHighLiteWhite);
+    UnloadTexture(tileHighLiteRed);
 }
 
 void Game::Update(double dt)
 {
-    bool isMouseOnOverlay = overlay.isMouseOnOverlay();;
-    if(IsMouseButtonPressed(0)) {
+    bool isMouseOnOverlay = overlay.isMouseOnOverlay(); // check if mouse is on overlay so it can be used for player aswell
+
+    if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
         if(overlay.isBuildMode) {
             if(isMouseOnOverlay) {
                 int buildTile = overlay.mouseOnBuildTile();
@@ -78,7 +86,9 @@ void Game::Update(double dt)
 
     }
 
-    player.Update(dt, overlay.selectedBuildTile);
+    player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
+
+    MusicPlayer(); // play the song 
 }
 
 void Game::MusicPlayer() 
@@ -97,10 +107,9 @@ void Game::Render()
         Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
         Vector2 coord = map.worldPosToGridPos(worldMousePos);
         BeginMode2D(player.camera);
-            // map draw functions where things have to move here
-            map.draw();
+            map.draw(); // draw the tiles
 
-            player.Render();
+            player.Render(); // draw player units
 
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
@@ -120,8 +129,6 @@ void Game::Render()
         overlay.drawInventory(food, coral, score, gameTime, waveCount, 1);
         overlay.drawBuildMode();
     EndDrawing();
-
-    // MusicPlayer();
 }
 
 void Game::run() // start the game loop
