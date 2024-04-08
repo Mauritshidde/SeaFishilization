@@ -69,6 +69,8 @@ void Game::Update(double dt)
     bool isMouseOnOverlay = overlay.isMouseOnOverlay(); // check if mouse is on overlay so it can be used for player aswell
 
     if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
+        Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
+        Vector2 coord = map.worldPosToGridPos(worldMousePos);
         if(overlay.isBuildMode) {
             if(isMouseOnOverlay) {
                 int buildTile = overlay.mouseOnBuildTile();
@@ -76,9 +78,7 @@ void Game::Update(double dt)
                     overlay.selectBuildTile(buildTile);
                 }
                 // do stuff with overlay
-            } else {
-                Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
-                Vector2 coord = map.worldPosToGridPos(worldMousePos);
+            } else if (!isCastleMenu) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "" && map.isSurrounded(coord) && map.isTileAvailable(coord, buildTileName)) {
                     bool isBought = player.buyTile(buildTileName);
@@ -94,6 +94,21 @@ void Game::Update(double dt)
                         // not enough money
                     }
                 }
+            }
+        }
+
+        std::vector<std::string> castleTypes = {"castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
+
+        bool isMouseOnCastle = (std::find(castleTypes.begin(), castleTypes.end(), map.getTileType(coord)) != castleTypes.end());
+
+        if(isMouseOnCastle) {
+            isCastleMenu = true;
+        }
+
+        if(isCastleMenu) {
+            Vector2 mousePos = GetMousePosition();
+            if(mousePos.x > 1365 && mousePos.x < 1485 && mousePos.y > 500 && mousePos.y < 630) {
+                isCastleMenu = false;
             }
         }
 
@@ -126,7 +141,7 @@ void Game::Render()
             player.Render(); // draw player units
             wave.Render();
 
-            if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
+            if(!overlay.isMouseOnOverlay() && overlay.isBuildMode && !isCastleMenu) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
                     map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
