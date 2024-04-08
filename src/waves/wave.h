@@ -20,7 +20,7 @@ private:
     Camera2D *camera;
     Texture2D *tileHighLite;
     std::map<std::string, Texture2D> unitTextures;
-
+    Vector2 target;
 
     int maxUnitLevel;
     int minUnitLevel;
