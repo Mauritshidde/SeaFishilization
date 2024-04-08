@@ -1,4 +1,3 @@
-#include <iostream>
 #include "overlay.h"
 
 Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Texture2D> tileTextures_) 
@@ -45,9 +44,6 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
     selectedBuildTile = -1;
     highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
 
-    castleLvl = 1;
-    castleHp = 5;
-    
     isBuildMode = true;
 }
 
@@ -115,20 +111,29 @@ void Overlay::drawInventory(int food, int coral, int score, int time, int wave, 
     DrawText(TextFormat("wave: %d", wave), screenWidth - screenWidth/4, screenHeight/15, 10, WHITE);
 }
 
-void Overlay::drawCastleMenu() 
+void Overlay::drawCastleMenu(int level) 
 {
-    int level = 1;
-    int cost = 20;
+    int cost = 10 * std::pow(2, level);
+    int productionSpeed = 5 - level;
+    int hp = (level + 1) * 5;
     int fontSize = 50;
     Vector2 startPosition = { screenWidth / 10 * 3, screenHeight / 2 - fontSize * 5 };
     Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 2.5, fontSize * 10 };
     DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
     DrawText(TextFormat("UPGRADE CASTLE TO LVL %d", level), startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
+    if(level >= 5) {
+        DrawText("MAX LVL REACHED!", startPosition.x + fontSize, startPosition.y + fontSize * 2.5, fontSize / 2, RED);
+        Rectangle cancelRect = { startPosition.x + fontSize * 7, startPosition.y + fontSize * 8, fontSize * 5, fontSize * 1.5 };
+        DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
+        DrawText("[C] CANCEL", startPosition.x + fontSize * 8.25, startPosition.y + fontSize * 8.5, fontSize / 2, WHITE);
+        return;
+
+    }
     // DrawText("×", startPosition.x + fontSize * 13.5, startPosition.y + fontSize * 0.9, fontSize, DARKGRAY);
     DrawText(TextFormat("BUILD COST %d CORAL", cost), startPosition.x + fontSize, startPosition.y + fontSize * 2.5, fontSize / 2, RED);
     DrawText("- Unlock new fish!", startPosition.x + fontSize, startPosition.y + fontSize * 4, fontSize / 2, GOLD);
-    DrawText(TextFormat("- Production time to %d sec (-1 sec)", 5 - 1), startPosition.x + fontSize, startPosition.y + fontSize * 5, fontSize / 2, GOLD);
-    DrawText(TextFormat("- Castle protection to %d hp (+5 hp)", 5), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
+    DrawText(TextFormat("- Production time to %d sec (-1 sec)", productionSpeed), startPosition.x + fontSize, startPosition.y + fontSize * 5, fontSize / 2, GOLD);
+    DrawText(TextFormat("- Castle protection to %d hp (+5 hp)", hp), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
     
     Rectangle buyRect = { startPosition.x + fontSize, startPosition.y + fontSize * 8, fontSize * 5, fontSize * 1.5 };
     DrawText("press key:", startPosition.x + fontSize, startPosition.y + fontSize * 7, fontSize / 2, DARKGRAY);

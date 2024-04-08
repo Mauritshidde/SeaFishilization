@@ -2,6 +2,8 @@
 #include <map>
 #include <vector>
 #include <string>
+#include <iostream>
+#include <cmath>
 #include "../raylib.h"
 
 class Overlay
@@ -23,16 +25,13 @@ private:
     std::vector<std::string> buildTileNames;
     Texture2D highlightTileTexture;
 
-    int castleLvl;
-    int castleHp;
-
     std::map<std::string, Texture2D> tileTextures;
 public:
     int selectedBuildTile;
     bool isBuildMode;
     void drawBuildMode();
     void drawInventory(int food, int coral, int score, int time, int wave, int nextWaveTime);
-    void drawCastleMenu();
+    void drawCastleMenu(int level);
     bool isMouseOnOverlay();
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);
