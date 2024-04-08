@@ -36,6 +36,8 @@ Map::Map(int rowCount, int columnCount, std::map<std::string, Texture2D> tileTex
 
 Map::~Map()
 {
+    UnloadTexture(whiteHighlightTileTexture);
+    UnloadTexture(redHighlightTileTexture);
 }
 
 Tile* Map::getTile(Vector2 coord) {
@@ -81,6 +83,8 @@ void Map::drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed
     } else {
         DrawTextureEx(redHighlightTileTexture, tile->getPos(), 0, (double) tileHeight / 810, WHITE);
     }
+    
+    tile = NULL;
 }
 
 std::string Map::getTileType(Vector2 coord) {
