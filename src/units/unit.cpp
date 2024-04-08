@@ -73,7 +73,7 @@ bool Unit::hasTileFriendly(Vector2 coord, std::string type) {
 }
 
 void Unit::setOptions() {
-    std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
+    std::vector<Vector2> options = tileMap->getSurroundingCoordsEnemy(gridPosition);
     for (int i=0; i < options.size(); i++) {
         Vector2 coord = options.at(i);
         if (!tileMap->isTileLocked(coord) && !hasTileFriendly(coord, owner)) {

@@ -23,7 +23,7 @@ public:
     std::string owner;
     std::vector<Unit> units;
 
-    void createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test);
+    void createUnit(Vector2 startingPos, Camera2D *test, int level);
     void Update(double dt);
     void Update(double dt, Vector2 target);
     void Render();

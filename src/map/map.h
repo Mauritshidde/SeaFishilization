@@ -25,6 +25,7 @@ public:
     Vector2 worldPosToGridPos(Vector2 coord);
     Vector2 gridPosToWorldPos(Vector2 coord);
     std::vector<Vector2> getSurroundingCoords(Vector2 coord);
+    std::vector<Vector2> getSurroundingCoordsEnemy(Vector2 coord);
     bool isSurrounded(Vector2 coord);
     void drawGhostTile(Vector2 coord, std::string type, bool isPlacementAllowed);
     std::string getTileType(Vector2 coord);
