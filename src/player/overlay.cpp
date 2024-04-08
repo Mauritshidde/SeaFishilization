@@ -67,7 +67,7 @@ void Overlay::drawBuildMode()
         DrawTextureEx(tileTextures[buildTileNames[i]], buildTilePositions[i], 0, (double) buildTileSize / 810, WHITE);
     }
 
-    const char*text0 = TextFormat("cost: %d", foodTileCost);
+    const char*text0 = TextFormat("%d coral", foodTileCost);
     Vector2 textDimentions0 = MeasureTextEx(font, text0, fontSize, spacing);
     Vector2 position0 = {
         buildTilePositions[0].x + buildTileSize*1.15f / 2 - textDimentions0.x / 2, 
@@ -75,7 +75,7 @@ void Overlay::drawBuildMode()
     };
     DrawTextEx(font, text0, position0, fontSize, spacing, WHITE);
     
-    const char*text1 = TextFormat("cost: %d", coralTileCost);
+    const char*text1 = TextFormat("%d coral", coralTileCost);
     Vector2 textDimentions1 = MeasureTextEx(font, text1, fontSize, spacing);
     Vector2 position1 = {
         buildTilePositions[1].x + buildTileSize*1.15f / 2 - textDimentions1.x / 2, 
@@ -83,14 +83,13 @@ void Overlay::drawBuildMode()
     };
     DrawTextEx(font, text1, position1, fontSize, spacing, WHITE);
     
-    const char*text2 = TextFormat("cost: %d", trainingTileCost);
+    const char*text2 = TextFormat("%d coral", trainingTileCost);
     Vector2 textDimentions2 = MeasureTextEx(font, text2, fontSize, spacing);
     Vector2 position2 = {
         buildTilePositions[2].x + buildTileSize*1.15f / 2 - textDimentions2.x / 2, 
         buildTilePositions[2].y + buildTileSize / 2 - textDimentions2.y / 2
     };
-    // DrawTextEx(font, text2, (Vector2) {position2.x - 2, position2.y - 2}, fontSize + 4, spacing, BLACK);
-    DrawTextEx(font, text2, position2, fontSize, spacing, GRAY);
+    DrawTextEx(font, text2, position2, fontSize, spacing, DARKGRAY);
 
     if(selectedBuildTile > -1 && selectedBuildTile < buildTilePositions.size()) {
         DrawTextureEx(highlightTileTexture, buildTilePositions[selectedBuildTile], 0, (double) buildTileSize / 810, WHITE);
