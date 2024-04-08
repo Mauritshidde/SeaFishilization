@@ -30,6 +30,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     overlay = Overlay(screenWidth, screenHeight, tileTextures);
     map = Map(rowCount, columnCount, tileTextures);
     player = Player(startingPosition, screenWidth, screenHeight, &map, &tileHighLiteWhite, unitTextures);
+    wave = Wave2(&map, &player.camera, &tileHighLiteWhite, unitTextures);
 
     gameTime = 0;
     waveCount = 0;
@@ -91,6 +92,7 @@ void Game::Update(double dt)
     }
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
+    wave.Update(dt);
 
     MusicPlayer(); // play the song 
 }
@@ -114,6 +116,7 @@ void Game::Render()
             map.draw(); // draw the tiles
 
             player.Render(); // draw player units
+            wave.Render();
 
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
@@ -121,6 +124,7 @@ void Game::Render()
                     map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
                 }
             }
+
         EndMode2D();
         
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
@@ -142,6 +146,7 @@ void Game::run() // start the game loop
     double dt;
 
     player.Start();
+    wave.Start();
     
     while (gameRunning && !WindowShouldClose())
     {

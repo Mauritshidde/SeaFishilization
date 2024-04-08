@@ -7,6 +7,7 @@
 #include "player/overlay.h"
 #include "map/map.h"
 #include "units/unit.h"
+#include "waves/wave.h"
 
 class Game
 {
@@ -15,6 +16,7 @@ private:
     Overlay overlay;
     Map map;
     Music song;
+    Wave2 wave;
 
     std::map<std::string, Texture2D> tileTextures;
     std::map<std::string, Texture2D> unitTextures;

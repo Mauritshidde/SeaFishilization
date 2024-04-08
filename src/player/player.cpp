@@ -21,7 +21,6 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     camera.zoom = 1.0f;
 
     playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
-    // std::cout << "jes" << std::endl;
 
     movementSpeed = 250;
     zoomSpeed = 10;
@@ -60,14 +59,14 @@ void Player::movement(double dt, int isBuildMode)
 
     if (GetMouseWheelMove() > 0) 
     {
-        camera.zoom += zoomSpeed * dt;
+        camera.zoom += zoomSpeed * dt / camera.zoom;
         if (camera.zoom > maxZoom) {
             camera.zoom = maxZoom;
         }
     }
     else if (GetMouseWheelMove() < 0)
     {
-        camera.zoom -= zoomSpeed * dt;
+        camera.zoom -= zoomSpeed * dt / camera.zoom;
         if (camera.zoom < minZoom) {
             camera.zoom = minZoom;
         }
@@ -84,8 +83,8 @@ void Player::movement(double dt, int isBuildMode)
         {
             Vector2 currentMousePos = GetMousePosition();
             if (currentMousePos.x != mouseStartPos.x || currentMousePos.y != mouseStartPos.y) {
-                camera.target.x -= (currentMousePos.x-mouseStartPos.x) * mouseMovementSpeed * dt;
-                camera.target.y -= (currentMousePos.y-mouseStartPos.y) * mouseMovementSpeed * dt;
+                camera.target.x -= (currentMousePos.x-mouseStartPos.x) * mouseMovementSpeed * dt / camera.zoom;
+                camera.target.y -= (currentMousePos.y-mouseStartPos.y) * mouseMovementSpeed * dt / camera.zoom;
             }
             
             mouseStartPos = GetMousePosition();
