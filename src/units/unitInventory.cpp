@@ -2,7 +2,7 @@
 
 void UnitInventory::createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test) { // startingPos is grid position and not world position
     Tile *startTile = map->getTile(startingPos);
-    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, map, test, startTile, startingPos, owner);
+    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, map, test, startTile, startingPos, owner, &warrior1, &tileHighLite);
     units.push_back(newUnit);
 }
 
@@ -46,6 +46,10 @@ UnitInventory::UnitInventory(std::string setOnwer, Map *setMap, Camera2D *setCam
     owner = setOnwer;
     map = setMap;
     camera = setCamera;
+    tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
+
+    warrior1 = LoadTexture("sprites/units/melee/Battlefish.png");
+    warrior2 = LoadTexture("sprites/units/melee/BattlefishRed.png");
 }
 
 UnitInventory::~UnitInventory()

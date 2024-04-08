@@ -14,6 +14,10 @@ private:
 
     Map *map;
     Camera2D *camera;
+    Texture2D tileHighLite;
+
+    Texture2D warrior1;
+    Texture2D warrior2;
 public:
     std::string owner;
     std::vector<Unit> units;
