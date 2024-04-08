@@ -29,9 +29,12 @@ private:
 
     void Update(double dt);
     void Render();
+    void Start();
     void MusicPlayer();
 
 public:
+    Tile *mapCenter;
+    std::vector<Tile*> surroundingCenter;
     double gameTime;
     int waveCount;
     int score;

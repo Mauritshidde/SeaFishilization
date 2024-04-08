@@ -124,7 +124,6 @@ void Unit::Update(double dt, Vector2 target) {
 
     if (canMove) {
         if (!isMoving) {
-            std::cout << "ja" << std::endl;
             if (target.x > gridPosition.x) {
                 target.x = gridPosition.x + 1;
                 target.y = gridPosition.y;

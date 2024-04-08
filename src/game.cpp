@@ -82,6 +82,14 @@ void Game::Update(double dt)
 {
     bool isMouseOnOverlay = overlay.isMouseOnOverlay(); // check if mouse is on overlay so it can be used for player aswell
 
+    for (int i=0; i < surroundingCenter.size(); i++) {
+        if (surroundingCenter.at(i)->isUnitOnTile) {
+            if (surroundingCenter.at(i)->unitOnTile->owner != "player") {
+                // catsle take damage TODO
+            }
+        }
+    }
+
     if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
         
         Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
@@ -195,13 +203,24 @@ void Game::Render()
     EndDrawing();
 }
 
+void Game::Start() {
+    mapCenter = map.getTile({int(map.cols/2), int(map.rows/2)});
+    std::vector<Vector2> surroundingCoords = map.getSurroundingCoords({int(map.cols/2), int(map.rows/2)});
+
+    for (int i=0; i < surroundingCoords.size(); i++) {
+        surroundingCenter.push_back(map.getTile(surroundingCoords.at(i)));
+    }
+
+    player.Start();
+    wave.Start();
+}
+
 void Game::run() // start the game loop
 {
     bool gameRunning = true;
     double dt;
 
-    player.Start();
-    wave.Start();
+    Start();
     
     while (gameRunning && !WindowShouldClose())
     {
