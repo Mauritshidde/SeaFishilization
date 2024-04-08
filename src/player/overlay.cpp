@@ -44,6 +44,9 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
 
     selectedBuildTile = -1;
     highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
+
+    castleLvl = 1;
+    castleHp = 5;
     
     isBuildMode = true;
 }
@@ -110,6 +113,24 @@ void Overlay::drawInventory(int food, int coral, int score, int time, int wave, 
     DrawText(TextFormat("time: %d", time), screenWidth - screenWidth/4, screenHeight/20, 10, WHITE);
     DrawText(TextFormat("time until next wave: %d", nextWaveTime), screenWidth - screenWidth/8, screenHeight/15, 10, WHITE);
     DrawText(TextFormat("wave: %d", wave), screenWidth - screenWidth/4, screenHeight/15, 10, WHITE);
+}
+
+void Overlay::drawCastleMenu() 
+{
+    int level = 1;
+    int fontSize = 50;
+    Vector2 startPosition = { screenWidth / 3, screenHeight / 2 - fontSize * 5 };
+    Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 3, fontSize * 10 };
+    DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
+    DrawText("UPGRADE CASTLE", startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
+    DrawText("×", startPosition.x + fontSize * 13.5, startPosition.y + fontSize * 0.9, fontSize, DARKGRAY);
+    DrawText(TextFormat("TO LEVEL %d", level), startPosition.x + fontSize, startPosition.y + fontSize * 2.5, fontSize / 2, DARKGRAY);
+    DrawText("- Unlock new fish!", startPosition.x + fontSize, startPosition.y + fontSize * 4, fontSize / 2, GOLD);
+    DrawText(TextFormat("- Production time to %d sec (-1 sec)", 5 - 1), startPosition.x + fontSize, startPosition.y + fontSize * 5, fontSize / 2, GOLD);
+    DrawText(TextFormat("- Castle protection to %d hp (+5 hp)", 5), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
+    Rectangle buyRect = { startPosition.x + fontSize, startPosition.y + fontSize * 7.5, fontSize * 4, fontSize * 1.5 };
+    DrawRectangleRounded(buyRect, 0.2f, 0.0f, DARKGREEN);
+    DrawText("LEVEL UP!", startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 8, fontSize / 2, WHITE);
 }
 
 int Overlay::mouseOnBuildTile() 

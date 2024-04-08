@@ -8,16 +8,23 @@ class Overlay
 {
 private:
     int screenWidth, screenHeight;
+    
     Vector2 inventoryPos;
     int inventoryWidth, inventoryHeight;
+    
     Vector2 buildMenuPos;
     int buildMenuWidth, buildMenuHeight;
     Vector2 buildTilePos0, buildTilePos1, buildTilePos2;
     std::vector<Vector2> buildTilePositions;
     int buildTileSize;
+    
     int foodTileCost, coralTileCost, trainingTileCost;
+    
     std::vector<std::string> buildTileNames;
     Texture2D highlightTileTexture;
+
+    int castleLvl;
+    int castleHp;
 
     std::map<std::string, Texture2D> tileTextures;
 public:

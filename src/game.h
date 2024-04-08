@@ -18,6 +18,8 @@ private:
     Music song;
     Wave2 wave;
 
+    bool isCastleMenu;
+
     std::map<std::string, Texture2D> tileTextures;
     std::map<std::string, Texture2D> unitTextures;
     Texture2D tileHighLiteWhite;

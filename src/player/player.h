@@ -31,8 +31,8 @@ private:
 
     std::map<std::string, Texture2D> unitTextures;
     Texture2D *tileHighLite;
+    int productionSpeed;
 public:
-    int productionSpeed; // in seconds
 
     Camera2D camera = { 0 };
     Vector2 position;

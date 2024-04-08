@@ -35,6 +35,8 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     gameTime = 0;
     waveCount = 0;
     score = 0;
+
+    isCastleMenu = false;
     
     int foodTileCost = player.getTileCost("food");
     int coralTileCost = player.getTileCost("coral");
@@ -140,7 +142,9 @@ void Game::Render()
 
         EndMode2D();
         
-
+        if(isCastleMenu) {
+            overlay.drawCastleMenu();
+        }
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
