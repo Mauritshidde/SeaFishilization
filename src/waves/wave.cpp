@@ -96,7 +96,7 @@ void Wave2::Update(double dt) {
         calcWaveLevel();
     }
 
-    units.Update(dt, {0,0});
+    units.Update(dt, target);
 }
 
 void Wave2::Render() {
@@ -105,6 +105,8 @@ void Wave2::Render() {
 
 void Wave2::Start() {
     srand (time(NULL)); // set random seed for rand int
+
+    target = {map->rows/2, map->cols/2};
 
     calcWaveLevel();
     units.createUnit({9,9}, camera, 1);

@@ -39,6 +39,7 @@ void Unit::fight(Tile *targetTile, double dt) {
         isAlive = false;
         isMoving = false;
         targetTile->isAccesible = true;
+        targetTile->unitOnTile->canMove = true;
     }
 }
 
@@ -121,8 +122,23 @@ void Unit::Update(double dt, Vector2 target) {
         currentTile->unitOnTile = this;
     }
 
-    if (!isMoving) {
-        if (target.x != 0 || target.y != 0) {
+    if (canMove) {
+        if (!isMoving) {
+            std::cout << "ja" << std::endl;
+            if (target.x > gridPosition.x) {
+                target.x = gridPosition.x + 1;
+                target.y = gridPosition.y;
+            } else if (target.x < gridPosition.x) {
+                target.x = gridPosition.x - 1;
+                target.y = gridPosition.y;
+            } else if (target.y > gridPosition.y) {
+                target.x = gridPosition.x;
+                target.y = gridPosition.y + 1;
+            } else if (target.y < gridPosition.y) {
+                target.x = gridPosition.x;
+                target.y = gridPosition.y - 1;
+            }
+            setOptions();
             if (tileInOptions(target)) {
                 selected = false;
                 gridPosition = target;
@@ -132,31 +148,48 @@ void Unit::Update(double dt, Vector2 target) {
 
                 newTile = tileMap->getTile(target);
                 
-                removeOptions();
+                if (newTile->isUnitOnTile) {
+                    isFighting = true;
+                    newTile->unitOnTile->isFighting = true;
+                }
+
                 isMoving = true;
             } else {
-                removeOptions();
                 isMoving = false;
             }
-        }
+            removeOptions();
+        } 
 
-        position = tileMap->gridPosToWorldPos(gridPosition);
-        position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
-    } else {
-        if (newTile->isUnitOnTile) {
-            fight(newTile, dt);
-        } else {
-            newTile->isUnitOnTile = true;
-            newTile->unitOnTile = this;
+        if (isMoving) {
+            newPosition = newTile->getPos();
+            newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
+            movingProgress += movementSpeed * dt;
 
-            currentTile->isUnitOnTile = false;
-            currentTile->unitOnTile = NULL;
+            if (isFighting) {
+                newTile->isAccesible = false;
+                newTile->unitOnTile->canMove = false;
+                fight(newTile, dt);
+            } else {
+                newTile->isUnitOnTile = true;
+                newTile->unitOnTile = this;
 
-            currentTile = newTile;
-            newTile = NULL;
-            isMoving = false;
+                currentTile->isUnitOnTile = false;
+                currentTile->unitOnTile = NULL;
+                newTile->isAccesible = true;
+            }
+
+            if ((movingProgress >= 100) && (!isFighting)) {
+                currentTile = newTile;
+                newTile = NULL;
+                newPosition = {0,0};
+                isMoving = false;
+                movingProgress = 0;
+            }
         }
     }
+
+    position = tileMap->gridPosToWorldPos(gridPosition);
+    position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
 }
 
 void Unit::Update(double dt)
@@ -166,73 +199,75 @@ void Unit::Update(double dt)
         currentTile->unitOnTile = this;
     }
 
-    if (!isMoving) {
-        if (selected) {
-            if (IsMouseButtonPressed(0)) {
-                Vector2 mousePos = GetMousePosition();
-                Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-                if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                    selected = false;
-                    removeOptions();
-                } else if (tileInOptions(tilePos)) {
-                    selected = false;
-                    gridPosition = tilePos;
+    if (canMove) {
+        if (!isMoving) {
+            if (selected) {
+                if (IsMouseButtonPressed(0)) {
+                    Vector2 mousePos = GetMousePosition();
+                    Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+                    if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                        selected = false;
+                        removeOptions();
+                    } else if (tileInOptions(tilePos)) {
+                        selected = false;
+                        gridPosition = tilePos;
 
-                    currentTile->isUnitOnTile = false;
-                    currentTile->unitOnTile = NULL;
+                        currentTile->isUnitOnTile = false;
+                        currentTile->unitOnTile = NULL;
 
-                    newTile = tileMap->getTile(tilePos);
-                    
-                    if (newTile->isUnitOnTile) {
-                        isFighting = true;
-                        newTile->unitOnTile->isFighting = true;
+                        newTile = tileMap->getTile(tilePos);
+                        
+                        if (newTile->isUnitOnTile) {
+                            isFighting = true;
+                            newTile->unitOnTile->isFighting = true;
+                        }
+
+                        movingProgress = 0;
+
+                        removeOptions();
+                        isMoving = true;
+                    } else {
+                        removeOptions();
+                        selected = false;
                     }
+                }
+            } else {
 
-                    movingProgress = 0;
+                if (IsMouseButtonPressed(0)) {
+                    Vector2 mousePos = GetMousePosition();
+                    Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
 
-                    removeOptions();
-                    isMoving = true;
-                } else {
-                    removeOptions();
-                    selected = false;
+                    if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                        selected = true;
+                        setOptions();
+                    }
                 }
             }
+
         } else {
+            newPosition = newTile->getPos();
+            newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
+            movingProgress += movementSpeed * dt;
 
-            if (IsMouseButtonPressed(0)) {
-                Vector2 mousePos = GetMousePosition();
-                Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+            if (isFighting) {
+                newTile->isAccesible = false;
+                fight(newTile, dt);
+            } else {
+                newTile->isUnitOnTile = true;
+                newTile->unitOnTile = this;
 
-                if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                    selected = true;
-                    setOptions();
-                }
+                currentTile->isUnitOnTile = false;
+                currentTile->unitOnTile = NULL;
+                newTile->isAccesible = true;
             }
-        }
 
-    } else {
-        newPosition = newTile->getPos();
-        newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
-        movingProgress += movementSpeed * dt;
-
-        if (isFighting) {
-            newTile->isAccesible = false;
-            fight(newTile, dt);
-        } else {
-            newTile->isUnitOnTile = true;
-            newTile->unitOnTile = this;
-
-            currentTile->isUnitOnTile = false;
-            currentTile->unitOnTile = NULL;
-            newTile->isAccesible = true;
-        }
-
-        if ((movingProgress >= 100) && (!isFighting)) {
-            currentTile = newTile;
-            newTile = NULL;
-            newPosition = {0,0};
-            isMoving = false;
-            movingProgress = 0;
+            if ((movingProgress >= 100) && (!isFighting)) {
+                currentTile = newTile;
+                newTile = NULL;
+                newPosition = {0,0};
+                isMoving = false;
+                movingProgress = 0;
+            }
         }
     }
 
