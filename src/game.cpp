@@ -186,7 +186,7 @@ void Game::Render()
         EndMode2D();
         
         if(isCastleMenu) {
-            overlay.drawCastleMenu();
+            overlay.drawCastleMenu(player.getCastleLvl());
         }
         // DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         // DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);

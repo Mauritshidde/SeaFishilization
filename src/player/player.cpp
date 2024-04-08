@@ -5,7 +5,7 @@
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
-    coral = 1800;
+    coral = 0;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -132,6 +132,7 @@ bool Player::buyCastleUpgrade() {
     if (castleLvl > 4) return false;
     if (coral < castleCost) return false;
     castleLvl++;
+    productionSpeed--;
     addCoralAmount(-castleCost);
     castleCost = castleCost * 2;
     return true;
@@ -148,8 +149,8 @@ void Player::Update(double dt, int isBuildMode) {
     if (GetTime() - (int)GetTime() + dt > 1 && (int)GetTime() % productionSpeed == 0) {
         int foodTileCount = map->countTilesWithType("food");
         int coralTileCount = map->countTilesWithType("coral");
-        addFoodAmount(foodTileCount); // 1 / tile / update
-        addCoralAmount(coralTileCount); // 1 / tile / sec
+        addFoodAmount(foodTileCount); // 1 / tile / prodSpeed
+        addCoralAmount(coralTileCount); // 1 / tile / prodSpeed
     }
 
 
