@@ -1,5 +1,6 @@
 #pragma once
 #include <map>
+#include <vector>
 #include <string>
 #include "raylib.h"
 
@@ -18,6 +19,7 @@ private:
     Music song;
     Wave2 wave;
 
+    std::vector<std::string> castleTypes;
     bool isCastleMenu;
 
     std::map<std::string, Texture2D> tileTextures;

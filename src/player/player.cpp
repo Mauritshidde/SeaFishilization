@@ -5,8 +5,7 @@
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
-    coral = 0;
-
+    coral = 1800;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -22,6 +21,9 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     camera.zoom = 1.0f;
 
     playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
+
+    castleCost = 20;
+    castleLvl = 1;
 
     movementSpeed = 250;
     zoomSpeed = 10;
@@ -124,6 +126,19 @@ bool Player::buyTile(std::string type) {
     
     addCoralAmount(-cost);
     return true;
+}
+
+bool Player::buyCastleUpgrade() {
+    if (castleLvl > 4) return false;
+    if (coral < castleCost) return false;
+    castleLvl++;
+    addCoralAmount(-castleCost);
+    castleCost = castleCost * 2;
+    return true;
+}
+
+int Player::getCastleLvl() {
+    return castleLvl;
 }
 
 void Player::Update(double dt, int isBuildMode) {

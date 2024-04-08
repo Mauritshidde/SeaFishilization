@@ -22,6 +22,8 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
         {"warrior1LVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
         {"warrior2LVL1", LoadTexture("sprites/units/melee/BattlefishRed.png")}
     };
+    
+    castleTypes = {"castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
 
     tileHighLiteWhite = LoadTexture("sprites/UI-elements/hexHighlight.png");
     tileHighLiteRed = LoadTexture("sprites/UI-elements/hexRedHighlight.png");
@@ -69,6 +71,7 @@ void Game::Update(double dt)
     bool isMouseOnOverlay = overlay.isMouseOnOverlay(); // check if mouse is on overlay so it can be used for player aswell
 
     if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
+        
         Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
         Vector2 coord = map.worldPosToGridPos(worldMousePos);
         if(overlay.isBuildMode) {
@@ -97,8 +100,6 @@ void Game::Update(double dt)
             }
         }
 
-        std::vector<std::string> castleTypes = {"castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
-
         bool isMouseOnCastle = (std::find(castleTypes.begin(), castleTypes.end(), map.getTileType(coord)) != castleTypes.end());
 
         if(isMouseOnCastle) {
@@ -108,8 +109,17 @@ void Game::Update(double dt)
 
     }
 
-    if(isCastleMenu && IsKeyPressed(KEY_C)) {
-        isCastleMenu = false;
+    if(isCastleMenu) {
+        if(IsKeyPressed(KEY_C)) {
+            isCastleMenu = false;
+        } else if (IsKeyPressed(KEY_L)) {
+            bool isBought = player.buyCastleUpgrade();
+            if(isBought) {
+                isCastleMenu = false;
+                int castleLvl = player.getCastleLvl();
+                map.changeTileType({8, 8}, castleTypes.at(castleLvl - 1));
+            }
+        }
     }
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player

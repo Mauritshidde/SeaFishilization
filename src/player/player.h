@@ -25,6 +25,9 @@ private:
     int food;
     int coral;
 
+    int castleLvl;
+    int castleCost;
+
 
     std::vector<Unit> units;
     Map *map;
@@ -43,6 +46,8 @@ public:
     int getCoralAmount();
     int getTileCost(std::string type);
     bool buyTile(std::string type);
+    bool buyCastleUpgrade();
+    int getCastleLvl();
 
     void Update(double dt, int isBuildMode);
     void Render();
