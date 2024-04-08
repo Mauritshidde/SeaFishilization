@@ -105,13 +105,11 @@ void Game::Update(double dt)
             isCastleMenu = true;
         }
 
-        if(isCastleMenu) {
-            Vector2 mousePos = GetMousePosition();
-            if(mousePos.x > 1365 && mousePos.x < 1485 && mousePos.y > 500 && mousePos.y < 630) {
-                isCastleMenu = false;
-            }
-        }
 
+    }
+
+    if(isCastleMenu && IsKeyPressed(KEY_C)) {
+        isCastleMenu = false;
     }
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
