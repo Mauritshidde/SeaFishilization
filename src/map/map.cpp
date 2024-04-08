@@ -36,8 +36,7 @@ Map::Map(int rowCount, int columnCount, std::map<std::string, Texture2D> tileTex
 
 Map::~Map()
 {
-    // UnloadTexture(whiteHighlightTileTexture);
-    // UnloadTexture(redHighlightTileTexture);
+
 }
 
 Tile* Map::getTile(Vector2 coord) {

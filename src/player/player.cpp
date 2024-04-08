@@ -21,7 +21,6 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     camera.zoom = 1.0f;
 
     playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
-    // std::cout << "jes" << std::endl;
 
     movementSpeed = 250;
     zoomSpeed = 10;

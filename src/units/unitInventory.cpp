@@ -1,8 +1,19 @@
 #include "unitInventory.h"
 
 void UnitInventory::createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test) { // startingPos is grid position and not world position
+    std::cout << owner << std::endl;
     Tile *startTile = tileMap->getTile(startingPos);
-    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, tileMap, test, startTile, startingPos, owner, &unitTextures["warrior1LVL1"], tileHighLite);
+    std::cout << owner << std::endl;
+
+    Texture2D *unitTexture;
+
+    if (owner == "player") {
+        unitTexture = &unitTextures["warrior1LVL1"];
+    } else {
+        unitTexture = &unitTextures["warrior2LVL1"];
+    }   
+
+    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, tileMap, test, startTile, startingPos, owner, unitTexture, tileHighLite);
     units.push_back(newUnit);
 }
 
