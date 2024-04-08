@@ -19,8 +19,20 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     };
 
     unitTextures = {
-        {"warrior1LVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
-        {"warrior2LVL1", LoadTexture("sprites/units/melee/BattlefishRed.png")}
+        {"warrior1LVL1", LoadTexture("sprites/units/Battlefish.png")},
+        {"warrior2LVL1", LoadTexture("sprites/units/BattlefishRed.png")},
+
+        {"warrior1LVL2", LoadTexture("sprites/units/BattleHorse.png")},
+        {"warrior2LVL2", LoadTexture("sprites/units/BattleHorseRed.png")},
+
+        {"warrior1LVL3", LoadTexture("sprites/units/Angler.png")},
+        {"warrior2LVL3", LoadTexture("sprites/units/AnglerRed.png")},
+
+        {"warrior1LVL4", LoadTexture("sprites/units/BattleHorse.png")},
+        {"warrior2LVL4", LoadTexture("sprites/units/BattleHorseRed.png")},
+
+        {"warrior1LVL5", LoadTexture("sprites/units/SharkRegular.png")},
+        {"warrior2LVL5", LoadTexture("sprites/units/SharkRed.png")}
     };
     
     castleTypes = {"castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
@@ -168,15 +180,16 @@ void Game::Render()
         if(isCastleMenu) {
             overlay.drawCastleMenu();
         }
-        DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
-        DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
+        // DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
+        // DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
 
         // ui draw functions that should not move here
         int food = player.getFoodAmount();
         int coral = player.getCoralAmount();
         int time = int(gameTime);
-        overlay.drawInventory(food, coral, score, time, waveCount, 1);
+        int timeUntilNextWave = round(wave.timeUntilNextWave);
+        overlay.drawInventory(food, coral, score, time, wave.waveCount, timeUntilNextWave);
 
         overlay.drawBuildMode();
     EndDrawing();

@@ -18,36 +18,36 @@ void UnitInventory::createUnit(Vector2 startingPos, Camera2D *test, int level) {
             maxHealth = 100;
             damage = 10;
             movementSpeed = 30;
-            defence = 3;
+            defence = 5;
             texture = &unitTextures["warrior1LVL1"];
             break;
         case 2:
-            maxHealth = 100;
-            damage = 10;
-            movementSpeed = 30;
-            defence = 3;
-            texture = &unitTextures["warrior1LVL1"];
+            maxHealth = 220;
+            damage = 15;
+            movementSpeed = 60;
+            defence = 2;
+            texture = &unitTextures["warrior1LVL2"];
             break;
         case 3:
-            maxHealth = 100;
-            damage = 10;
+            maxHealth = 320;
+            damage = 23;
             movementSpeed = 30;
-            defence = 3;
-            texture = &unitTextures["warrior1LVL1"];
+            defence = 9;
+            texture = &unitTextures["warrior1LVL3"];
             break;
         case 4:
-            maxHealth = 100;
-            damage = 10;
+            maxHealth = 430;
+            damage = 35;
             movementSpeed = 30;
-            defence = 3;
-            texture = &unitTextures["warrior1LVL1"];
+            defence = 14;
+            texture = &unitTextures["warrior1LVL4"];
             break;
         case 5:
-            maxHealth = 100;
-            damage = 10;
-            movementSpeed = 30;
-            defence = 3;
-            texture = &unitTextures["warrior1LVL1"];
+            maxHealth = 640;
+            damage = 50;
+            movementSpeed = 10;
+            defence = 20;
+            texture = &unitTextures["warrior1LVL5"];
             break;
         default:
             break;
@@ -67,28 +67,28 @@ void UnitInventory::createUnit(Vector2 startingPos, Camera2D *test, int level) {
             damage = 10;
             movementSpeed = 30;
             defence = 3;
-            texture = &unitTextures["warrior2LVL1"];
+            texture = &unitTextures["warrior2LVL2"];
             break;
         case 3:
             maxHealth = 100;
             damage = 10;
             movementSpeed = 30;
             defence = 3;
-            texture = &unitTextures["warrior2LVL1"];
+            texture = &unitTextures["warrior2LVL3"];
             break;
         case 4:
             maxHealth = 100;
             damage = 10;
             movementSpeed = 30;
             defence = 3;
-            texture = &unitTextures["warrior2LVL1"];
+            texture = &unitTextures["warrior2LVL4"];
             break;
         case 5:
             maxHealth = 100;
             damage = 10;
             movementSpeed = 30;
             defence = 3;
-            texture = &unitTextures["warrior2LVL1"];
+            texture = &unitTextures["warrior2LVL5"];
             break;
         default:
             break;

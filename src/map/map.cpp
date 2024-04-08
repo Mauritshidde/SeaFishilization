@@ -145,6 +145,20 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
     return result;
 }
 
+std::vector<Vector2> Map::getBorders() {
+    std::vector<Vector2> borderTiles;
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            if(i < 1 || i > rows - 2 || j < 1 || j > cols - 2) {
+                borderTiles.push_back({i, j});
+            }
+        }
+    }
+
+    return borderTiles;
+}
+
+
 std::vector<Vector2> Map::getSurroundingCoordsEnemy(Vector2 coord) 
 {
     std::vector<Vector2> surroundingCoords;
