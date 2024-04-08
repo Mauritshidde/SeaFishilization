@@ -145,6 +145,36 @@ Vector2 Map::gridPosToWorldPos(Vector2 coord)
     return result;
 }
 
+std::vector<Vector2> Map::getSurroundingCoordsEnemy(Vector2 coord) 
+{
+    std::vector<Vector2> surroundingCoords;
+    if(coord.x < 0 || coord.x > rows - 1 || coord.y < 0 || coord.y > cols - 1) {
+        // ? excluding gameBorder tiles: always locked //
+        return surroundingCoords;
+    }
+    
+    if((int)coord.x % 2 == 1) {
+        surroundingCoords = {
+            { coord.x, coord.y - 1 },
+            { coord.x + 1, coord.y - 1 },
+            { coord.x + 1, coord.y },
+            { coord.x, coord.y + 1 },
+            { coord.x - 1, coord.y },
+            { coord.x - 1, coord.y - 1}
+        };
+    } else {
+        surroundingCoords = {
+            { coord.x, coord.y - 1 },
+            { coord.x + 1, coord.y },
+            { coord.x + 1, coord.y + 1 },
+            { coord.x, coord.y + 1 },
+            { coord.x - 1, coord.y + 1 },
+            { coord.x - 1, coord.y}
+        };
+    }
+    return surroundingCoords;
+}
+
 std::vector<Vector2> Map::getSurroundingCoords(Vector2 coord) 
 {
     std::vector<Vector2> surroundingCoords;

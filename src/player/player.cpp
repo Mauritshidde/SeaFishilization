@@ -145,7 +145,7 @@ void Player::Render() {
 }
 
 void Player::Start() {
-    playerUnits.createUnit(100, 10, 100, {10, 10}, &camera);
-    playerUnits.createUnit(100, 10, 100, {11, 10}, &camera);
-    playerUnits.createUnit(100, 10, 100, {12, 10}, &camera);
+    playerUnits.createUnit({10, 10}, &camera, 1);
+    playerUnits.createUnit({11, 10}, &camera, 1);
+    playerUnits.createUnit({16, 7}, &camera, 1);
 }

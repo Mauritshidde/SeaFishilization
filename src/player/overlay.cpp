@@ -103,7 +103,7 @@ void Overlay::drawBuildMode()
 
 }
 
-void Overlay::drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime) 
+void Overlay::drawInventory(int food, int coral, int score, int time, int wave, int nextWaveTime) 
 {
     DrawRectangle(inventoryPos.x, inventoryPos.y, inventoryWidth, inventoryHeight, BROWN);
 

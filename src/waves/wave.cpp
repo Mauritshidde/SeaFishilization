@@ -10,7 +10,7 @@ void Wave2::Render() {
 }
 
 void Wave2::Start() {
-    units.createUnit(100, 10, 100, {5,5}, camera);
+    units.createUnit({9,9}, camera, 1);
 }
 
 Wave2::Wave2(Map *map_, Camera2D *camera_, Texture2D *tileHighLite_, std::map<std::string, Texture2D> unitTextures_)

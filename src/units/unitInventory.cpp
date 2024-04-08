@@ -1,19 +1,101 @@
 #include "unitInventory.h"
 
-void UnitInventory::createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test) { // startingPos is grid position and not world position
-    std::cout << owner << std::endl;
+void UnitInventory::createUnit(Vector2 startingPos, Camera2D *test, int level) { // startingPos is grid position and not world position
     Tile *startTile = tileMap->getTile(startingPos);
-    std::cout << owner << std::endl;
-
     Texture2D *unitTexture;
+    
+    int maxHealth = 0;
+    double damage = 0;
+    double movementSpeed = 0;
+    double defence = 0;
+
+    Texture2D *texture = &unitTextures["warrior1LVL1"];
 
     if (owner == "player") {
-        unitTexture = &unitTextures["warrior1LVL1"];
+        switch (level)
+        {
+        case 1:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior1LVL1"];
+            break;
+        case 2:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior1LVL1"];
+            break;
+        case 3:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior1LVL1"];
+            break;
+        case 4:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior1LVL1"];
+            break;
+        case 5:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior1LVL1"];
+            break;
+        default:
+            break;
+        }
     } else {
-        unitTexture = &unitTextures["warrior2LVL1"];
+        switch (level)
+        {
+        case 1:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior2LVL1"];
+            break;
+        case 2:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior2LVL1"];
+            break;
+        case 3:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior2LVL1"];
+            break;
+        case 4:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior2LVL1"];
+            break;
+        case 5:
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 3;
+            texture = &unitTextures["warrior2LVL1"];
+            break;
+        default:
+            break;
+        }
     }   
 
-    Unit newUnit = Unit(maxHealth, 1, movementSpeed, damage, tileMap, test, startTile, startingPos, owner, unitTexture, tileHighLite);
+    Unit newUnit = Unit(maxHealth, defence, movementSpeed, damage, tileMap, test, startTile, startingPos, owner, texture, tileHighLite);
     units.push_back(newUnit);
 }
 

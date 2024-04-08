@@ -24,6 +24,8 @@ private:
     Tile *newTile;
     Camera2D* camera;
 
+    Vector2 newPosition;
+
     std::vector<Vector2> possibleOptions;
 
     bool tileInOptions(Vector2 coords);
@@ -32,6 +34,7 @@ public:
     bool selected;
     bool isFighting;
     double health;
+    double movingProgress;
 
     Vector2 gridPosition;
     Vector2 position;
