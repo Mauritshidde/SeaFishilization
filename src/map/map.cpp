@@ -154,6 +154,8 @@ std::vector<Vector2> Map::getBorders() {
             }
         }
     }
+
+    return borderTiles;
 }
 
 

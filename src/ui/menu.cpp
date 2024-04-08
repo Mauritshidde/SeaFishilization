@@ -23,10 +23,13 @@ Menu::Menu(int screenWidth, int screenHeight)
             endX.push_back((screenWidth / 2) + (MeasureText(menuTexts.at(i), fontSize) / 2));
             endY.push_back(val * (i + 1) - 50);
       }
+
+      backgroundImage = LoadTexture("sprites/UI-elements/SeafishTITLE.png");
 }
 
 Menu::~Menu()
 {
+      // UnloadTexture(backgroundImage);
 }
 
 void Menu::Draw(int screenWidth, int screenHeight)
@@ -34,6 +37,7 @@ void Menu::Draw(int screenWidth, int screenHeight)
       BeginDrawing();
       // Texture2D test = LoadTexture("test.png");
       ClearBackground(WHITE);
+      // DrawTextureEx(backgroundImage, {0,0}, 0, 1, WHITE);
 
       for (int i = 0; i < menuTexts.size(); i++)
       {

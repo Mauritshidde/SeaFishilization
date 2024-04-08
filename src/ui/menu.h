@@ -22,6 +22,7 @@ private:
     std::vector<const char *> menuTexts;
     std::vector<float> startX, startY, endX, endY;
 
+    Texture2D backgroundImage;
 public:
     int buttonPressed;
     bool running;

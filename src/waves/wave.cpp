@@ -1,21 +1,60 @@
 #include "wave.h"
 
 std::vector<Vector2> Wave2::genStartingPositions(int unitAmount) {
-    map->getBorders();
+    std::vector<Vector2> borders = map->getBorders();
+
+    std::vector<int> numbers;
     
-    for (int i=0; i < unitAmount; i++) {
-        
+    int times = 0;
+    while (numbers.size() < unitAmount || times >= 100) {
+        int number = rand() % borders.size();
+
+        numbers.push_back(number);
+
+        for (int i=0; i < numbers.size()-1; i++) {
+            if (numbers.at(i) == number) {
+                numbers.pop_back();
+                break;
+            }
+        }
+
+        times++;
     }
+
+    std::vector<Vector2> positions;
+
+    for (int i=0; i < numbers.size(); i++) {
+        positions.push_back(borders.at(numbers.at(i)));
+    }
+
+    return positions;
 }
 
 void Wave2::spawnWave() {
-    int unitAmount = rand() % maxUnitAmount + minUnitAmount;
-    int unitLevel = rand() % maxUnitLevel + minUnitLevel;
+    int unitAmountDifference = maxUnitAmount - minUnitAmount;
+    int unitLevelDifference = maxUnitLevel-minUnitLevel;
 
-    genStartingPositions(unitAmount);
+    int unitAmount;
+    if (unitLevelDifference > 0) {
+        unitAmount = rand() % unitAmountDifference;
+    } else {
+        unitAmount = 0;
+    }
 
-    for (int i = 0; i < unitAmount+1; i++) {
-        units.createUnit({0,0}, camera, maxUnitAmount);
+    int unitLevel;
+    if (unitLevelDifference > 0) {
+        unitLevel = rand() % unitLevelDifference;
+    } else {
+        unitLevel = 0;
+    }
+
+    unitAmount += minUnitAmount;
+    unitLevel += minUnitLevel;
+
+    std::vector<Vector2> startingPositions = genStartingPositions(unitAmount);
+
+    for (int i=0; i < startingPositions.size(); i++) {
+        units.createUnit(startingPositions.at(i), camera, maxUnitAmount);
     }
 }
 
@@ -51,9 +90,10 @@ void Wave2::Update(double dt) {
     timeUntilNextWave -= dt;
 
     if (timeUntilNextWave <= 0) {
-        timeUntilNextWave = 120;
+        timeUntilNextWave = 60;
         spawnWave();
         waveCount++;
+        calcWaveLevel();
     }
 
     units.Update(dt, {0,0});
