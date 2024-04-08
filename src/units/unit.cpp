@@ -78,7 +78,7 @@ void Unit::setOptions() {
         Vector2 coord = options.at(i);
         if (!tileMap->isTileLocked(coord) && !hasTileFriendly(coord, owner)) {
             bool isBorder = (coord.x < 1 || coord.x > tileMap->rows - 2 || coord.y < 1 || coord.y > tileMap->cols - 2);
-            if (!isBorder) {
+            if (!isBorder && tileMap->getTile(coord)->isAccesible) {
                 possibleOptions.push_back(options.at(i));
             }
         }
@@ -211,6 +211,7 @@ void Unit::Update(double dt)
 
             currentTile->isUnitOnTile = false;
             currentTile->unitOnTile = NULL;
+            newTile->isAccesible = true;
         }
 
         if ((movingProgress >= 100) && (!isFighting)) {
