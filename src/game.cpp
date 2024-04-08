@@ -83,6 +83,7 @@ void Game::Update(double dt)
                         overlay.setTileTypeCosts(foodTileCost, coralTileCost, trainingTileCost);
                     } else {
                         std::cout << "NOT ENOUGH MONEY" << std::endl;
+                        // DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2}, 50, 10, DARKGRAY);
                         // not enough money
                     }
                 }
@@ -127,6 +128,11 @@ void Game::Render()
 
         EndMode2D();
         
+        // ! TODO: DRAW MONEY SHORTAGE ! //
+        // Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
+        // DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){(GetScreenWidth() - textDimentions.x) / 2, (GetScreenHeight() - textDimentions.y) / 2}, 50, 10, RED);
+        // ! END TODO ! //
+
         DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
