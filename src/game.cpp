@@ -5,7 +5,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
 
-    std::map<std::string, Texture2D> tileTextures = {
+    tileTextures = {
         {"locked", LoadTexture("sprites/resources/BlankTile.png")},
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
         {"food", LoadTexture("sprites/resources/AlgenTile.png")},
@@ -18,14 +18,18 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
         {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
     };
 
-    std::map<std::string, Texture2D> unitTextures = {
-        {"warriorLVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
-        {"warriorLVL2", LoadTexture("sprites/units/melee/BattlefishRed.png")}
+    unitTextures = {
+        {"warrior1LVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
+        {"warrior2LVL1", LoadTexture("sprites/units/melee/BattlefishRed.png")}
     };
+
+    tileHighLiteWhite = LoadTexture("sprites/UI-elements/hexHighlight.png");
+    tileHighLiteRed = LoadTexture("sprites/UI-elements/hexRedHighlight.png");
+    
 
     overlay = Overlay(screenWidth, screenHeight, tileTextures);
     map = Map(rowCount, columnCount, tileTextures);
-    player = Player(startingPosition, screenWidth, screenHeight, &map);
+    player = Player(startingPosition, screenWidth, screenHeight, &map, &tileHighLiteWhite, unitTextures);
 
     gameTime = 0;
     waveCount = 0;
@@ -36,15 +40,29 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 
 Game::~Game()
 {
+    std::vector<std::string> unloadTileTextures = {"locked", "sea", "food", "coral", "training", "castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
+
+    for (int i=0; i < unloadTileTextures.size(); i++) {
+        UnloadTexture(tileTextures[unloadTileTextures.at(i)]);
+    }
+    
+    std::vector<std::string> unloadUnitTextures = {"warrior1LVL1", "warrior2LVL1"};
+
+    for (int i=0; i < unloadUnitTextures.size(); i++) {
+        UnloadTexture(unitTextures[unloadUnitTextures.at(i)]);
+    }
+
+    UnloadTexture(tileHighLiteWhite);
+    UnloadTexture(tileHighLiteRed);
 }
 
 void Game::Update(double dt)
 {
-    player.Update(dt);
+    bool isMouseOnOverlay = overlay.isMouseOnOverlay(); // check if mouse is on overlay so it can be used for player aswell
 
-    if(IsMouseButtonReleased(0)) {
+    if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
         if(overlay.isBuildMode) {
-            if(overlay.isMouseOnOverlay()) {
+            if(isMouseOnOverlay) {
                 int buildTile = overlay.mouseOnBuildTile();
                 if(buildTile != -1) {
                     overlay.selectBuildTile(buildTile);
@@ -71,6 +89,10 @@ void Game::Update(double dt)
         }
 
     }
+
+    player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
+
+    MusicPlayer(); // play the song 
 }
 
 void Game::MusicPlayer() 
@@ -89,10 +111,9 @@ void Game::Render()
         Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera); // dit voor screen pos naar world pos
         Vector2 coord = map.worldPosToGridPos(worldMousePos);
         BeginMode2D(player.camera);
-            // map draw functions where things have to move here
-            map.draw();
+            map.draw(); // draw the tiles
 
-            player.Render();
+            player.Render(); // draw player units
 
             if(!overlay.isMouseOnOverlay() && overlay.isBuildMode) {
                 std::string buildTileName = overlay.getBuildTileName();
@@ -113,8 +134,6 @@ void Game::Render()
 
         overlay.drawBuildMode();
     EndDrawing();
-
-    // MusicPlayer();
 }
 
 void Game::run() // start the game loop

@@ -46,41 +46,41 @@ void Unit::moveOneTile(int option) {
     // }
 }
 
-void Unit::move(Vector2 target) // target is given in hexagon coords
-{
-    Tile *targetTile = tileMap->getTile(target);
+// void Unit::move(Vector2 target) // target is given in hexagon coords
+// {
+//     Tile *targetTile = tileMap->getTile(target);
 
-    // if (selected) {
-    //     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
-    //     for (int i=0; i < possibleOptions.size(); i++) {
-    //         if (!tileMap->isTileLocked(options.at(i))) {
-    //             possibleOptions.push_back(options.at(i));
-    //         }
-    //     }
-    // }
+//     // if (selected) {
+//     //     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
+//     //     for (int i=0; i < possibleOptions.size(); i++) {
+//     //         if (!tileMap->isTileLocked(options.at(i))) {
+//     //             possibleOptions.push_back(options.at(i));
+//     //         }
+//     //     }
+//     // }
     
 
-    // if (!targetTile->isUnitOnTile) {
-    //     position = target;
-    //     currentTile->isUnitOnTile = false;
-    //     currentTile->unitOnTile = NULL;
+//     // if (!targetTile->isUnitOnTile) {
+//     //     position = target;
+//     //     currentTile->isUnitOnTile = false;
+//     //     currentTile->unitOnTile = NULL;
 
-    //     targetTile->unitOnTile = this;
-    //     targetTile->isUnitOnTile = true;
-    // } else {
-    //     fight(targetTile);
-    // }
+//     //     targetTile->unitOnTile = this;
+//     //     targetTile->isUnitOnTile = true;
+//     // } else {
+//     //     fight(targetTile);
+//     // }
 
 
-    // bool unitMoving = false;
+//     // bool unitMoving = false;
 
-    // if (unitMoving) {
-    //     // pathfinding
+//     // if (unitMoving) {
+//     //     // pathfinding
 
-    //     moveOneTile(1);
-    // }
+//     //     moveOneTile(1);
+//     // }
 
-}
+// }
 
 bool Unit::hasTileEnemy(Vector2 coord, std::string type) {
     Tile *tile = tileMap->getTile(coord);
@@ -107,12 +107,6 @@ bool Unit::hasTileFriendly(Vector2 coord, std::string type) {
 
     return false; // just to be sure for the compiler
 }
-
-// void Unit::removeBorderOptions() {
-//     if() {
-//         return surroundingCoords;
-//     }
-// }
 
 void Unit::setOptions() {
     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
@@ -156,7 +150,6 @@ void Unit::Update(double dt)
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
                 Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-
                 if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
                     selected = false;
                     removeOptions();
@@ -181,6 +174,7 @@ void Unit::Update(double dt)
                 }
             }
         } else {
+
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
                 Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
@@ -215,19 +209,22 @@ void Unit::Update(double dt)
 
 void Unit::Render()
 {
+
     for (int i=0; i < possibleOptions.size(); i++) {
         Tile *tile = tileMap->getTile(possibleOptions.at(i));
-        DrawTextureEx(tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
+        std::cout << "yes 1" << std::endl;
+        DrawTextureEx(*tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
     }
 
     if (int(gridPosition.x) % 2 == 0) {
-        DrawTextureEx(texture, position, 0, 0.1, WHITE);
+        DrawTextureEx(*texture, position, 0, 0.1, WHITE);
     } else {
-        DrawTextureEx(texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
+        DrawTextureEx(*texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
     }
+
 }
 
-Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner)
+Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)
 {
     maxHealth = setMaxHealth;
     attackSpeed = setMaxHealth;
@@ -248,15 +245,16 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
 
     owner = setOwner;
 
-    // currentTile->isUnitOnTile = true;
-    // currentTile->unitOnTile = this;
-
-    texture = LoadTexture("sprites/units/melee/Battlefish.png");
-    tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
+    texture = setTexture;
+    tileHighLite = setTileHighLite;
 }
 
 Unit::~Unit()
 {
-
+    texture = NULL;
+    tileHighLite = NULL;
+    tileMap = NULL;
+    currentTile = NULL;
+    camera = NULL;
 }
         

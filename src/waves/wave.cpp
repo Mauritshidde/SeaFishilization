@@ -10,7 +10,7 @@ void Wave2::Render() {
 
 Wave2::Wave2()
 {
-    owner = "Wave2";
+    owner = "Wave";
 }
 
 Wave2::~Wave2()

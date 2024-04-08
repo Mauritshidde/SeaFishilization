@@ -16,6 +16,11 @@ private:
     Map map;
     Music song;
 
+    std::map<std::string, Texture2D> tileTextures;
+    std::map<std::string, Texture2D> unitTextures;
+    Texture2D tileHighLiteWhite;
+    Texture2D tileHighLiteRed;
+
     void Update(double dt);
     void Render();
     void MusicPlayer();
