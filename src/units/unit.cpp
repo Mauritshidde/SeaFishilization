@@ -1,9 +1,7 @@
 #include "unit.h"
 
 void Unit::fight(Tile *targetTile, double dt) {
-    std::cout << "ja" << std::endl;
     Unit *enemy = targetTile->unitOnTile;
-    
     double *enemyHealth = &enemy->health;
 
     *enemyHealth -= attackDamage * dt;
@@ -16,6 +14,7 @@ void Unit::fight(Tile *targetTile, double dt) {
         targetTile->unitOnTile = this;
         currentTile = targetTile;
         enemy->isAlive = false;
+        isMoving = false;
         std::cout << "dead" << std::endl;
     }
     
@@ -25,6 +24,7 @@ void Unit::fight(Tile *targetTile, double dt) {
 
         currentTile = NULL;   
         isAlive = false;
+        isMoving = false;
         std::cout << "dead" << std::endl;
     }
 
@@ -141,6 +141,50 @@ bool Unit::tileInOptions(Vector2 coords) {
     return false;
 }
 
+void Unit::Update(double dt, Vector2 target) {
+    if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
+        currentTile->isUnitOnTile = true;
+        currentTile->unitOnTile = this;
+    }
+
+    if (!isMoving) {
+        if (target.x != 0 || target.y != 0) {
+            if (tileInOptions(target)) {
+                selected = false;
+                gridPosition = target;
+
+                currentTile->isUnitOnTile = false;
+                currentTile->unitOnTile = NULL;
+
+                newTile = tileMap->getTile(target);
+                
+                removeOptions();
+                isMoving = true;
+            } else {
+                removeOptions();
+                isMoving = false;
+            }
+        }
+
+        position = tileMap->gridPosToWorldPos(gridPosition);
+        position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
+    } else {
+        if (newTile->isUnitOnTile) {
+            fight(newTile, dt);
+        } else {
+            newTile->isUnitOnTile = true;
+            newTile->unitOnTile = this;
+
+            currentTile->isUnitOnTile = false;
+            currentTile->unitOnTile = NULL;
+
+            currentTile = newTile;
+            newTile = NULL;
+            isMoving = false;
+        }
+    }
+}
+
 void Unit::Update(double dt)
 {
     if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
@@ -193,6 +237,9 @@ void Unit::Update(double dt)
         } else {
             newTile->isUnitOnTile = true;
             newTile->unitOnTile = this;
+
+            currentTile->isUnitOnTile = false;
+            currentTile->unitOnTile = NULL;
 
             currentTile = newTile;
             newTile = NULL;
@@ -247,7 +294,8 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     isMoving = false;
     canMove = true;
     isAlive = true;
-
+    isFighting = false;
+    
     owner = setOwner;
 
     texture = setTexture;

@@ -2,7 +2,7 @@
 
 void Wave2::Update(double dt) {
     // units.UpdateCPU(dt)
-    units.Update(dt);
+    units.Update(dt, {0,0});
 }
 
 void Wave2::Render() {

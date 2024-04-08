@@ -37,6 +37,14 @@ void UnitInventory::removeDead() {
     }
 }
 
+void UnitInventory::Update(double dt, Vector2 target) {
+    removeDead();
+
+    for (int i=0; i < units.size(); i++) {
+        units.at(i).Update(dt, target);
+    }
+}
+
 void UnitInventory::Update(double dt) {
     removeDead();
 
