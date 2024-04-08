@@ -5,7 +5,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     // generate map using mapSize
     Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
 
-    tileTextures = {
+    std::map<std::string, Texture2D> tileTextures = {
         {"locked", LoadTexture("sprites/resources/BlankTile.png")},
         {"sea", LoadTexture("sprites/resources/BlankTile.png")},
         {"food", LoadTexture("sprites/resources/AlgenTile.png")},
@@ -18,7 +18,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
         {"castleV5", LoadTexture("sprites/castle/CastleTileLVL5.png")}
     };
 
-    unitTextures = {
+    std::map<std::string, Texture2D> unitTextures = {
         {"warriorLVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
         {"warriorLVL2", LoadTexture("sprites/units/melee/BattlefishRed.png")}
     };
@@ -36,17 +36,6 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 
 Game::~Game()
 {
-    std::vector<std::string> unloadTileTextures = {"locked", "sea", "food", "coral", "training", "castleV1", "castleV2", "castleV3", "castleV4", "castleV5"};
-
-    for (int i=0; i < unloadTileTextures.size(); i++) {
-        UnloadTexture(tileTextures[unloadTileTextures.at(i)]);
-    }
-    
-    std::vector<std::string> unloadUnitTextures = {"warrior1LVL1", "warrior2LVL1"};
-
-    for (int i=0; i < unloadUnitTextures.size(); i++) {
-        UnloadTexture(unitTextures[unloadUnitTextures.at(i)]);
-    }
 }
 
 void Game::Update(double dt)

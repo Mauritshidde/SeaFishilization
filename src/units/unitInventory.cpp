@@ -46,7 +46,6 @@ UnitInventory::UnitInventory(std::string setOnwer, Map *setMap, Camera2D *setCam
     owner = setOnwer;
     map = setMap;
     camera = setCamera;
-
     tileHighLite = LoadTexture("sprites/UI-elements/hexHighlight.png");
 
     warrior1 = LoadTexture("sprites/units/melee/Battlefish.png");
@@ -55,12 +54,6 @@ UnitInventory::UnitInventory(std::string setOnwer, Map *setMap, Camera2D *setCam
 
 UnitInventory::~UnitInventory()
 {
-    map = NULL;
-    camera = NULL;
-
-    UnloadTexture(tileHighLite);
     
-    UnloadTexture(warrior1);
-    UnloadTexture(warrior2);
 }
 
