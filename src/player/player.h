@@ -36,6 +36,7 @@ public:
     void movement(double dt);
     int getFoodAmount();
     int getCoralAmount();
+    int getTileCost(std::string type);
     bool buyTile(std::string type);
 
     void Update(double dt);

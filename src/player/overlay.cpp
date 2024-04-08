@@ -1,3 +1,4 @@
+#include <iostream>
 #include "overlay.h"
 
 Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Texture2D> tileTextures_) 
@@ -37,6 +38,10 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
         "training"
     };
 
+    coralTileCost = 0;
+    foodTileCost = 0;
+    trainingTileCost = 0;
+
     selectedBuildTile = -1;
     highlightTileTexture = LoadTexture("sprites/UI-elements/hexHighlight.png");
     
@@ -49,13 +54,48 @@ Overlay::~Overlay()
 
 void Overlay::drawBuildMode() 
 {
+    Font font = GetFontDefault();
+    // const char *text = TextFormat("cost: %d", coralTileCost);
+    float fontSize = 20;
+    float spacing = 5;
+
+    // Vector2 textDimentions = MeasureTextEx(font, text, fontSize, spacing);
+
     DrawRectangle(buildMenuPos.x, buildMenuPos.y, buildMenuWidth, buildMenuHeight, BROWN);
+
     for(int i = 0; i < buildTilePositions.size(); i++) {
         DrawTextureEx(tileTextures[buildTileNames[i]], buildTilePositions[i], 0, (double) buildTileSize / 810, WHITE);
     }
+
+    const char*text0 = TextFormat("cost: %d", foodTileCost);
+    Vector2 textDimentions0 = MeasureTextEx(font, text0, fontSize, spacing);
+    Vector2 position0 = {
+        buildTilePositions[0].x + buildTileSize*1.15f / 2 - textDimentions0.x / 2, 
+        buildTilePositions[0].y + buildTileSize / 2 - textDimentions0.y / 2
+    };
+    DrawTextEx(font, text0, position0, fontSize, spacing, WHITE);
+    
+    const char*text1 = TextFormat("cost: %d", coralTileCost);
+    Vector2 textDimentions1 = MeasureTextEx(font, text1, fontSize, spacing);
+    Vector2 position1 = {
+        buildTilePositions[1].x + buildTileSize*1.15f / 2 - textDimentions1.x / 2, 
+        buildTilePositions[1].y + buildTileSize / 2 - textDimentions1.y / 2
+    };
+    DrawTextEx(font, text1, position1, fontSize, spacing, WHITE);
+    
+    const char*text2 = TextFormat("cost: %d", trainingTileCost);
+    Vector2 textDimentions2 = MeasureTextEx(font, text2, fontSize, spacing);
+    Vector2 position2 = {
+        buildTilePositions[2].x + buildTileSize*1.15f / 2 - textDimentions2.x / 2, 
+        buildTilePositions[2].y + buildTileSize / 2 - textDimentions2.y / 2
+    };
+    // DrawTextEx(font, text2, (Vector2) {position2.x - 2, position2.y - 2}, fontSize + 4, spacing, BLACK);
+    DrawTextEx(font, text2, position2, fontSize, spacing, GRAY);
+
     if(selectedBuildTile > -1 && selectedBuildTile < buildTilePositions.size()) {
         DrawTextureEx(highlightTileTexture, buildTilePositions[selectedBuildTile], 0, (double) buildTileSize / 810, WHITE);
     }
+
 }
 
 void Overlay::drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime) 
@@ -70,7 +110,8 @@ void Overlay::drawInventory(int food, int coral, int score, double time, int wav
     DrawText(TextFormat("wave: %d", wave), screenWidth - screenWidth/4, screenHeight/15, 10, WHITE);
 }
 
-int Overlay::mouseOnBuildTile() {
+int Overlay::mouseOnBuildTile() 
+{
     for(int i = 0; i < buildTilePositions.size(); i++) {
         Rectangle buildTileRect = { buildTilePositions[i].x, buildTilePositions[i].y, buildTileSize*1.15f, (float)buildTileSize };
         if (CheckCollisionPointRec(GetMousePosition(), buildTileRect)) {
@@ -80,7 +121,8 @@ int Overlay::mouseOnBuildTile() {
     return -1;
 }
 
-void Overlay::selectBuildTile(int buildTile) {
+void Overlay::selectBuildTile(int buildTile) 
+{
     if(buildTile == selectedBuildTile) {
         selectedBuildTile = -1; // deselct if already selected
         return;
@@ -88,7 +130,8 @@ void Overlay::selectBuildTile(int buildTile) {
     selectedBuildTile = buildTile;
 }
 
-std::string Overlay::getBuildTileName() {
+std::string Overlay::getBuildTileName() 
+{
     if(selectedBuildTile < 0 || selectedBuildTile >= buildTileNames.size()) {
         return "";
     }
@@ -96,7 +139,8 @@ std::string Overlay::getBuildTileName() {
 }
 
 
-bool Overlay::isMouseOnOverlay() {
+bool Overlay::isMouseOnOverlay() 
+{
     Vector2 mousePos = GetMousePosition();
     bool isXInBuildMenu = (mousePos.x > buildMenuPos.x && mousePos.x < buildMenuPos.x + buildMenuWidth);
     bool isYInBuildMenu = (mousePos.y > buildMenuPos.y && mousePos.y < buildMenuPos.y + buildMenuHeight);
@@ -110,4 +154,11 @@ bool Overlay::isMouseOnOverlay() {
         return true;
     }
     return false;
+}
+
+void Overlay::setTileTypeCosts(int foodCost, int coralCost, int trainingCost)
+{
+    foodTileCost = foodCost;
+    coralTileCost = coralCost;
+    trainingTileCost = trainingCost;
 }

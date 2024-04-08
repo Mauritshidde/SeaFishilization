@@ -103,10 +103,14 @@ int Player::getCoralAmount() {
     return coral;
 }
 
-bool Player::buyTile(std::string type) {
+int Player::getTileCost(std::string type) {
     int tileCount = map->countTilesWithType(type);
-    int cost = (tileCount + 1) * 2;
+    int cost = tileCount * 2;
+    return cost;
+}
 
+bool Player::buyTile(std::string type) {
+    int cost = getTileCost(type);
     if (cost > coral) return false;
     
     addCoralAmount(-cost);

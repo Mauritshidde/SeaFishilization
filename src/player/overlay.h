@@ -15,6 +15,7 @@ private:
     Vector2 buildTilePos0, buildTilePos1, buildTilePos2;
     std::vector<Vector2> buildTilePositions;
     int buildTileSize;
+    int foodTileCost, coralTileCost, trainingTileCost;
     std::vector<std::string> buildTileNames;
     int selectedBuildTile;
     Texture2D highlightTileTexture;
@@ -28,6 +29,7 @@ public:
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);
     std::string getBuildTileName();
+    void setTileTypeCosts(int foodCost, int coralCost, int trainingCost);
     Overlay(int screenWidth = 1920, int screenHeight = 1084, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Overlay();
 };

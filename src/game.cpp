@@ -58,6 +58,10 @@ void Game::Update(double dt)
                     bool isBought = player.buyTile(buildTileName);
                     if(isBought) {
                         map.changeTileType(coord, buildTileName);
+                        int foodTileCost = player.getTileCost("food");
+                        int coralTileCost = player.getTileCost("coral");
+                        int trainingTileCost = player.getTileCost("training");
+                        overlay.setTileTypeCosts(foodTileCost, coralTileCost, trainingTileCost);
                     } else {
                         std::cout << "NOT ENOUGH MONEY" << std::endl;
                         // not enough money
@@ -106,6 +110,7 @@ void Game::Render()
         int food = player.getFoodAmount();
         int coral = player.getCoralAmount();
         overlay.drawInventory(food, coral, score, gameTime, waveCount, 1);
+
         overlay.drawBuildMode();
     EndDrawing();
 
