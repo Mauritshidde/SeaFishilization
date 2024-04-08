@@ -33,12 +33,12 @@ public:
     Vector2 position;
     void addFoodAmount(int amount); // remove food if buying something add food when receiving something
     void addCoralAmount(int amount); // remove coral if buying something add coral when receiving something
-    void movement(double dt);
+    void movement(double dt, int isBuildMode);
     int getFoodAmount();
     int getCoralAmount();
     bool buyTile(std::string type);
 
-    void Update(double dt);
+    void Update(double dt, int isBuildMode);
     void Render();
     void Start();
 

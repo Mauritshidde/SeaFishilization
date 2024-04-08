@@ -40,11 +40,10 @@ Game::~Game()
 
 void Game::Update(double dt)
 {
-    player.Update(dt);
-
-    if(IsMouseButtonReleased(0)) {
+    bool isMouseOnOverlay = overlay.isMouseOnOverlay();;
+    if(IsMouseButtonPressed(0)) {
         if(overlay.isBuildMode) {
-            if(overlay.isMouseOnOverlay()) {
+            if(isMouseOnOverlay) {
                 int buildTile = overlay.mouseOnBuildTile();
                 if(buildTile != -1) {
                     overlay.selectBuildTile(buildTile);
@@ -67,6 +66,8 @@ void Game::Update(double dt)
         }
 
     }
+
+    player.Update(dt, overlay.selectedBuildTile);
 }
 
 void Game::MusicPlayer() 

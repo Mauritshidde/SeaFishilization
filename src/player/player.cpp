@@ -35,7 +35,7 @@ Player::~Player()
 
 }
 
-void Player::movement(double dt)
+void Player::movement(double dt, int isBuildMode)
 {
     if (IsKeyDown(KEY_W))
     {
@@ -70,20 +70,22 @@ void Player::movement(double dt)
     }
 
 
-    if (IsMouseButtonPressed(0)) // for camera movement by dragging of the mouse whilst pressing left mouse button
-    {
-        mouseStartPos = GetMousePosition();
-    }
-
-    if (IsMouseButtonDown(0)) 
-    {
-        Vector2 currentMousePos = GetMousePosition();
-        if (currentMousePos.x != mouseStartPos.x || currentMousePos.y != mouseStartPos.y) {
-            camera.target.x -= (currentMousePos.x-mouseStartPos.x) * mouseMovementSpeed * dt;
-            camera.target.y -= (currentMousePos.y-mouseStartPos.y) * mouseMovementSpeed * dt;
+    if (isBuildMode == -1) {
+        if (IsMouseButtonPressed(0)) // for camera movement by dragging of the mouse whilst pressing left mouse button
+        {
+            mouseStartPos = GetMousePosition();
         }
-        
-        mouseStartPos = GetMousePosition();
+
+        if (IsMouseButtonDown(0)) 
+        {
+            Vector2 currentMousePos = GetMousePosition();
+            if (currentMousePos.x != mouseStartPos.x || currentMousePos.y != mouseStartPos.y) {
+                camera.target.x -= (currentMousePos.x-mouseStartPos.x) * mouseMovementSpeed * dt;
+                camera.target.y -= (currentMousePos.y-mouseStartPos.y) * mouseMovementSpeed * dt;
+            }
+            
+            mouseStartPos = GetMousePosition();
+        }
     }
 }
 
@@ -113,9 +115,9 @@ bool Player::buyTile(std::string type) {
     return true;
 }
 
-void Player::Update(double dt) {
+void Player::Update(double dt, int isBuildMode) {
     playerUnits.Update(dt);
-    movement(dt);
+    movement(dt, isBuildMode);
 
 
     if (GetTime() - static_cast<int>(GetTime()) + dt > 1) {

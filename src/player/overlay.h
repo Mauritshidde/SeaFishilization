@@ -16,11 +16,11 @@ private:
     std::vector<Vector2> buildTilePositions;
     int buildTileSize;
     std::vector<std::string> buildTileNames;
-    int selectedBuildTile;
     Texture2D highlightTileTexture;
 
     std::map<std::string, Texture2D> tileTextures;
 public:
+    int selectedBuildTile;
     bool isBuildMode;
     void drawBuildMode();
     void drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime);
