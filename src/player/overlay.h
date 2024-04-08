@@ -24,7 +24,7 @@ public:
     int selectedBuildTile;
     bool isBuildMode;
     void drawBuildMode();
-    void drawInventory(int food, int coral, int score, double time, int wave, double nextWaveTime);
+    void drawInventory(int food, int coral, int score, int time, int wave, int nextWaveTime);
     bool isMouseOnOverlay();
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);

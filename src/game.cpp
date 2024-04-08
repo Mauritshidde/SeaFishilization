@@ -148,7 +148,8 @@ void Game::Render()
         // ui draw functions that should not move here
         int food = player.getFoodAmount();
         int coral = player.getCoralAmount();
-        overlay.drawInventory(food, coral, score, gameTime, waveCount, 1);
+        int time = int(gameTime);
+        overlay.drawInventory(food, coral, score, time, waveCount, 1);
 
         overlay.drawBuildMode();
     EndDrawing();
