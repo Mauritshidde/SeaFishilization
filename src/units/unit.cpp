@@ -15,7 +15,7 @@ void Unit::fight(Tile *targetTile, double dt) {
         currentTile = targetTile;
         enemy->isAlive = false;
         isMoving = false;
-        std::cout << "dead" << std::endl;
+        targetTile->isAccesible = true;
     }
     
     if (health <= 0) {
@@ -25,11 +25,8 @@ void Unit::fight(Tile *targetTile, double dt) {
         currentTile = NULL;   
         isAlive = false;
         isMoving = false;
-        std::cout << "dead" << std::endl;
+        targetTile->isAccesible = true;
     }
-
-    // health -= enemy->attack();
-    // enemy->health -= attack();
 }
 
 void Unit::heal() {
@@ -48,42 +45,6 @@ void Unit::moveOneTile(int option) {
         // unitMoving = false;
     // }
 }
-
-// void Unit::move(Vector2 target) // target is given in hexagon coords
-// {
-//     Tile *targetTile = tileMap->getTile(target);
-
-//     // if (selected) {
-//     //     std::vector<Vector2> options = tileMap->getSurroundingCoords(gridPosition);
-//     //     for (int i=0; i < possibleOptions.size(); i++) {
-//     //         if (!tileMap->isTileLocked(options.at(i))) {
-//     //             possibleOptions.push_back(options.at(i));
-//     //         }
-//     //     }
-//     // }
-    
-
-//     // if (!targetTile->isUnitOnTile) {
-//     //     position = target;
-//     //     currentTile->isUnitOnTile = false;
-//     //     currentTile->unitOnTile = NULL;
-
-//     //     targetTile->unitOnTile = this;
-//     //     targetTile->isUnitOnTile = true;
-//     // } else {
-//     //     fight(targetTile);
-//     // }
-
-
-//     // bool unitMoving = false;
-
-//     // if (unitMoving) {
-//     //     // pathfinding
-
-//     //     moveOneTile(1);
-//     // }
-
-// }
 
 bool Unit::hasTileEnemy(Vector2 coord, std::string type) {
     Tile *tile = tileMap->getTile(coord);
@@ -209,6 +170,13 @@ void Unit::Update(double dt)
 
                     newTile = tileMap->getTile(tilePos);
                     
+                    if (newTile->isUnitOnTile) {
+                        isFighting = true;
+                        newTile->unitOnTile->isFighting = true;
+                    }
+
+                    movingProgress = 0;
+
                     removeOptions();
                     isMoving = true;
                 } else {
@@ -229,10 +197,13 @@ void Unit::Update(double dt)
             }
         }
 
-        position = tileMap->gridPosToWorldPos(gridPosition);
-        position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
     } else {
-        if (newTile->isUnitOnTile) {
+        newPosition = newTile->getPos();
+        newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
+        movingProgress += movementSpeed * dt;
+
+        if (isFighting) {
+            newTile->isAccesible = false;
             fight(newTile, dt);
         } else {
             newTile->isUnitOnTile = true;
@@ -240,24 +211,19 @@ void Unit::Update(double dt)
 
             currentTile->isUnitOnTile = false;
             currentTile->unitOnTile = NULL;
+        }
 
+        if ((movingProgress >= 100) && (!isFighting)) {
             currentTile = newTile;
             newTile = NULL;
+            newPosition = {0,0};
             isMoving = false;
+            movingProgress = 0;
         }
     }
 
-
-    // checkIfMovementPossible(); // returns true if possible input is the option
-
-    // if (unitMoving) {
-    //     movingProgress += movementSpeed * dt;
-    // }
-
-    // if (movingProgress >= 100) {
-    //     movingDone = true;
-    //     moveOneTile(option);
-    // }
+    position = tileMap->gridPosToWorldPos(gridPosition);
+    position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
 }
 
 void Unit::Render()
@@ -268,12 +234,19 @@ void Unit::Render()
         DrawTextureEx(*tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
     }
 
-    if (int(gridPosition.x) % 2 == 0) {
-        DrawTextureEx(*texture, position, 0, 0.1, WHITE);
+    if (isMoving) {
+        if (int(gridPosition.x) % 2 == 0) {
+            DrawTextureEx(*texture, {(position.x + newPosition.x)/2, (position.y + newPosition.y)/2}, 0, 0.1, WHITE);
+        } else {
+            DrawTextureEx(*texture, {(position.x + newPosition.x)/2, (position.y + newPosition.y - tileMap->tileHeight)/2}, 0, 0.1, WHITE);
+        }
     } else {
-        DrawTextureEx(*texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
+        if (int(gridPosition.x) % 2 == 0) {
+            DrawTextureEx(*texture, position, 0, 0.1, WHITE);
+        } else {
+            DrawTextureEx(*texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
+        }
     }
-
 }
 
 Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)
@@ -295,7 +268,8 @@ Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, 
     canMove = true;
     isAlive = true;
     isFighting = false;
-    
+    movingProgress = 0;
+
     owner = setOwner;
 
     texture = setTexture;
