@@ -14,7 +14,7 @@ int screenHeight = 0;
 int main()
 {
     bool quitGame = false;
-
+    
     InitWindow(0, 0, "SeaFishilisation I");
     SetTargetFPS(60);
 

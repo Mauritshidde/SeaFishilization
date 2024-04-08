@@ -3,9 +3,22 @@
 void Unit::fight(Tile *targetTile, double dt) {
     Unit *enemy = targetTile->unitOnTile;
     double *enemyHealth = &enemy->health;
+    int damage = 0;
 
-    *enemyHealth -= attackDamage * dt;
-    health -= enemy->attackDamage * dt;
+
+    damage = attackDamage - enemy->defence; // calc damage with defence
+    if (damage < 0) {
+        damage = 0;
+    }
+    *enemyHealth -= damage * dt;
+
+    
+    damage = enemy->attackDamage - defence;
+    if (damage < 0) {
+        damage = 0;
+    }
+    health -= damage * dt;
+
 
     if (*enemyHealth <= 0) {
         currentTile->unitOnTile = NULL;
@@ -250,10 +263,10 @@ void Unit::Render()
     }
 }
 
-Unit::Unit(double setMaxHealth, double setAttackSpeed, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)
+Unit::Unit(double setMaxHealth, double setDefence, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)
 {
     maxHealth = setMaxHealth;
-    attackSpeed = setMaxHealth;
+    defence = setMaxHealth;
     movementSpeed = setMovementSpeed;
     attackDamage = setAttackDamage;
 

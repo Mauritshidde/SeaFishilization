@@ -1,6 +1,8 @@
 #pragma once
 #include <vector>
 #include <string>
+#include <cmath>
+#include <random>
 #include "../raylib.h"
 
 #include "../units/unitInventory.h"
@@ -19,7 +21,20 @@ private:
     Texture2D *tileHighLite;
     std::map<std::string, Texture2D> unitTextures;
 
+
+    int maxUnitLevel;
+    int minUnitLevel;
+
+    int minUnitAmount;
+    int maxUnitAmount;
+
+    std::vector<Vector2> genStartingPositions(int unitAmount);
+    void spawnWave();
+    void calcWaveLevel();
 public:
+    int waveCount;
+    double timeUntilNextWave;
+    
     void Update(double dt);
     void Render();
     void Start();

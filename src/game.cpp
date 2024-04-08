@@ -19,8 +19,20 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     };
 
     unitTextures = {
-        {"warrior1LVL1", LoadTexture("sprites/units/melee/Battlefish.png")},
-        {"warrior2LVL1", LoadTexture("sprites/units/melee/BattlefishRed.png")}
+        {"warrior1LVL1", LoadTexture("sprites/units/Battlefish.png")},
+        {"warrior2LVL1", LoadTexture("sprites/units/BattlefishRed.png")},
+
+        {"warrior1LVL2", LoadTexture("sprites/units/BattleHorse.png")},
+        {"warrior2LVL2", LoadTexture("sprites/units/BattleHorseRed.png")},
+
+        {"warrior1LVL3", LoadTexture("sprites/units/BattleHorse.png")},
+        {"warrior2LVL3", LoadTexture("sprites/units/BattleHorseRed.png")},
+
+        {"warrior1LVL4", LoadTexture("sprites/units/BattleHorse.png")},
+        {"warrior2LVL4", LoadTexture("sprites/units/BattleHorseRed.png")},
+
+        {"warrior1LVL5", LoadTexture("sprites/units/SharkRegular.png")},
+        {"warrior2LVL5", LoadTexture("sprites/units/SharkRed.png")}
     };
 
     tileHighLiteWhite = LoadTexture("sprites/UI-elements/hexHighlight.png");
