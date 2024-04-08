@@ -1,6 +1,7 @@
 #include "unit.h"
 
 void Unit::fight(Tile *targetTile, double dt) {
+    std::cout << "ja" << std::endl;
     Unit *enemy = targetTile->unitOnTile;
     
     double *enemyHealth = &enemy->health;
@@ -15,6 +16,7 @@ void Unit::fight(Tile *targetTile, double dt) {
         targetTile->unitOnTile = this;
         currentTile = targetTile;
         enemy->isAlive = false;
+        std::cout << "dead" << std::endl;
     }
     
     if (health <= 0) {
@@ -23,6 +25,7 @@ void Unit::fight(Tile *targetTile, double dt) {
 
         currentTile = NULL;   
         isAlive = false;
+        std::cout << "dead" << std::endl;
     }
 
     // health -= enemy->attack();
@@ -145,7 +148,7 @@ void Unit::Update(double dt)
         currentTile->unitOnTile = this;
     }
 
-    // if (!isMoving) {
+    if (!isMoving) {
         if (selected) {
             if (IsMouseButtonPressed(0)) {
                 Vector2 mousePos = GetMousePosition();
@@ -160,14 +163,10 @@ void Unit::Update(double dt)
                     currentTile->isUnitOnTile = false;
                     currentTile->unitOnTile = NULL;
 
-                    Tile *targetTile = tileMap->getTile(tilePos);
-
-                    targetTile->isUnitOnTile = true;
-                    targetTile->unitOnTile = this;
-
-                    currentTile = targetTile;
+                    newTile = tileMap->getTile(tilePos);
                     
                     removeOptions();
+                    isMoving = true;
                 } else {
                     removeOptions();
                     selected = false;
@@ -188,11 +187,18 @@ void Unit::Update(double dt)
 
         position = tileMap->gridPosToWorldPos(gridPosition);
         position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
-    // } else {
-        // smooth movement
+    } else {
+        if (newTile->isUnitOnTile) {
+            fight(newTile, dt);
+        } else {
+            newTile->isUnitOnTile = true;
+            newTile->unitOnTile = this;
 
-        // isMoving = false;
-    // }
+            currentTile = newTile;
+            newTile = NULL;
+            isMoving = false;
+        }
+    }
 
 
     // checkIfMovementPossible(); // returns true if possible input is the option
@@ -212,7 +218,6 @@ void Unit::Render()
 
     for (int i=0; i < possibleOptions.size(); i++) {
         Tile *tile = tileMap->getTile(possibleOptions.at(i));
-        std::cout << "yes 1" << std::endl;
         DrawTextureEx(*tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
     }
 

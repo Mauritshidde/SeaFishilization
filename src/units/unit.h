@@ -21,6 +21,7 @@ private:
     Texture2D *tileHighLite;
     Map* tileMap;
     Tile* currentTile;
+    Tile *newTile;
     Camera2D* camera;
 
     std::vector<Vector2> possibleOptions;
