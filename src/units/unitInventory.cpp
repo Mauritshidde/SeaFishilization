@@ -58,9 +58,9 @@ UnitInventory::~UnitInventory()
     map = NULL;
     camera = NULL;
 
-    UnloadTexture(tileHighLite);
+    // UnloadTexture(tileHighLite);
     
-    UnloadTexture(warrior1);
-    UnloadTexture(warrior2);
+    // UnloadTexture(warrior1);
+    // UnloadTexture(warrior2);
 }
 
