@@ -21,6 +21,7 @@ private:
     Texture2D *tileHighLite;
     Map* tileMap;
     Tile* currentTile;
+    Tile *newTile;
     Camera2D* camera;
 
     std::vector<Vector2> possibleOptions;
@@ -29,6 +30,7 @@ private:
 public:
     bool isAlive;
     bool selected;
+    bool isFighting;
     double health;
 
     Vector2 gridPosition;
@@ -45,6 +47,7 @@ public:
     void setOptions();
     void removeOptions();
     
+    void Update(double dt, Vector2 target); // update function for AI
     void Update(double dt);
     void Render();
     

@@ -25,6 +25,7 @@ public:
 
     void createUnit(int maxHealth, double damage, double movementSpeed, Vector2 startingPos, Camera2D *test);
     void Update(double dt);
+    void Update(double dt, Vector2 target);
     void Render();
 
     UnitInventory(std::string setOnwer = "player", Map *setMap = NULL, Camera2D *setCamera = NULL, Texture2D *setTileHighLite = NULL, std::map<std::string, Texture2D> setUnitTextures = {});

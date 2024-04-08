@@ -21,6 +21,7 @@ public:
     Unit *unitOnTile;
     bool isUnitOnTile;
     bool tileSelected;
+    bool isAccesible;
 
     Vector2 getPos();
     std::string getType();
