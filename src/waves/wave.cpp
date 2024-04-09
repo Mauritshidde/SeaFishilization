@@ -133,8 +133,8 @@ Wave2::Wave2(Map *map_, Camera2D *camera_, Texture2D *tileHighLite_, std::map<st
     tileHighLite = tileHighLite_;
     unitTextures = unitTextures_;
     waveCount = 0;
-    waveCoolDown = 45;
-    timeUntilNextWave = 45; // in seconds
+    waveCoolDown = 50;
+    timeUntilNextWave = 60; // in seconds
     statMultiplier = 1;
 
     units = UnitInventory("wave", map_, camera_, tileHighLite_, unitTextures_);
