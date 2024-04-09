@@ -221,7 +221,7 @@ void Overlay::drawTrainingMenu(int level)
         DrawRectangleRounded(buyRect, 0.2f, 0.0f, color);
         DrawText(TextFormat("[%d] BUY LVL %d", i, i), startPosition.x + fontSize * 1.75, startPosition.y + fontSize * (1 + 2 * i), fontSize / 2, WHITE);
         
-        const char *text = TextFormat("cost: %d - hp: %d - damage: %d - move speed: %d - defence: %d", cost, maxHealth, damage, movementSpeed, defence);
+        const char *text = TextFormat("cost: %d food - hp: %d - damage: %d - move speed: %d - defence: %d", cost, maxHealth, damage, movementSpeed, defence);
         DrawText(text, startPosition.x + fontSize * 6.75, startPosition.y + fontSize * (1 + 2 * i), fontSize / 2, DARKGRAY);
     }
 
