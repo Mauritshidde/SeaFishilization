@@ -35,6 +35,8 @@ private:
 
     Vector2 trainingTileLocation;
 
+    double noMoneyMsgCountDown = 0;
+
     void Update(double dt);
     void Render();
     void Start();
