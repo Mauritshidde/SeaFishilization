@@ -51,7 +51,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     score = 0;
 
     isCastleMenu = false;
-    isTrainingMenu = true;
+    isTrainingMenu = false;
     
     int foodTileCost = player.getTileCost("food");
     int coralTileCost = player.getTileCost("coral");
@@ -149,22 +149,27 @@ void Game::Update(double dt)
                 map.changeTileType({8, 8}, castleTypes.at(castleLvl - 1));
             }
         }
-    }
-
-    if (isTrainingMenu) {
+    } else if (isTrainingMenu) {
         // create unit
 
         if (!selectedTrainingTile->isTraining) {
             if (IsKeyPressed(KEY_ONE)) {
                 player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
+                isTrainingMenu = false;
             } else if (IsKeyPressed(KEY_TWO)) {
                 player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
+                isTrainingMenu = false;
             } else if (IsKeyPressed(KEY_THREE)) {
                 player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
+                isTrainingMenu = false;
             } else if (IsKeyPressed(KEY_FOUR)) {
                 player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
+                isTrainingMenu = false;
             } else if (IsKeyPressed(KEY_FIVE)) {
                 player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
+                isTrainingMenu = false;
+            } else if (IsKeyPressed(KEY_C)) {
+                isTrainingMenu = false;
             }
         } else {
             // show is training
