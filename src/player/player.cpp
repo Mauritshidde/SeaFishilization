@@ -18,7 +18,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     position = startPosition;
     camera.target = position;
     camera.rotation = 0.0f;
-    camera.zoom = 1.0f;
+    camera.zoom = 3.0f;
 
     playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
 
@@ -29,8 +29,8 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     movementSpeed = 250;
     zoomSpeed = 10;
     mouseMovementSpeed = 100;
-    minZoom = 0.3;
-    maxZoom = 3;
+    minZoom = 1.2;
+    maxZoom = 4;
     maxX = screenWidth;
     minX = 0;
     maxY = screenHeight;
