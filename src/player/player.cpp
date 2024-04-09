@@ -5,7 +5,7 @@
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
-    coral = 0;
+    coral = 1;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
