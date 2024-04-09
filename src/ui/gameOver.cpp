@@ -5,13 +5,13 @@ GameOver::GameOver(int screenWidth, int screenHeight)
       running = true;
       fontSize = 100;
       startScreen = true;
-      selected = 0;
+      selected = 2;
       isButtonPressed = false;
       buttonPressed = 0;
 
       lenghtOfOneLetter = MeasureText(oneLetter, fontSize);
       // gameOverTexts = setgameOverTexts;
-      gameOverTexts = {simuText, settingsText};
+      gameOverTexts = {game, simuText, settingsText};
 
       amount = gameOverTexts.size();
       val = screenHeight / (amount + 1);
@@ -35,14 +35,12 @@ GameOver::~GameOver()
 void GameOver::Draw(int screenWidth, int screenHeight, double time)
 {
       BeginDrawing();
-      // Texture2D test = LoadTexture("test.png");
       ClearBackground(WHITE);
-      // DrawTextureEx(backgroundImage, {0,0}, 0, 1, WHITE);
 
       for (int i = 0; i < gameOverTexts.size(); i++)
       {
-            if (i == 0) {
-                  // DrawText(TextFormat("You survived for: %d", int(time), "%d econds"), (screenWidth / 2) - (TextFormat("You survived for: %d", int(time), "%d econds"), fontSize) / 2), val * (i + 1) - 50, fontSize, BLACK);
+            if (i == 1) {
+                  DrawText(TextFormat("You survived for: %d seconds", int(time)), (screenWidth / 2) - (MeasureText(TextFormat("You survived for: %d seconds", int(time)), fontSize) / 2), val * (i + 1) - 50, fontSize, BLACK);
             } else {
                   if (selected == i)
                   {
@@ -60,40 +58,6 @@ void GameOver::Draw(int screenWidth, int screenHeight, double time)
 
 void GameOver::Update(int screenWidth, int screenHeight)
 {
-      if (IsKeyPressed(KEY_UP))
-      {
-            selected--;
-            if (selected < 0)
-            {
-                  selected = 0;
-            }
-      }
-      else if (IsKeyPressed(KEY_DOWN))
-      {
-            selected++;
-            if (selected > gameOverTexts.size())
-            {
-                  selected = amount - 1;
-            }
-      }
-
-      if (IsKeyPressed(KEY_W))
-      {
-            selected--;
-            if (selected < 0)
-            {
-                  selected = 0;
-            }
-      }
-      else if (IsKeyPressed(KEY_S))
-      {
-            selected++;
-            if (selected > gameOverTexts.size())
-            {
-                  selected = amount - 1;
-            }
-      }
-
       if (1 == 2)
       { // screenheight or screenwidth or fontSize changed
             val = screenHeight / (amount + 1);

@@ -6,6 +6,7 @@ class GameOver
 {
 private:
     const char *oneLetter = "A";
+    const char *game = "Game Over";
     const char *simuText = "Score";
     const char *settingsText = "Back to Main Menu";
 
