@@ -49,7 +49,7 @@ public:
     bool buyCastleUpgrade();
     int getCastleLvl();
 
-    void Update(double dt, int isBuildMode);
+    void Update(double dt, int isBuildMode, bool overlay);
     void Render();
     void Start(Vector2 center);
 

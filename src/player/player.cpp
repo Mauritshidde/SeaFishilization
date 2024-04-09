@@ -161,8 +161,8 @@ int Player::getCastleLvl() {
     return castleLvl;
 }
 
-void Player::Update(double dt, int isBuildMode) {
-    playerUnits.Update(dt);
+void Player::Update(double dt, int isBuildMode, bool overlay) {
+    playerUnits.Update(dt, overlay);
     movement(dt, isBuildMode);
 
     if (GetTime() - (int)GetTime() + dt > 1 && (int)GetTime() % productionSpeed == 0) {

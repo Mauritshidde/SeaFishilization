@@ -223,7 +223,12 @@ void Game::Update(double dt)
         std::cout << "final count down " << noMoneyMsgCountDown << " dudududu" << std::endl;
     }
 
-    player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
+    bool dontMove = false;
+    if(overlay.getBuildTileName() == "") {
+        dontMove = true;
+    }
+
+    player.Update(dt, overlay.selectedBuildTile, dontMove); // update all the objects that are in player
     wave.Update(dt);
     map.Update(dt);
 

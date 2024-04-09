@@ -127,11 +127,11 @@ void UnitInventory::Update(double dt, Vector2 target) {
     }
 }
 
-void UnitInventory::Update(double dt) {
+void UnitInventory::Update(double dt, bool overlay) {
     removeDead();
 
     for (int i=0; i < units.size(); i++) {
-        units.at(i).Update(dt);
+        units.at(i).Update(dt, overlay);
     }
 }
 

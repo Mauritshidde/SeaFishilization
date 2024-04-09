@@ -216,59 +216,60 @@ void Unit::Update(double dt, Vector2 target) {
     position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
 }
 
-void Unit::Update(double dt)
+void Unit::Update(double dt, bool overlay)
 {
     if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
         currentTile->isUnitOnTile = true;
         currentTile->unitOnTile = this;
     }
-
+    
     if (canMove) {
         if (!isMoving) {
-            if (selected) {
-                if (IsMouseButtonPressed(0)) {
-                    Vector2 mousePos = GetMousePosition();
-                    Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
-                    if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                        selected = false;
-                        removeOptions();
-                    } else if (tileInOptions(tilePos)) {
-                        selected = false;
-                        gridPosition = tilePos;
+            if (overlay) {
+                if (selected) {
+                    if (IsMouseButtonPressed(0)) {
+                        Vector2 mousePos = GetMousePosition();
+                        Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+                        if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                            selected = false;
+                            removeOptions();
+                        } else if (tileInOptions(tilePos)) {
+                            selected = false;
+                            gridPosition = tilePos;
 
-                        currentTile->isUnitOnTile = false;
-                        currentTile->unitOnTile = NULL;
+                            currentTile->isUnitOnTile = false;
+                            currentTile->unitOnTile = NULL;
 
-                        newTile = tileMap->getTile(tilePos);
-                        
-                        if (newTile->isUnitOnTile) {
-                            isFighting = true;
-                            newTile->isAccesible = false;
-                            newTile->unitOnTile->canMove = false;
+                            newTile = tileMap->getTile(tilePos);
+                            
+                            if (newTile->isUnitOnTile) {
+                                isFighting = true;
+                                newTile->isAccesible = false;
+                                newTile->unitOnTile->canMove = false;
+                            }
+
+                            movingProgress = 0;
+
+                            removeOptions();
+                            isMoving = true;
+                        } else {
+                            removeOptions();
+                            selected = false;
                         }
-
-                        movingProgress = 0;
-
-                        removeOptions();
-                        isMoving = true;
-                    } else {
-                        removeOptions();
-                        selected = false;
                     }
-                }
-            } else {
+                } else {
 
-                if (IsMouseButtonPressed(0)) {
-                    Vector2 mousePos = GetMousePosition();
-                    Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
+                    if (IsMouseButtonPressed(0)) {
+                        Vector2 mousePos = GetMousePosition();
+                        Vector2 tilePos = tileMap->worldPosToGridPos(GetScreenToWorld2D(mousePos, *camera));
 
-                    if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
-                        selected = true;
-                        setOptions();
+                        if (tilePos.x == gridPosition.x && tilePos.y == gridPosition.y) {
+                            selected = true;
+                            setOptions();
+                        }
                     }
                 }
             }
-
         } else {
             newPosition = newTile->getPos();
             newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
