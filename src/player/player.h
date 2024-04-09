@@ -16,7 +16,6 @@ private:
     double maxX, minX;
     double maxY, minY;
 
-    UnitInventory playerUnits;
     Vector2 mouseStartPos;
 
     int screenWidth;
@@ -28,14 +27,13 @@ private:
     int castleLvl;
     int castleCost;
 
-
-    std::vector<Unit> units;
     Map *map;
 
     std::map<std::string, Texture2D> unitTextures;
     Texture2D *tileHighLite;
     int productionSpeed;
 public:
+    UnitInventory playerUnits;
     double castleHealth;
     Vector2 castlePos;
 

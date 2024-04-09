@@ -20,6 +20,7 @@ public:
     bool isUnitOnTile;
     bool tileSelected;
     bool isAccesible;
+    bool isTraining;
 
     int width;
     int height;

@@ -132,6 +132,8 @@ void Game::Update(double dt)
 
         if(map.getTileType(coord) == "training" && overlay.getBuildTileName() == "") {
             isTrainingMenu = true;
+            trainingTileLocation = coord;
+            selectedTrainingTile = map.getTile(coord);
         }
 
     }
@@ -146,6 +148,26 @@ void Game::Update(double dt)
                 int castleLvl = player.getCastleLvl();
                 map.changeTileType({8, 8}, castleTypes.at(castleLvl - 1));
             }
+        }
+    }
+
+    if (isTrainingMenu) {
+        // create unit
+
+        if (!selectedTrainingTile->isTraining) {
+            if (IsKeyPressed(KEY_ONE)) {
+                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
+            } else if (IsKeyPressed(KEY_TWO)) {
+                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
+            } else if (IsKeyPressed(KEY_THREE)) {
+                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
+            } else if (IsKeyPressed(KEY_FOUR)) {
+                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
+            } else if (IsKeyPressed(KEY_FIVE)) {
+                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
+            }
+        } else {
+            // show is training
         }
     }
 

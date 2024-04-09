@@ -23,11 +23,15 @@ private:
     bool isCastleMenu;
     bool isTrainingMenu;
     bool gameRunning;
+    
+    Tile *selectedTrainingTile;
 
     std::map<std::string, Texture2D> tileTextures;
     std::map<std::string, Texture2D> unitTextures;
     Texture2D tileHighLiteWhite;
     Texture2D tileHighLiteRed;
+
+    Vector2 trainingTileLocation;
 
     void Update(double dt);
     void Render();

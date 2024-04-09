@@ -5,6 +5,7 @@ Tile::Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTex
     unitOnTile = NULL;
     isUnitOnTile = false;
     isAccesible = true;
+    isTraining = false;
     
     pos.x = x;
     pos.y = y;
