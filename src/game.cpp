@@ -3,7 +3,7 @@
 Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
 {
     // generate map using mapSize
-    Vector2 startingPosition = {0, 0}; // map generation has to give starting position, which is base position 
+    Vector2 startingPosition = {screenWidth /4, screenHeight / 2}; // map generation has to give starting position, which is base position 
 
     tileTextures = {
         {"locked", LoadTexture("sprites/resources/BlankTile.png")},
