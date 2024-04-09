@@ -23,12 +23,14 @@ void Unit::fight(Tile *targetTile, double dt) {
     if (*enemyHealth <= 0) {
         currentTile->unitOnTile = NULL;
         currentTile->isUnitOnTile = false;
+        currentTile->isAccesible = true;
 
         targetTile->unitOnTile = this;
         currentTile = targetTile;
 
         enemy->isAlive = false;
         isMoving = false;
+        
         targetTile->isAccesible = true;
 
         isFighting = false;
@@ -37,6 +39,7 @@ void Unit::fight(Tile *targetTile, double dt) {
     if (health <= 0) {
         currentTile->unitOnTile = NULL;
         currentTile->isUnitOnTile = false;
+        currentTile->isAccesible = true;
 
         currentTile = NULL;   
         isAlive = false;
@@ -45,7 +48,6 @@ void Unit::fight(Tile *targetTile, double dt) {
         if (targetTile->isUnitOnTile) {
             targetTile->isAccesible = true;
             targetTile->unitOnTile->canMove = true;
-            targetTile->isUnitOnTile = false;
         }
 
         isFighting = false;
