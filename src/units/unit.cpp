@@ -10,14 +10,14 @@ void Unit::fight(Tile *targetTile, double dt) {
     if (damage < 0) {
         damage = 0;
     }
-    *enemyHealth -= damage * dt;
+    *enemyHealth -= attackDamage * dt;
 
     
     damage = enemy->attackDamage - defence;
     if (damage < 0) {
         damage = 0;
     }
-    health -= damage * dt;
+    health -= enemy->attackDamage * dt;
 
 
     if (*enemyHealth <= 0) {
@@ -26,20 +26,35 @@ void Unit::fight(Tile *targetTile, double dt) {
 
         targetTile->unitOnTile = this;
         currentTile = targetTile;
+
         enemy->isAlive = false;
         isMoving = false;
         targetTile->isAccesible = true;
+
+        isFighting = false;
+        std::cout << "ja" << std::endl;
     }
     
     if (health <= 0) {
+        std::cout << "ja" << std::endl;
+        
         currentTile->unitOnTile = NULL;
         currentTile->isUnitOnTile = false;
+        std::cout << "ja" << std::endl;
 
         currentTile = NULL;   
         isAlive = false;
         isMoving = false;
-        targetTile->isAccesible = true;
-        targetTile->unitOnTile->canMove = true;
+        std::cout << "ja" << std::endl;
+
+        if (targetTile->isUnitOnTile) {
+            targetTile->isAccesible = true;
+            targetTile->unitOnTile->canMove = true;
+            targetTile->isUnitOnTile = false;
+        }
+
+        isFighting = false;
+        std::cout << "nee" << std::endl;
     }
 }
 
@@ -117,26 +132,49 @@ bool Unit::tileInOptions(Vector2 coords) {
 }
 
 void Unit::Update(double dt, Vector2 target) {
+        // std::cout << "nee" << std::endl;
+
     if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
         currentTile->isUnitOnTile = true;
         currentTile->unitOnTile = this;
     }
+        // std::cout << "nee" << std::endl;
+
 
     if (canMove) {
+        // std::cout << "nee" << std::endl;
+
         if (!isMoving) {
-            if (target.x > gridPosition.x) {
-                target.x = gridPosition.x + 1;
-                target.y = gridPosition.y;
-            } else if (target.x < gridPosition.x) {
-                target.x = gridPosition.x - 1;
-                target.y = gridPosition.y;
-            } else if (target.y > gridPosition.y) {
-                target.x = gridPosition.x;
-                target.y = gridPosition.y + 1;
-            } else if (target.y < gridPosition.y) {
-                target.x = gridPosition.x;
-                target.y = gridPosition.y - 1;
+            std::vector<Vector2> options;
+        // std::cout << "nee" << std::endl;
+
+            if (target.x > gridPosition.x && target.y > gridPosition.y) {
+                options.push_back({gridPosition.x + 1, gridPosition.y + 1});
+            } else if (target.x > gridPosition.x && target.y < gridPosition.y) {
+                options.push_back({gridPosition.x + 1, gridPosition.y - 1});
+            } else if (target.x < gridPosition.x && target.y > gridPosition.y) {
+                options.push_back({gridPosition.x - 1, gridPosition.y + 1});
+            } else if (target.x < gridPosition.x && target.y < gridPosition.y) {
+                options.push_back({gridPosition.x - 1, gridPosition.y - 1});
             }
+
+            if (target.x > gridPosition.x) {
+                options.push_back({gridPosition.x + 1, gridPosition.y});
+            } else if (target.x < gridPosition.x) {
+                options.push_back({gridPosition.x - 1, gridPosition.y});
+            }
+
+            if (target.y > gridPosition.y) {
+                options.push_back({gridPosition.x, gridPosition.y + 1});
+            } else if (target.y < gridPosition.y) {
+                options.push_back({gridPosition.x, gridPosition.y - 1});
+            }
+
+            if (options.size() > 0) {
+                int choice = rand() % options.size();
+                target = options.at(choice);
+            }
+            
             setOptions();
             if (tileInOptions(target)) {
                 selected = false;
@@ -149,7 +187,8 @@ void Unit::Update(double dt, Vector2 target) {
                 
                 if (newTile->isUnitOnTile) {
                     isFighting = true;
-                    newTile->unitOnTile->isFighting = true;
+                    newTile->unitOnTile->canMove = false;
+                    newTile->isAccesible = false;
                 }
 
                 isMoving = true;
@@ -218,7 +257,8 @@ void Unit::Update(double dt)
                         
                         if (newTile->isUnitOnTile) {
                             isFighting = true;
-                            newTile->unitOnTile->isFighting = true;
+                            newTile->isAccesible = false;
+                            newTile->unitOnTile->canMove = false;
                         }
 
                         movingProgress = 0;
