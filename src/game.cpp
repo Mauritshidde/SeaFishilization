@@ -151,26 +151,45 @@ void Game::Update(double dt)
         }
     } else if (isTrainingMenu) {
         // create unit
+        Vector2 worldMousePos = GetScreenToWorld2D(GetMousePosition(), player.camera);
+        Vector2 coord = map.worldPosToGridPos(worldMousePos);
 
-        if (!selectedTrainingTile->isTraining) {
+        if (!selectedTrainingTile->isTraining && !map.getTile(coord)->isUnitOnTile) {
             if (IsKeyPressed(KEY_ONE)) {
-                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
-                isTrainingMenu = false;
+                if(player.getFoodAmount() >= 10) {
+                    player.addFoodAmount(-10);
+                    player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
+                    isTrainingMenu = false;
+                }
             } else if (IsKeyPressed(KEY_TWO)) {
-                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
-                isTrainingMenu = false;
+                if(player.getFoodAmount() >= 20) {
+                    player.addFoodAmount(-20);
+                    player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
+                    isTrainingMenu = false;
+                }
             } else if (IsKeyPressed(KEY_THREE)) {
-                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
-                isTrainingMenu = false;
+                if(player.getFoodAmount() >= 40) {
+                    player.addFoodAmount(-40);
+                    player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
+                    isTrainingMenu = false;
+                }
             } else if (IsKeyPressed(KEY_FOUR)) {
-                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
-                isTrainingMenu = false;
+                if(player.getFoodAmount() >= 80) {
+                    player.addFoodAmount(-80);
+                    player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
+                    isTrainingMenu = false;
+                }
             } else if (IsKeyPressed(KEY_FIVE)) {
-                player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
-                isTrainingMenu = false;
+                if(player.getFoodAmount() >= 160) {
+                    player.addFoodAmount(-160);
+                    player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
+                    isTrainingMenu = false;
+                }
             } else if (IsKeyPressed(KEY_C)) {
                 isTrainingMenu = false;
             }
+        } else if (map.getTile(coord)->isUnitOnTile) {
+            isTrainingMenu = false;
         } else {
             // show is training
         }
