@@ -24,7 +24,7 @@ public:
     std::vector<Unit> units;
 
     void createUnit(Vector2 startingPos, Camera2D *test, int level, double statMultiplier);
-    void Update(double dt);
+    void Update(double dt, bool overlay);
     void Update(double dt, Vector2 target);
     void Render();
 

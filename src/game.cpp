@@ -86,7 +86,7 @@ void Game::Update(double dt)
     for (int i=0; i < surroundingCenter.size(); i++) {
         if (surroundingCenter.at(i)->isUnitOnTile) {
             if (surroundingCenter.at(i)->unitOnTile->owner != "player") {
-                    player.castleHealth -= surroundingCenter.at(i)->unitOnTile->attackDamage/10 * dt;
+                    player.castleHealth -= surroundingCenter.at(i)->unitOnTile->attackDamage * dt;
             }
         }
     }
@@ -224,8 +224,12 @@ void Game::Update(double dt)
         noMoneyMsgCountDown -= dt;
     }
 
-    player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
     overlay.updateCooldown(dt);
+    bool dontMove = false;
+    if(overlay.getBuildTileName() == "") {
+        dontMove = true;
+    } 
+    player.Update(dt, overlay.selectedBuildTile, dontMove); // update all the objects that are in player
     wave.Update(dt);
     map.Update(dt);
 
