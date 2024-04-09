@@ -77,11 +77,6 @@ void Player::movement(double dt, int isBuildMode)
         if (camera.zoom > maxZoom) {
             camera.zoom = maxZoom;
         }
-
-        // camera.offset.x -= (screenWidth/2 - camera.offset.x) * abs((camera.zoom - zoomBefore));
-        // camera.offset.y -= (screenHeight/2 - camera.offset.y) * abs((camera.zoom - zoomBefore));
-        // camera.target.x += 0.5 * screenWidth * (camera.zoom - zoombefore) / camera.zoom;
-        // camera.target.y += 0.5 * screenHeight * (camera.zoom - zoombefore) / camera.zoom;
     }
     else if (GetMouseWheelMove() < 0)
     {
@@ -89,8 +84,6 @@ void Player::movement(double dt, int isBuildMode)
         if (camera.zoom < minZoom) {
             camera.zoom = minZoom;
         }
-        // camera.target.x += 0.5 * screenWidth * camera.zoom;
-        // camera.target.y += 0.5 * screenHeight * camera.zoom;
     }
 
 
@@ -181,8 +174,9 @@ void Player::Render() {
 }
 
 void Player::Start(Vector2 center) {
-    // camera.offset = {-0.5 * screenWidth, -0.5 * screenHeight};
-    // camera.target = {-0.5 * screenWidth, -0.5 * screenHeight};
+    camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
+    camera.target = map->gridPosToWorldPos(center);
+    camera.zoom = 1.2;
 
     castlePos = map->gridPosToWorldPos(center);
     playerUnits.createUnit({center.x-1, center.y}, &camera, 2, 1);
