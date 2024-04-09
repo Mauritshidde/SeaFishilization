@@ -42,7 +42,7 @@ void GameOver::Draw(int screenWidth, int screenHeight, double time)
       for (int i = 0; i < gameOverTexts.size(); i++)
       {
             if (i == 0) {
-                  DrawText(TextFormat("You survived for: %d", int(time), "%d econds"), (screenWidth / 2) - (MeasureText(gameOverTexts.at(i), fontSize) / 2), val * (i + 1) - 50, fontSize, BLACK);
+                  // DrawText(TextFormat("You survived for: %d", int(time), "%d econds"), (screenWidth / 2) - (TextFormat("You survived for: %d", int(time), "%d econds"), fontSize) / 2), val * (i + 1) - 50, fontSize, BLACK);
             } else {
                   if (selected == i)
                   {

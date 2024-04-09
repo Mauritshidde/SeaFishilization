@@ -6,7 +6,8 @@ Tile::Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTex
     isUnitOnTile = false;
     isAccesible = true;
     isTraining = false;
-    
+    trainingCooldown = 0;
+
     pos.x = x;
     pos.y = y;
     width = w;
@@ -18,6 +19,17 @@ Tile::Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTex
 Tile::~Tile() 
 {
     unitOnTile = NULL;
+}
+
+void Tile::Update(double dt) {
+    if (isTraining) {
+        trainingCooldown -= dt;
+
+        if (trainingCooldown <= 0) {
+            trainingCooldown = 0;
+            isTraining = false;
+        }
+    }
 }
 
 Vector2 Tile::getPos() {

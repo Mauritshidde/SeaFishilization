@@ -21,7 +21,8 @@ public:
     bool tileSelected;
     bool isAccesible;
     bool isTraining;
-
+    double trainingCooldown;
+    
     int width;
     int height;
     
@@ -29,6 +30,9 @@ public:
     std::string getType();
     void changeType(std::string newType);
     void draw();
+
+    void Update(double dt);
+
     Tile(int x, int y, int w, int h, std::map<std::string, Texture2D>& tileTextures, std::string type_);
     ~Tile();
 };

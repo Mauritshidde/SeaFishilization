@@ -34,6 +34,7 @@ std::vector<Vector2> getBorders();
     bool isTileLocked(Vector2 coord);
     void changeTileType(Vector2 coord, std::string type);
     int countTilesWithType(std::string type);
+    void Update(double dt);
     void draw();
     Tile* getTile(Vector2 coord);
 
