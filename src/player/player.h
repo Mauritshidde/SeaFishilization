@@ -37,6 +37,7 @@ private:
     int productionSpeed;
 public:
     double castleHealth;
+    Vector2 castlePos;
 
     Camera2D camera = { 0 };
     Vector2 position;

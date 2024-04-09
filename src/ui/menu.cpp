@@ -73,6 +73,23 @@ void Menu::Update(int screenWidth, int screenHeight)
             }
       }
 
+      if (IsKeyPressed(KEY_W))
+      {
+            selected--;
+            if (selected < 0)
+            {
+                  selected = 0;
+            }
+      }
+      else if (IsKeyPressed(KEY_S))
+      {
+            selected++;
+            if (selected > menuTexts.size())
+            {
+                  selected = amount - 1;
+            }
+      }
+
       if (1 == 2)
       { // screenheight or screenwidth or fontSize changed
             val = screenHeight / (amount + 1);
@@ -87,19 +104,7 @@ void Menu::Update(int screenWidth, int screenHeight)
             }
       }
 
-      if (IsMouseButtonPressed(0))
-      {
-            for (int i = 0; i < amount; i++)
-            {
-                  if (CheckCollisionPointRec(GetMousePosition(), {startX.at(i), endX.at(i), startY.at(i), endY.at(i)}))
-                  {
-                        buttonPressed = i;
-                        isButtonPressed = true;
-                        break;
-                  }
-            }
-      }
-      else if (IsKeyPressed(KEY_ENTER))
+      if (IsKeyPressed(KEY_ENTER) || IsMouseButtonPressed(1))
       {
             buttonPressed = selected;
             isButtonPressed = true;

@@ -197,9 +197,14 @@ void Game::Render()
         } else if (isTrainingMenu && overlay.getBuildTileName() == "") {
             overlay.drawTrainingMenu(player.getCastleLvl());
         }
+<<<<<<< Updated upstream
 
         // DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         // DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
+=======
+        DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, WHITE);
+        DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, WHITE);
+>>>>>>> Stashed changes
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
 
         // ui draw functions that should not move here

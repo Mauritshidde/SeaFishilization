@@ -326,6 +326,8 @@ Unit::Unit(double setMaxHealth, double setDefence, double setMovementSpeed, doub
     camera = setCamera;
     currentTile = startTile;
 
+    // newPosition = tileMap->gridPosToWorldPos(gridPosition);
+
     isMoving = false;
     canMove = true;
     isAlive = true;

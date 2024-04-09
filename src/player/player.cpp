@@ -48,26 +48,40 @@ void Player::movement(double dt, int isBuildMode)
     if (IsKeyDown(KEY_W))
     {
         camera.target.y -= movementSpeed * dt / camera.zoom;
+    } else if (IsKeyDown(KEY_UP)) {
+        camera.target.y -= movementSpeed * dt / camera.zoom;
     }
     if (IsKeyDown(KEY_S))
     {
+        camera.target.y += movementSpeed * dt / camera.zoom;
+    } else if (IsKeyDown(KEY_DOWN)) {
         camera.target.y += movementSpeed * dt / camera.zoom;
     }
     if (IsKeyDown(KEY_A))
     {
         camera.target.x -= movementSpeed * dt / camera.zoom;
+    } else if (IsKeyDown(KEY_LEFT)) {
+        camera.target.x -= movementSpeed * dt / camera.zoom;
     }
     if (IsKeyDown(KEY_D))
     {
+        camera.target.x += movementSpeed * dt / camera.zoom;
+    } else if (IsKeyDown(KEY_RIGHT)) {
         camera.target.x += movementSpeed * dt / camera.zoom;
     }
 
     if (GetMouseWheelMove() > 0) 
     {
+        double zoomBefore = camera.zoom;
         camera.zoom += zoomSpeed * dt / camera.zoom;
         if (camera.zoom > maxZoom) {
             camera.zoom = maxZoom;
         }
+
+        // camera.offset.x -= (screenWidth/2 - camera.offset.x) * abs((camera.zoom - zoomBefore));
+        // camera.offset.y -= (screenHeight/2 - camera.offset.y) * abs((camera.zoom - zoomBefore));
+        // camera.target.x += 0.5 * screenWidth * (camera.zoom - zoombefore) / camera.zoom;
+        // camera.target.y += 0.5 * screenHeight * (camera.zoom - zoombefore) / camera.zoom;
     }
     else if (GetMouseWheelMove() < 0)
     {
@@ -75,6 +89,8 @@ void Player::movement(double dt, int isBuildMode)
         if (camera.zoom < minZoom) {
             camera.zoom = minZoom;
         }
+        // camera.target.x += 0.5 * screenWidth * camera.zoom;
+        // camera.target.y += 0.5 * screenHeight * camera.zoom;
     }
 
 
@@ -160,10 +176,15 @@ void Player::Update(double dt, int isBuildMode) {
 }
 
 void Player::Render() {
+    DrawText(TextFormat("Health: %d", int(castleHealth)), castlePos.x + 0.5 * map->getTile({0,0})->width, castlePos.y + 0.75 * map->getTile({0,0})->height, 10, WHITE);
     playerUnits.Render();
 }
 
 void Player::Start(Vector2 center) {
+    // camera.offset = {-0.5 * screenWidth, -0.5 * screenHeight};
+    // camera.target = {-0.5 * screenWidth, -0.5 * screenHeight};
+
+    castlePos = map->gridPosToWorldPos(center);
     playerUnits.createUnit({center.x-1, center.y}, &camera, 2, 1);
     playerUnits.createUnit({center.x, center.y+1}, &camera, 1, 1);
 }
