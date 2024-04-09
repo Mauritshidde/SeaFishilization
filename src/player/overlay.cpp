@@ -127,20 +127,22 @@ void Overlay::drawCastleMenu(int level)
         DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
         DrawText("[C] CANCEL", startPosition.x + fontSize * 8.25, startPosition.y + fontSize * 8.5, fontSize / 2, WHITE);
         return;
-
     }
+
+    // ? upgrade information ? //
     // DrawText("×", startPosition.x + fontSize * 13.5, startPosition.y + fontSize * 0.9, fontSize, DARKGRAY);
     DrawText(TextFormat("BUILD COST %d CORAL", cost), startPosition.x + fontSize, startPosition.y + fontSize * 2.5, fontSize / 2, RED);
     DrawText("- Unlock new fish!", startPosition.x + fontSize, startPosition.y + fontSize * 4, fontSize / 2, GOLD);
     DrawText(TextFormat("- Production time to %d sec (-1 sec)", productionSpeed), startPosition.x + fontSize, startPosition.y + fontSize * 5, fontSize / 2, GOLD);
     DrawText(TextFormat("- Castle protection to %d hp (+5 hp)", hp), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
     
+    // ? BUY button ? //
     Rectangle buyRect = { startPosition.x + fontSize, startPosition.y + fontSize * 8, fontSize * 5, fontSize * 1.5 };
     DrawText("press key:", startPosition.x + fontSize, startPosition.y + fontSize * 7, fontSize / 2, DARKGRAY);
     DrawRectangleRounded(buyRect, 0.2f, 0.0f, DARKGREEN);
     DrawText("[L] LEVEL UP!", startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 8.5, fontSize / 2, WHITE);
 
-
+    // ? CANCEL button ? //
     Rectangle cancelRect = { startPosition.x + fontSize * 7, startPosition.y + fontSize * 8, fontSize * 5, fontSize * 1.5 };
     DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
     DrawText("[C] CANCEL", startPosition.x + fontSize * 8.25, startPosition.y + fontSize * 8.5, fontSize / 2, WHITE);
@@ -148,12 +150,74 @@ void Overlay::drawCastleMenu(int level)
 
 void Overlay::drawTrainingMenu(int level) 
 {
-    int fontSize = 50;
-    Vector2 startPosition = { screenWidth / 10 * 3, screenHeight / 2 - fontSize * 5 };
-    Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 2.5, fontSize * 10 };
-    DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
-    DrawText(TextFormat("UPGRADE TRAINING TO LVL %d", level), startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
 
+    int fontSize = 50;
+    Vector2 startPosition = { screenWidth / 10 * 2, screenHeight / 2 - fontSize * 7.5 };
+    Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 10 * 6, fontSize * 15 };
+    DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
+    DrawText("FISH TRAINING AREA!", startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
+    
+    // ? BUY button 1-5 ? //
+    for(int i = 1; i < 6; i++) {
+
+        int cost, maxHealth, damage, movementSpeed, defence;
+        switch (i)
+        {
+        case 1:
+            cost = 10;
+            maxHealth = 100;
+            damage = 10;
+            movementSpeed = 30;
+            defence = 5;
+            break;
+        case 2:
+            cost = 20;
+            maxHealth = 220;
+            damage = 15;
+            movementSpeed = 60;
+            defence = 2;
+            break;
+        case 3:
+            cost = 40;
+            maxHealth = 320;
+            damage = 23;
+            movementSpeed = 30;
+            defence = 9;
+            break;
+        case 4:
+            cost = 80;
+            maxHealth = 430;
+            damage = 35;
+            movementSpeed = 30;
+            defence = 14;
+            break;
+        case 5:
+            cost = 160;
+            maxHealth = 640;
+            damage = 50;
+            movementSpeed = 10;
+            defence = 20;
+            break;
+        default:
+            break;
+        }
+
+        Color color = DARKGREEN;
+        if(i > level) {
+            color = DARKGRAY;
+        }
+        Rectangle buyRect = { startPosition.x + fontSize, startPosition.y + fontSize * (0.5 + 2 * i), fontSize * 5, fontSize * 1.5 };
+        DrawRectangleRounded(buyRect, 0.2f, 0.0f, color);
+        DrawText(TextFormat("[%d] BUY LVL %d", i, i), startPosition.x + fontSize * 1.75, startPosition.y + fontSize * (1 + 2 * i), fontSize / 2, WHITE);
+        
+        const char *text = TextFormat("cost: %d - hp: %d - damage: %d - move speed: %d - defence: %d", cost, maxHealth, damage, movementSpeed, defence);
+        DrawText(text, startPosition.x + fontSize * 6.75, startPosition.y + fontSize * (1 + 2 * i), fontSize / 2, DARKGRAY);
+    }
+
+    // ? CANCEL button ? //
+    Rectangle cancelRect = { startPosition.x + fontSize, startPosition.y + fontSize * 12.5, fontSize * 5, fontSize * 1.5 };
+    DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
+    DrawText("[C] CANCEL", startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 13, fontSize / 2, WHITE);
 }
 
 int Overlay::mouseOnBuildTile() 

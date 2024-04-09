@@ -51,7 +51,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     score = 0;
 
     isCastleMenu = false;
-    isTrainingMenu = false;
+    isTrainingMenu = true;
     
     int foodTileCost = player.getTileCost("food");
     int coralTileCost = player.getTileCost("coral");
