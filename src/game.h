@@ -9,6 +9,7 @@
 #include "map/map.h"
 #include "units/unit.h"
 #include "waves/wave.h"
+#include "gameOver.h"
 
 class Game
 {
@@ -18,6 +19,7 @@ private:
     Map map;
     Music song;
     Wave2 wave;
+    GameOver gameOverScreen;
 
     std::vector<std::string> castleTypes;
     bool isCastleMenu;

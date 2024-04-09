@@ -289,4 +289,12 @@ void Game::run() // start the game loop
         // If quit go to main menu
         // When esc press open menu for settings, save, load, continue and exit
     }
+
+    gameOverScreen = GameOver(GetScreenWidth(), GetScreenHeight());
+
+    while (!gameOverScreen.buttonPressed)
+    {
+        gameOverScreen.Update(GetScreenWidth(), GetScreenHeight());
+        gameOverScreen.Draw(GetScreenWidth(), GetScreenHeight(), gameTime);
+    }
 }
