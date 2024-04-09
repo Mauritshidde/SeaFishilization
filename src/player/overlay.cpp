@@ -115,8 +115,8 @@ void Overlay::drawInventory(int food, int coral, int score, int time, int wave, 
 
 void Overlay::drawCastleMenu(int level) 
 {
-    int cost = 10 * std::pow(2, level);
-    int productionSpeed = 5 - level;
+    int cost = 25 * std::pow(2, level);
+    int productionSpeed = 10 - level;
     int hp = (level + 1) * 250;
     int fontSize = 50;
     Vector2 startPosition = { screenWidth / 10 * 3, screenHeight / 2 - fontSize * 5 };

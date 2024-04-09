@@ -5,7 +5,7 @@
 Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, Map *setMap, Texture2D *setTileHighLite, std::map<std::string, Texture2D> setUnitTextures)
 {
     food = 0;
-    coral = 1;
+    coral = 0;
 
     screenWidth = setScreenWidth;
     screenHeight = setScreenHeight;
@@ -22,7 +22,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
 
     playerUnits = UnitInventory("player", map, &camera, setTileHighLite, setUnitTextures);
 
-    castleCost = 20;
+    castleCost = 50;
     castleLvl = 1;
     castleHealth = 500;
 
@@ -35,7 +35,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
     minX = 0;
     maxY = screenHeight;
     minY = 0;
-    productionSpeed = 5;
+    productionSpeed = 10;
 }
 
 Player::~Player()
