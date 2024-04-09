@@ -109,7 +109,6 @@ void Wave2::Start() {
     target = {map->rows/2, map->cols/2};
 
     calcWaveLevel();
-    units.createUnit({9,9}, camera, 1);
 }
 
 Wave2::Wave2(Map *map_, Camera2D *camera_, Texture2D *tileHighLite_, std::map<std::string, Texture2D> unitTextures_)

@@ -24,6 +24,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
 
     castleCost = 20;
     castleLvl = 1;
+    castleHealth = 10;
 
     movementSpeed = 250;
     zoomSpeed = 10;
@@ -131,6 +132,8 @@ bool Player::buyTile(std::string type) {
 bool Player::buyCastleUpgrade() {
     if (castleLvl > 4) return false;
     if (coral < castleCost) return false;
+
+    castleHealth += 5;
     castleLvl++;
     productionSpeed--;
     addCoralAmount(-castleCost);

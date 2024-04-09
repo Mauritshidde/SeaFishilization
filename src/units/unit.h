@@ -9,10 +9,6 @@
 class Unit
 {
 private:
-    double maxHealth;
-    double defence;
-    double movementSpeed;
-    double attackDamage;
 
     bool isMoving;
     bool canMove;
@@ -30,6 +26,11 @@ private:
 
     bool tileInOptions(Vector2 coords);
 public:
+    double maxHealth;
+    double defence;
+    double movementSpeed;
+    double attackDamage;
+    
     bool isAlive;
     bool selected;
     bool isFighting;

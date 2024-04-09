@@ -85,9 +85,13 @@ void Game::Update(double dt)
     for (int i=0; i < surroundingCenter.size(); i++) {
         if (surroundingCenter.at(i)->isUnitOnTile) {
             if (surroundingCenter.at(i)->unitOnTile->owner != "player") {
-                // catsle take damage TODO
+                    player.castleHealth -= surroundingCenter.at(i)->unitOnTile->attackDamage/10 * dt;
             }
         }
+    }
+
+    if (player.castleHealth <= 0) {
+        gameRunning = false;
     }
 
     if(IsMouseButtonPressed(0)) { // makes build mode and overlay selction work
@@ -204,6 +208,8 @@ void Game::Render()
 }
 
 void Game::Start() {
+    gameRunning = true;
+
     mapCenter = map.getTile({int(map.cols/2), int(map.rows/2)});
     std::vector<Vector2> surroundingCoords = map.getSurroundingCoords({int(map.cols/2), int(map.rows/2)});
 
@@ -217,7 +223,6 @@ void Game::Start() {
 
 void Game::run() // start the game loop
 {
-    bool gameRunning = true;
     double dt;
 
     Start();

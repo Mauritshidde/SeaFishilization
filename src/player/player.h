@@ -36,6 +36,7 @@ private:
     Texture2D *tileHighLite;
     int productionSpeed;
 public:
+    double castleHealth;
 
     Camera2D camera = { 0 };
     Vector2 position;
