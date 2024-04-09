@@ -148,6 +148,8 @@ void Game::Update(double dt)
                 isCastleMenu = false;
                 int castleLvl = player.getCastleLvl();
                 map.changeTileType({8, 8}, castleTypes.at(castleLvl - 1));
+            } else {
+                noMoneyMsgCountDown = 1.0;
             }
         }
     } else if (isTrainingMenu) {
