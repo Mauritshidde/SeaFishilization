@@ -36,6 +36,7 @@ private:
 public:
     int waveCount;
     double timeUntilNextWave;
+    double waveCoolDown;
     
     void Update(double dt);
     void Render();

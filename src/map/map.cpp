@@ -159,7 +159,11 @@ std::vector<Vector2> Map::getBorders() {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             if(i < 1 || i > rows - 2 || j < 1 || j > cols - 2) {
-                borderTiles.push_back({i, j});
+                if ((i<1 && j < 1) || (i < 1 && j > cols - 2) || (j < 1 && i > rows - 2) || (j > cols - 2 && i > rows - 2)) {
+
+                } else {
+                    borderTiles.push_back({i, j});
+                }
             }
         }
     }

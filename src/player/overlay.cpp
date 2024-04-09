@@ -152,7 +152,6 @@ void Overlay::drawCastleMenu(int level)
 
 void Overlay::drawTrainingMenu(int level) 
 {
-    std::cout << trainingCooldown << std::endl;
     int fontSize = 50;
     Vector2 startPosition = { screenWidth / 10 * 2, screenHeight / 2 - fontSize * 7.5 };
     Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 10 * 6, fontSize * 15 };

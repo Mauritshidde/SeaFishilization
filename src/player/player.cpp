@@ -179,6 +179,4 @@ void Player::Start(Vector2 center) {
     camera.zoom = 3.0;
 
     castlePos = map->gridPosToWorldPos(center);
-    playerUnits.createUnit({center.x-1, center.y}, &camera, 2, 1);
-    playerUnits.createUnit({center.x, center.y+1}, &camera, 1, 1);
 }
