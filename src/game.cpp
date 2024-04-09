@@ -209,15 +209,15 @@ void Game::Render()
 
 void Game::Start() {
     gameRunning = true;
-
-    mapCenter = map.getTile({int(map.cols/2), int(map.rows/2)});
-    std::vector<Vector2> surroundingCoords = map.getSurroundingCoords({int(map.cols/2), int(map.rows/2)});
+    Vector2 center = {int(map.cols/2), int(map.rows/2)};
+    mapCenter = map.getTile(center);
+    std::vector<Vector2> surroundingCoords = map.getSurroundingCoords(center);
 
     for (int i=0; i < surroundingCoords.size(); i++) {
         surroundingCenter.push_back(map.getTile(surroundingCoords.at(i)));
     }
 
-    player.Start();
+    player.Start(center);
     wave.Start();
 }
 

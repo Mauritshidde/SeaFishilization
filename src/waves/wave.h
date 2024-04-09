@@ -28,6 +28,8 @@ private:
     int minUnitAmount;
     int maxUnitAmount;
 
+    double statMultiplier;
+
     std::vector<Vector2> genStartingPositions(int unitAmount);
     void spawnWave();
     void calcWaveLevel();

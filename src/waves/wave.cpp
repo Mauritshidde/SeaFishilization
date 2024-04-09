@@ -48,13 +48,17 @@ void Wave2::spawnWave() {
         unitLevel = 0;
     }
 
+    if (statMultiplier > 2) {
+        statMultiplier = 2;
+    }
+
     unitAmount += minUnitAmount;
     unitLevel += minUnitLevel;
 
     std::vector<Vector2> startingPositions = genStartingPositions(unitAmount);
 
     for (int i=0; i < startingPositions.size(); i++) {
-        units.createUnit(startingPositions.at(i), camera, maxUnitAmount);
+        units.createUnit(startingPositions.at(i), camera, unitLevel, statMultiplier);
     }
 }
 
@@ -66,9 +70,11 @@ void Wave2::calcWaveLevel() {
         minUnitLevel = 1;
     } else if (minUnitLevel > 5) {
         minUnitLevel = 5;
+        statMultiplier += 0.05;
     }
     if (maxUnitLevel > 5) {
         maxUnitLevel = 5;
+        statMultiplier += 0.02;
     }
 
     minUnitAmount = 1 + waveCount/10;
@@ -78,8 +84,10 @@ void Wave2::calcWaveLevel() {
         minUnitAmount = 1;
     } else if (minUnitAmount > 20) {
         minUnitAmount = 20;
+        statMultiplier += 0.02;
     }
     if (maxUnitAmount > 25) {
+        statMultiplier += 0.03;
         maxUnitAmount = 25;
     }
 }
@@ -120,6 +128,7 @@ Wave2::Wave2(Map *map_, Camera2D *camera_, Texture2D *tileHighLite_, std::map<st
     unitTextures = unitTextures_;
     waveCount = 0;
     timeUntilNextWave = 120; // in seconds
+    statMultiplier = 1;
 
     units = UnitInventory("wave", map_, camera_, tileHighLite_, unitTextures_);
 }

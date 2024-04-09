@@ -276,6 +276,11 @@ void Unit::Update(double dt)
 
 void Unit::drawStats(Vector2 pos) {
     DrawText(TextFormat("HP: %d", int(health)), pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.75 * tileMap->getTile({0,0})->height, 10, WHITE);
+    if (isFighting) {
+        DrawText("fighting", pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.8 * tileMap->getTile({0,0})->height, 10, WHITE);
+    } else if (isMoving) { 
+        DrawText("moving", pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.8 * tileMap->getTile({0,0})->height, 10, WHITE);
+    }
     // DrawText("test", pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.75 * tileMap->getTile({0,0})->height, 10, WHITE);
     // DrawRectangle(position.x + tileMap->getTile({0,0})->width, position.y, tileMap->getTile({0,0})->width, tileMap->getTile({0,0})->height, WHITE);
 }

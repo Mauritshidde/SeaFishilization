@@ -163,8 +163,7 @@ void Player::Render() {
     playerUnits.Render();
 }
 
-void Player::Start() {
-    playerUnits.createUnit({10, 10}, &camera, 1);
-    playerUnits.createUnit({11, 10}, &camera, 1);
-    playerUnits.createUnit({16, 7}, &camera, 1);
+void Player::Start(Vector2 center) {
+    playerUnits.createUnit({center.x-1, center.y}, &camera, 2, 1);
+    playerUnits.createUnit({center.x, center.y+1}, &camera, 1, 1);
 }

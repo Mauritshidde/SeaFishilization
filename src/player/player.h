@@ -52,7 +52,7 @@ public:
 
     void Update(double dt, int isBuildMode);
     void Render();
-    void Start();
+    void Start(Vector2 center);
 
     Player(Vector2 startPosition={0,0}, int screenWidth=1920, int screenHeight=1080, Map *setMap = NULL, Texture2D *setTileHighLite = NULL, std::map<std::string, Texture2D> setUnitTextures = {});
     ~Player();
