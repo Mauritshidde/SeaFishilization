@@ -211,8 +211,6 @@ void Game::Update(double dt)
             } else if (IsKeyPressed(KEY_C)) {
                 isTrainingMenu = false;
             }
-        } else if (map.getTile(coord)->isUnitOnTile) {
-            isTrainingMenu = false;
         } else {
             if (IsKeyPressed(KEY_C)) {
                 isTrainingMenu = false;
@@ -271,6 +269,9 @@ void Game::Render()
         } else if (isTrainingMenu && overlay.getBuildTileName() == "") {
             overlay.drawTrainingMenu(player.getCastleLvl());
         }
+
+            std::cout << isTrainingMenu ? "Training" : "Not Training";
+            std::cout << "name: " << overlay.getBuildTileName() << std::endl;
 
         if(noMoneyMsgCountDown > 0) {
             Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
