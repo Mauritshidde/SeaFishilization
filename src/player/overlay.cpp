@@ -173,7 +173,7 @@ void Overlay::drawTrainingMenu(int level)
     for(int i = 1; i < 6; i++) {
 
         int cost, maxHealth, damage, movementSpeed, defence;
-        switch (level)
+        switch (i)
         {
         case 1:
             cost = 10;
