@@ -117,7 +117,6 @@ void Game::Update(double dt)
                         int trainingTileCost = player.getTileCost("training");
                         overlay.setTileTypeCosts(foodTileCost, coralTileCost, trainingTileCost);
                     } else {
-                        std::cout << "NOT ENOUGH MONEY" << std::endl;
                         noMoneyMsgCountDown = 1.0;
                         // DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2}, 50, 10, DARKGRAY);
                         // not enough money
@@ -148,6 +147,8 @@ void Game::Update(double dt)
                 isCastleMenu = false;
                 int castleLvl = player.getCastleLvl();
                 map.changeTileType({8, 8}, castleTypes.at(castleLvl - 1));
+            } else {
+                noMoneyMsgCountDown = 1.0;
             }
         }
     } else if (isTrainingMenu) {
@@ -166,7 +167,7 @@ void Game::Update(double dt)
                 } else {
                     noMoneyMsgCountDown = 1.0;
                 }
-            } else if (IsKeyPressed(KEY_TWO)) {
+            } else if (IsKeyPressed(KEY_TWO) && player.getCastleLvl() > 1) {
                 if(player.getFoodAmount() >= 20) {
                     player.addFoodAmount(-20);
                     selectedTrainingTile->trainingCooldown = 13;
@@ -176,7 +177,7 @@ void Game::Update(double dt)
                 } else {
                     noMoneyMsgCountDown = 1.0;
                 }
-            } else if (IsKeyPressed(KEY_THREE)) {
+            } else if (IsKeyPressed(KEY_THREE) && player.getCastleLvl() > 2) {
                 if(player.getFoodAmount() >= 40) {
                     player.addFoodAmount(-40);
                     selectedTrainingTile->trainingCooldown = 16;
@@ -186,7 +187,7 @@ void Game::Update(double dt)
                 } else {
                     noMoneyMsgCountDown = 1.0;
                 }
-            } else if (IsKeyPressed(KEY_FOUR)) {
+            } else if (IsKeyPressed(KEY_FOUR) && player.getCastleLvl() > 3) {
                 if(player.getFoodAmount() >= 80) {
                     player.addFoodAmount(-80);
                     selectedTrainingTile->trainingCooldown = 20;
@@ -196,7 +197,7 @@ void Game::Update(double dt)
                 } else {
                     noMoneyMsgCountDown = 1.0;
                 }
-            } else if (IsKeyPressed(KEY_FIVE)) {
+            } else if (IsKeyPressed(KEY_FIVE) && player.getCastleLvl() > 4) {
                 if(player.getFoodAmount() >= 160) {
                     player.addFoodAmount(-160);
                     selectedTrainingTile->trainingCooldown = 24;
@@ -220,7 +221,6 @@ void Game::Update(double dt)
 
     if(noMoneyMsgCountDown > 0.0) {
         noMoneyMsgCountDown -= dt;
-        std::cout << "final count down " << noMoneyMsgCountDown << " dudududu" << std::endl;
     }
 
     bool dontMove = false;
