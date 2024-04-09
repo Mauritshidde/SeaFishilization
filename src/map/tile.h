@@ -11,8 +11,6 @@ class Unit;
 class Tile 
 {
 private: 
-    int width;
-    int height;
     std::string type;
     std::map<std::string, Texture2D> textures;
     Vector2 pos;
@@ -23,6 +21,9 @@ public:
     bool tileSelected;
     bool isAccesible;
 
+    int width;
+    int height;
+    
     Vector2 getPos();
     std::string getType();
     void changeType(std::string newType);

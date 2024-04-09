@@ -274,9 +274,14 @@ void Unit::Update(double dt)
     position = {position.x + 0.35 * tileMap->tileWidth, position.y + 0.1 * tileMap->tileHeight};
 }
 
+void Unit::drawStats(Vector2 pos) {
+    DrawText(TextFormat("HP: %d", int(health)), pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.75 * tileMap->getTile({0,0})->height, 10, WHITE);
+    // DrawText("test", pos.x + 0.1 * tileMap->getTile({0,0})->width, pos.y + 0.75 * tileMap->getTile({0,0})->height, 10, WHITE);
+    // DrawRectangle(position.x + tileMap->getTile({0,0})->width, position.y, tileMap->getTile({0,0})->width, tileMap->getTile({0,0})->height, WHITE);
+}
+
 void Unit::Render()
 {
-
     for (int i=0; i < possibleOptions.size(); i++) {
         Tile *tile = tileMap->getTile(possibleOptions.at(i));
         DrawTextureEx(*tileHighLite, tile->getPos(), 0, (double) tileMap->tileHeight / 810, WHITE);
@@ -285,14 +290,18 @@ void Unit::Render()
     if (isMoving) {
         if (int(gridPosition.x) % 2 == 0) {
             DrawTextureEx(*texture, {(position.x + newPosition.x)/2, (position.y + newPosition.y)/2}, 0, 0.1, WHITE);
+            drawStats({(position.x + newPosition.x)/2, (position.y + newPosition.y)/2});
         } else {
             DrawTextureEx(*texture, {(position.x + newPosition.x)/2, (position.y + newPosition.y - tileMap->tileHeight)/2}, 0, 0.1, WHITE);
+            drawStats({(position.x + newPosition.x)/2, (position.y + newPosition.y - tileMap->tileHeight)/2});
         }
     } else {
         if (int(gridPosition.x) % 2 == 0) {
             DrawTextureEx(*texture, position, 0, 0.1, WHITE);
+            drawStats(position);
         } else {
             DrawTextureEx(*texture, {position.x, position.y - 0.5 * tileMap->tileHeight}, 0, 0.1, WHITE);
+            drawStats({position.x, position.y - 0.5 * tileMap->tileHeight});
         }
     }
 }

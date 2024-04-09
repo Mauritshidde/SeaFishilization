@@ -30,7 +30,7 @@ public:
     double defence;
     double movementSpeed;
     double attackDamage;
-    
+
     bool isAlive;
     bool selected;
     bool isFighting;
@@ -51,6 +51,7 @@ public:
     void setOptions();
     void removeOptions();
     
+    void drawStats(Vector2 pos);
     void Update(double dt, Vector2 target); // update function for AI
     void Update(double dt);
     void Render();
