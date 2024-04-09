@@ -176,7 +176,7 @@ void Player::Render() {
 void Player::Start(Vector2 center) {
     camera.offset = (Vector2){ screenWidth/2.0f, screenHeight/2.0f };
     camera.target = map->gridPosToWorldPos(center);
-    camera.zoom = 1.2;
+    camera.zoom = 3.0;
 
     castlePos = map->gridPosToWorldPos(center);
     playerUnits.createUnit({center.x-1, center.y}, &camera, 2, 1);
