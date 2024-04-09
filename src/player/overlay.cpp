@@ -146,6 +146,16 @@ void Overlay::drawCastleMenu(int level)
     DrawText("[C] CANCEL", startPosition.x + fontSize * 8.25, startPosition.y + fontSize * 8.5, fontSize / 2, WHITE);
 }
 
+void Overlay::drawTrainingMenu(int level) 
+{
+    int fontSize = 50;
+    Vector2 startPosition = { screenWidth / 10 * 3, screenHeight / 2 - fontSize * 5 };
+    Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 2.5, fontSize * 10 };
+    DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
+    DrawText(TextFormat("UPGRADE TRAINING TO LVL %d", level), startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
+
+}
+
 int Overlay::mouseOnBuildTile() 
 {
     for(int i = 0; i < buildTilePositions.size(); i++) {

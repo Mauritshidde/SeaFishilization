@@ -21,6 +21,7 @@ private:
 
     std::vector<std::string> castleTypes;
     bool isCastleMenu;
+    bool isTrainingMenu;
     bool gameRunning;
 
     std::map<std::string, Texture2D> tileTextures;

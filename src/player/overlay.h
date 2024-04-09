@@ -32,6 +32,7 @@ public:
     void drawBuildMode();
     void drawInventory(int food, int coral, int score, int time, int wave, int nextWaveTime);
     void drawCastleMenu(int level);
+    void drawTrainingMenu(int level);
     bool isMouseOnOverlay();
     int mouseOnBuildTile();
     void selectBuildTile(int buildTile);

@@ -51,6 +51,7 @@ Game::Game(int screenWidth, int screenHeight, int columnCount, int rowCount)
     score = 0;
 
     isCastleMenu = false;
+    isTrainingMenu = false;
     
     int foodTileCost = player.getTileCost("food");
     int coralTileCost = player.getTileCost("coral");
@@ -105,7 +106,7 @@ void Game::Update(double dt)
                     overlay.selectBuildTile(buildTile);
                 }
                 // do stuff with overlay
-            } else if (!isCastleMenu) {
+            } else if (!isCastleMenu && !isTrainingMenu) {
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "" && map.isSurrounded(coord) && map.isTileAvailable(coord, buildTileName)) {
                     bool isBought = player.buyTile(buildTileName);
@@ -125,11 +126,13 @@ void Game::Update(double dt)
         }
 
         bool isMouseOnCastle = (std::find(castleTypes.begin(), castleTypes.end(), map.getTileType(coord)) != castleTypes.end());
-
         if(isMouseOnCastle) {
             isCastleMenu = true;
         }
 
+        if(map.getTileType(coord) == "training" && overlay.getBuildTileName() == "") {
+            isTrainingMenu = true;
+        }
 
     }
 
@@ -191,7 +194,10 @@ void Game::Render()
         
         if(isCastleMenu) {
             overlay.drawCastleMenu(player.getCastleLvl());
+        } else if (isTrainingMenu && overlay.getBuildTileName() == "") {
+            overlay.drawTrainingMenu(player.getCastleLvl());
         }
+
         // DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         // DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
