@@ -161,7 +161,7 @@ void Overlay::drawTrainingMenu(int level)
     for(int i = 1; i < 6; i++) {
 
         int cost, maxHealth, damage, movementSpeed, defence;
-        switch (i)
+        switch (level)
         {
         case 1:
             cost = 10;
@@ -173,30 +173,30 @@ void Overlay::drawTrainingMenu(int level)
         case 2:
             cost = 20;
             maxHealth = 220;
-            damage = 15;
+            damage = 20;
             movementSpeed = 60;
-            defence = 2;
+            defence = 7;
             break;
         case 3:
             cost = 40;
-            maxHealth = 320;
-            damage = 23;
+            maxHealth = 450;
+            damage = 34;
             movementSpeed = 30;
-            defence = 9;
+            defence = 15;
             break;
         case 4:
             cost = 80;
-            maxHealth = 430;
-            damage = 35;
+            maxHealth = 854;
+            damage = 50;
             movementSpeed = 30;
-            defence = 14;
+            defence = 19;
             break;
         case 5:
             cost = 160;
-            maxHealth = 640;
-            damage = 50;
-            movementSpeed = 10;
-            defence = 20;
+            maxHealth = 1200;
+            damage = 120;
+            movementSpeed = 20;
+            defence = 25;
             break;
         default:
             break;

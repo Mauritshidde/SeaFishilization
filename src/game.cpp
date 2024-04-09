@@ -86,7 +86,7 @@ void Game::Update(double dt)
     for (int i=0; i < surroundingCenter.size(); i++) {
         if (surroundingCenter.at(i)->isUnitOnTile) {
             if (surroundingCenter.at(i)->unitOnTile->owner != "player") {
-                    player.castleHealth -= surroundingCenter.at(i)->unitOnTile->attackDamage/10 * dt;
+                    player.castleHealth -= surroundingCenter.at(i)->unitOnTile->attackDamage * dt;
             }
         }
     }

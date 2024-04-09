@@ -23,30 +23,30 @@ void UnitInventory::createUnit(Vector2 startingPos, Camera2D *test, int level, d
             break;
         case 2:
             maxHealth = 220;
-            damage = 15;
+            damage = 20;
             movementSpeed = 60;
             defence = 7;
             texture = &unitTextures["warrior1LVL2"];
             break;
         case 3:
-            maxHealth = 320;
-            damage = 23;
+            maxHealth = 450;
+            damage = 34;
             movementSpeed = 30;
-            defence = 9;
+            defence = 15;
             texture = &unitTextures["warrior1LVL3"];
             break;
         case 4:
-            maxHealth = 430;
-            damage = 35;
+            maxHealth = 854;
+            damage = 50;
             movementSpeed = 30;
-            defence = 14;
+            defence = 19;
             texture = &unitTextures["warrior1LVL4"];
             break;
         case 5:
-            maxHealth = 640;
-            damage = 50;
+            maxHealth = 1200;
+            damage = 120;
             movementSpeed = 20;
-            defence = 20;
+            defence = 25;
             texture = &unitTextures["warrior1LVL5"];
             break;
         default:
@@ -64,30 +64,30 @@ void UnitInventory::createUnit(Vector2 startingPos, Camera2D *test, int level, d
             break;
         case 2:
             maxHealth = 220 * statMultiplier;
-            damage = 15 * statMultiplier;
+            damage = 20 * statMultiplier;
             movementSpeed = 60 * statMultiplier;
             defence = 7;
             texture = &unitTextures["warrior2LVL2"];
             break;
         case 3:
-            maxHealth = 320 * statMultiplier;
-            damage = 23 * statMultiplier;
+            maxHealth = 450 * statMultiplier;
+            damage = 34 * statMultiplier;
             movementSpeed = 30 * statMultiplier;
-            defence = 9;
+            defence = 15;
             texture = &unitTextures["warrior2LVL3"];
             break;
         case 4:
-            maxHealth = 430 * statMultiplier;
-            damage = 35 * statMultiplier;
+            maxHealth = 854 * statMultiplier;
+            damage = 50 * statMultiplier;
             movementSpeed = 30 * statMultiplier;
-            defence = 14;
+            defence = 19;
             texture = &unitTextures["warrior2LVL4"];
             break;
         case 5:
-            maxHealth = 640 * statMultiplier;
-            damage = 50 * statMultiplier;
+            maxHealth = 1200 * statMultiplier;
+            damage = 120 * statMultiplier;
             movementSpeed = 20 * statMultiplier;
-            defence = 20;
+            defence = 25;
             texture = &unitTextures["warrior2LVL5"];
             break;
         default:

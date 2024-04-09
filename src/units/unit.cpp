@@ -271,8 +271,6 @@ void Unit::Update(double dt, bool overlay)
                 }
             }
         } else {
-            newPosition = newTile->getPos();
-            newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
             movingProgress += movementSpeed * dt;
 
             if (isFighting) {
@@ -295,6 +293,11 @@ void Unit::Update(double dt, bool overlay)
                 movingProgress = 0;
             }
         }
+    }
+
+    if (isMoving) {
+        newPosition = newTile->getPos();
+        newPosition = {newPosition.x + 0.35 * tileMap->tileWidth, newPosition.y + 0.1 * tileMap->tileHeight};
     }
 
     position = tileMap->gridPosToWorldPos(gridPosition);
