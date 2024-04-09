@@ -118,6 +118,7 @@ void Game::Update(double dt)
                         overlay.setTileTypeCosts(foodTileCost, coralTileCost, trainingTileCost);
                     } else {
                         std::cout << "NOT ENOUGH MONEY" << std::endl;
+                        noMoneyMsgCountDown = 1.0;
                         // DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){GetScreenWidth() / 2, GetScreenHeight() / 2}, 50, 10, DARKGRAY);
                         // not enough money
                     }
@@ -162,6 +163,8 @@ void Game::Update(double dt)
                     selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
                     isTrainingMenu = false;
+                } else {
+                    noMoneyMsgCountDown = 1.0;
                 }
             } else if (IsKeyPressed(KEY_TWO)) {
                 if(player.getFoodAmount() >= 20) {
@@ -170,6 +173,8 @@ void Game::Update(double dt)
                     selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
                     isTrainingMenu = false;
+                } else {
+                    noMoneyMsgCountDown = 1.0;
                 }
             } else if (IsKeyPressed(KEY_THREE)) {
                 if(player.getFoodAmount() >= 40) {
@@ -178,6 +183,8 @@ void Game::Update(double dt)
                     selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
                     isTrainingMenu = false;
+                } else {
+                    noMoneyMsgCountDown = 1.0;
                 }
             } else if (IsKeyPressed(KEY_FOUR)) {
                 if(player.getFoodAmount() >= 80) {
@@ -186,6 +193,8 @@ void Game::Update(double dt)
                     selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
                     isTrainingMenu = false;
+                } else {
+                    noMoneyMsgCountDown = 1.0;
                 }
             } else if (IsKeyPressed(KEY_FIVE)) {
                 if(player.getFoodAmount() >= 160) {
@@ -194,6 +203,8 @@ void Game::Update(double dt)
                     selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
                     isTrainingMenu = false;
+                } else {
+                    noMoneyMsgCountDown = 1.0;
                 }
             } else if (IsKeyPressed(KEY_C)) {
                 isTrainingMenu = false;
@@ -205,6 +216,11 @@ void Game::Update(double dt)
                 isTrainingMenu = false;
             }
         }
+    }
+
+    if(noMoneyMsgCountDown > 0.0) {
+        noMoneyMsgCountDown -= dt;
+        std::cout << "final count down " << noMoneyMsgCountDown << " dudududu" << std::endl;
     }
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
@@ -239,13 +255,6 @@ void Game::Render()
                 std::string buildTileName = overlay.getBuildTileName();
                 if(buildTileName != "") {
                     map.drawGhostTile(coord, buildTileName, map.isSurrounded(coord));
-                    // ! TODO: DRAW MONEY SHORTAGE ! //
-                    // ! getTileCost is not optimized //
-                    // if(player.getTileCost(buildTileName) > player.getCoralAmount()) {
-                    //     Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
-                    //     DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){(GetScreenWidth() - textDimentions.x) / 2, (GetScreenHeight() - textDimentions.y) / 2}, 50, 10, RED);
-                    // }
-                    // ! END TODO ! //
                 }
             }
 
@@ -257,6 +266,10 @@ void Game::Render()
             overlay.drawTrainingMenu(player.getCastleLvl());
         }
 
+        if(noMoneyMsgCountDown > 0) {
+            Vector2 textDimentions = MeasureTextEx(GetFontDefault(), "NOT ENOUGH MONEY", 50, 10);
+            DrawTextEx(GetFontDefault(), "NOT ENOUGH MONEY", (Vector2){(GetScreenWidth() - textDimentions.x) / 2, (GetScreenHeight() - textDimentions.y) / 2 + 50}, 50, 10, RED);
+        }
         // DrawText(TextFormat("coord x: %d", int(coord.x)), 100, 100, 10, BLACK);
         // DrawText(TextFormat("coord y: %d", int(coord.y)), 200, 100, 10, BLACK);
         // DrawText(TextFormat("coord z: %d", int(coord.z)), 300, 100, 10, BLACK);
