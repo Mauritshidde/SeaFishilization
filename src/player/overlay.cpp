@@ -117,7 +117,7 @@ void Overlay::drawCastleMenu(int level)
 {
     int cost = 10 * std::pow(2, level);
     int productionSpeed = 5 - level;
-    int hp = (level + 1) * 5;
+    int hp = (level + 1) * 250;
     int fontSize = 50;
     Vector2 startPosition = { screenWidth / 10 * 3, screenHeight / 2 - fontSize * 5 };
     Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 2.5, fontSize * 10 };
@@ -136,7 +136,7 @@ void Overlay::drawCastleMenu(int level)
     DrawText(TextFormat("BUILD COST %d CORAL", cost), startPosition.x + fontSize, startPosition.y + fontSize * 2.5, fontSize / 2, RED);
     DrawText("- Unlock new fish!", startPosition.x + fontSize, startPosition.y + fontSize * 4, fontSize / 2, GOLD);
     DrawText(TextFormat("- Production time to %d sec (-1 sec)", productionSpeed), startPosition.x + fontSize, startPosition.y + fontSize * 5, fontSize / 2, GOLD);
-    DrawText(TextFormat("- Castle protection to %d hp (+5 hp)", hp), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
+    DrawText(TextFormat("- Castle protection to %d hp (+250 hp)", hp), startPosition.x + fontSize, startPosition.y + fontSize * 6, fontSize / 2, GOLD);
     
     // ? BUY button ? //
     Rectangle buyRect = { startPosition.x + fontSize, startPosition.y + fontSize * 8, fontSize * 5, fontSize * 1.5 };

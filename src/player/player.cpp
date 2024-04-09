@@ -24,7 +24,7 @@ Player::Player(Vector2 startPosition, int setScreenWidth, int setScreenHeight, M
 
     castleCost = 20;
     castleLvl = 1;
-    castleHealth = 1000;
+    castleHealth = 500;
 
     movementSpeed = 250;
     zoomSpeed = 10;
@@ -149,7 +149,7 @@ bool Player::buyCastleUpgrade() {
     if (castleLvl > 4) return false;
     if (coral < castleCost) return false;
 
-    castleHealth += 500;
+    castleHealth += 250;
     castleLvl++;
     productionSpeed--;
     addCoralAmount(-castleCost);
@@ -176,7 +176,7 @@ void Player::Update(double dt, int isBuildMode, bool overlay) {
 }
 
 void Player::Render() {
-    DrawText(TextFormat("Health: %d", int(castleHealth)), castlePos.x + 0.5 * map->getTile({0,0})->width, castlePos.y + 0.75 * map->getTile({0,0})->height, 10, WHITE);
+    DrawText(TextFormat("Hp: %d", int(castleHealth)), castlePos.x + 0.5 * map->getTile({0,0})->width, castlePos.y + 0.75 * map->getTile({0,0})->height, 10, WHITE);
     playerUnits.Render();
 }
 
