@@ -39,6 +39,15 @@ Map::~Map()
 
 }
 
+void Map::Update(double dt) {
+    for (int i = 0; i < rows; ++i) {
+        for (int j = 0; j < cols; ++j) {
+            tileMap.at(i).at(j).Update(dt);
+        }
+    }
+}
+
+
 Tile* Map::getTile(Vector2 coord) {
     if(coord.y >= rows) {
         coord.y = rows - 1;

@@ -3,21 +3,21 @@
 void Unit::fight(Tile *targetTile, double dt) {
     Unit *enemy = targetTile->unitOnTile;
     double *enemyHealth = &enemy->health;
-    int damage = 0;
+    double damage = 0;
 
 
     damage = attackDamage - enemy->defence; // calc damage with defence
     if (damage < 0) {
         damage = 0;
     }
-    *enemyHealth -= attackDamage * dt;
+    *enemyHealth -= damage * dt;
 
     
     damage = enemy->attackDamage - defence;
     if (damage < 0) {
         damage = 0;
     }
-    health -= enemy->attackDamage * dt;
+    health -= damage * dt;
 
 
     if (*enemyHealth <= 0) {
@@ -32,20 +32,15 @@ void Unit::fight(Tile *targetTile, double dt) {
         targetTile->isAccesible = true;
 
         isFighting = false;
-        std::cout << "ja" << std::endl;
     }
     
     if (health <= 0) {
-        std::cout << "ja" << std::endl;
-        
         currentTile->unitOnTile = NULL;
         currentTile->isUnitOnTile = false;
-        std::cout << "ja" << std::endl;
 
         currentTile = NULL;   
         isAlive = false;
         isMoving = false;
-        std::cout << "ja" << std::endl;
 
         if (targetTile->isUnitOnTile) {
             targetTile->isAccesible = true;
@@ -54,7 +49,6 @@ void Unit::fight(Tile *targetTile, double dt) {
         }
 
         isFighting = false;
-        std::cout << "nee" << std::endl;
     }
 }
 
@@ -132,22 +126,14 @@ bool Unit::tileInOptions(Vector2 coords) {
 }
 
 void Unit::Update(double dt, Vector2 target) {
-        // std::cout << "nee" << std::endl;
-
     if (!currentTile->isUnitOnTile) { // only place that this can be done, in constructor it doesn't change the value for some reason
         currentTile->isUnitOnTile = true;
         currentTile->unitOnTile = this;
     }
-        // std::cout << "nee" << std::endl;
-
 
     if (canMove) {
-        // std::cout << "nee" << std::endl;
-
         if (!isMoving) {
             std::vector<Vector2> options;
-        // std::cout << "nee" << std::endl;
-
             if (target.x > gridPosition.x && target.y > gridPosition.y) {
                 options.push_back({gridPosition.x + 1, gridPosition.y + 1});
             } else if (target.x > gridPosition.x && target.y < gridPosition.y) {
@@ -354,7 +340,7 @@ void Unit::Render()
 Unit::Unit(double setMaxHealth, double setDefence, double setMovementSpeed, double setAttackDamage, Map *setTileMap, Camera2D* setCamera, Tile *startTile, Vector2 startingGridPos, std::string setOwner, Texture2D *setTexture, Texture2D *setTileHighLite)
 {
     maxHealth = setMaxHealth;
-    defence = setMaxHealth;
+    defence = setDefence;
     movementSpeed = setMovementSpeed;
     attackDamage = setAttackDamage;
 

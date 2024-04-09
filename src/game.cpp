@@ -161,6 +161,8 @@ void Game::Update(double dt)
             if (IsKeyPressed(KEY_ONE)) {
                 if(player.getFoodAmount() >= 10) {
                     player.addFoodAmount(-10);
+                    selectedTrainingTile->trainingCooldown = 10;
+                    selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 1, 1);
                     isTrainingMenu = false;
                 } else {
@@ -169,6 +171,8 @@ void Game::Update(double dt)
             } else if (IsKeyPressed(KEY_TWO)) {
                 if(player.getFoodAmount() >= 20) {
                     player.addFoodAmount(-20);
+                    selectedTrainingTile->trainingCooldown = 13;
+                    selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 2, 1);
                     isTrainingMenu = false;
                 } else {
@@ -177,6 +181,8 @@ void Game::Update(double dt)
             } else if (IsKeyPressed(KEY_THREE)) {
                 if(player.getFoodAmount() >= 40) {
                     player.addFoodAmount(-40);
+                    selectedTrainingTile->trainingCooldown = 16;
+                    selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 3, 1);
                     isTrainingMenu = false;
                 } else {
@@ -185,6 +191,8 @@ void Game::Update(double dt)
             } else if (IsKeyPressed(KEY_FOUR)) {
                 if(player.getFoodAmount() >= 80) {
                     player.addFoodAmount(-80);
+                    selectedTrainingTile->trainingCooldown = 20;
+                    selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 4, 1);
                     isTrainingMenu = false;
                 } else {
@@ -193,6 +201,8 @@ void Game::Update(double dt)
             } else if (IsKeyPressed(KEY_FIVE)) {
                 if(player.getFoodAmount() >= 160) {
                     player.addFoodAmount(-160);
+                    selectedTrainingTile->trainingCooldown = 24;
+                    selectedTrainingTile->isTraining = true;
                     player.playerUnits.createUnit(trainingTileLocation, &player.camera, 5, 1);
                     isTrainingMenu = false;
                 } else {
@@ -204,7 +214,9 @@ void Game::Update(double dt)
         } else if (map.getTile(coord)->isUnitOnTile) {
             isTrainingMenu = false;
         } else {
-            // show is training
+            if (IsKeyPressed(KEY_C)) {
+                isTrainingMenu = false;
+            }
         }
     }
 
@@ -215,6 +227,7 @@ void Game::Update(double dt)
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
     wave.Update(dt);
+    map.Update(dt);
 
     MusicPlayer(); // play the song 
 }
