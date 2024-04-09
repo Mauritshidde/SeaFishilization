@@ -63,8 +63,8 @@ void Wave2::spawnWave() {
 }
 
 void Wave2::calcWaveLevel() {
-    minUnitLevel = round(1 + waveCount/5);
-    maxUnitLevel = round(1 + waveCount/2);
+    minUnitLevel = round(1 + waveCount/9);
+    maxUnitLevel = round(1 + waveCount/7);
 
     if (minUnitLevel < 1) {
         minUnitLevel = 1;
@@ -77,8 +77,8 @@ void Wave2::calcWaveLevel() {
         statMultiplier += 0.02;
     }
 
-    minUnitAmount = 1 + waveCount/10;
-    maxUnitAmount = 2 + waveCount/5;
+    minUnitAmount = 1 + waveCount/15;
+    maxUnitAmount = 2 + waveCount/10;
 
     if (minUnitAmount < 1) {
         minUnitAmount = 1;
@@ -91,7 +91,7 @@ void Wave2::calcWaveLevel() {
         maxUnitAmount = 25;
     }
 
-    waveCoolDown -= 0.5;
+    waveCoolDown -= 0.7;
 
     if (waveCoolDown < 10) {
         waveCoolDown = 10;
@@ -104,7 +104,7 @@ void Wave2::Update(double dt) {
     timeUntilNextWave -= dt;
 
     if (timeUntilNextWave <= 0) {
-        timeUntilNextWave = 45;
+        timeUntilNextWave = waveCoolDown;
         spawnWave();
         waveCount++;
         calcWaveLevel();
@@ -133,7 +133,7 @@ Wave2::Wave2(Map *map_, Camera2D *camera_, Texture2D *tileHighLite_, std::map<st
     tileHighLite = tileHighLite_;
     unitTextures = unitTextures_;
     waveCount = 0;
-    waveCoolDown = 50;
+    waveCoolDown = 60;
     timeUntilNextWave = 60; // in seconds
     statMultiplier = 1;
 
