@@ -21,12 +21,14 @@ private:
     int buildTileSize;
     
     int foodTileCost, coralTileCost, trainingTileCost;
+
     
     std::vector<std::string> buildTileNames;
     Texture2D highlightTileTexture;
 
     std::map<std::string, Texture2D> tileTextures;
 public:
+    double trainingCooldown;
     int selectedBuildTile;
     bool isBuildMode;
     void drawBuildMode();
@@ -38,6 +40,7 @@ public:
     void selectBuildTile(int buildTile);
     std::string getBuildTileName();
     void setTileTypeCosts(int foodCost, int coralCost, int trainingCost);
+    void updateCooldown(double dt);
     Overlay(int screenWidth = 1920, int screenHeight = 1084, std::map<std::string, Texture2D> tileTextures_ = std::map<std::string, Texture2D>());
     ~Overlay();
 };

@@ -131,6 +131,7 @@ void Game::Update(double dt)
         }
 
         if(map.getTileType(coord) == "training" && overlay.getBuildTileName() == "") {
+            overlay.trainingCooldown = map.getTile(coord)->trainingCooldown;
             isTrainingMenu = true;
             trainingTileLocation = coord;
             selectedTrainingTile = map.getTile(coord);
@@ -224,6 +225,7 @@ void Game::Update(double dt)
     }
 
     player.Update(dt, overlay.selectedBuildTile); // update all the objects that are in player
+    overlay.updateCooldown(dt);
     wave.Update(dt);
     map.Update(dt);
 

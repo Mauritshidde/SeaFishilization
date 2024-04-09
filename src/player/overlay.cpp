@@ -14,6 +14,8 @@ Overlay::Overlay(int screenWidth_, int screenHeight_, std::map<std::string, Text
     buildMenuWidth = screenWidth/2.0f;
     buildMenuHeight = screenHeight/8.0f;
 
+    trainingCooldown = 0.0;
+
     buildTileSize = 120;
 
     buildTilePositions = {
@@ -150,12 +152,22 @@ void Overlay::drawCastleMenu(int level)
 
 void Overlay::drawTrainingMenu(int level) 
 {
-
+    std::cout << trainingCooldown << std::endl;
     int fontSize = 50;
     Vector2 startPosition = { screenWidth / 10 * 2, screenHeight / 2 - fontSize * 7.5 };
     Rectangle rect = { startPosition.x, startPosition.y, screenWidth / 10 * 6, fontSize * 15 };
     DrawRectangleRounded(rect, 0.2f, 0.0f, WHITE);
     DrawText("FISH TRAINING AREA!", startPosition.x + fontSize, startPosition.y + fontSize, fontSize, DARKGRAY);
+    
+    // ? CANCEL button ? //
+    Rectangle cancelRect = { startPosition.x + fontSize, startPosition.y + fontSize * 12.5, fontSize * 5, fontSize * 1.5 };
+    DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
+    DrawText("[C] CANCEL", startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 13, fontSize / 2, WHITE);
+    
+    if(trainingCooldown > 0.0f) {
+        DrawText(TextFormat("COOLDOWN: %d seconds", (int)trainingCooldown), startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 3, fontSize / 3 * 2, RED);
+        return;
+    }
     
     // ? BUY button 1-5 ? //
     for(int i = 1; i < 6; i++) {
@@ -214,10 +226,6 @@ void Overlay::drawTrainingMenu(int level)
         DrawText(text, startPosition.x + fontSize * 6.75, startPosition.y + fontSize * (1 + 2 * i), fontSize / 2, DARKGRAY);
     }
 
-    // ? CANCEL button ? //
-    Rectangle cancelRect = { startPosition.x + fontSize, startPosition.y + fontSize * 12.5, fontSize * 5, fontSize * 1.5 };
-    DrawRectangleRounded(cancelRect, 0.2f, 0.0f, RED);
-    DrawText("[C] CANCEL", startPosition.x + fontSize * 1.75, startPosition.y + fontSize * 13, fontSize / 2, WHITE);
 }
 
 int Overlay::mouseOnBuildTile() 
@@ -246,6 +254,13 @@ std::string Overlay::getBuildTileName()
         return "";
     }
     return buildTileNames[selectedBuildTile];
+}
+
+void Overlay::updateCooldown(double dt)
+{
+    if(trainingCooldown > 0.0) {
+        trainingCooldown -= dt;
+    }
 }
 
 
