@@ -1,4 +1,4 @@
-#sea Fishilization
+# Sea Fishilization
 Sea Fishilazition is a game we made for the Fish Fest game jam.  
 We made this game using c++ and Raylib.
 
